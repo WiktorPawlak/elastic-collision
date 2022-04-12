@@ -22,15 +22,9 @@ public class Vector
             return (x == o.x) && (y == o.y);
         }
     }
-    public double magnitude()
-    {
-        return Math.Sqrt(x * x + y * y);
-    }
+    public double magnitude() => Math.Sqrt(x * x + y * y);
 
-    public static Vector vec(double x, double y)
-    {
-        return new Vector(x, y);
-    }
+    public static Vector vec(double x, double y) => new Vector(x, y);
 
     public static Vector operator +(Vector l, Vector r)
     {
@@ -39,18 +33,9 @@ public class Vector
         return vec(x, y);
     }
 
-    public static Vector operator -(Vector v)
-    {
-        return vec(-v.x, -v.y);
-    }
+    public static Vector operator -(Vector v) => vec(-v.x, -v.y);
 
-    public static Vector operator -(Vector l, Vector r)
-    {
-        return l + (-r);
-    }
+    public static Vector operator -(Vector l, Vector r) => l + (-r);
 
-    public static double distance(Vector l, Vector r)
-    {
-        return (l - r).magnitude();
-    }
+    public static double distance(Vector l, Vector r) => (l - r).magnitude();
 }
