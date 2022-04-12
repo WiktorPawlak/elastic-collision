@@ -1,10 +1,11 @@
 using System;
+/// pair of x, y coordinates, used as vectors, coordinates, deltas of the above
 public class Vector
 {
     public double x { get; }
     public double y { get; }
 
-    private Vector(double X, double Y)
+    private Vector(double X, double Y) // use `vec` instead
     {
         x = X;
         y = Y;
@@ -22,6 +23,9 @@ public class Vector
             return (x == o.x) && (y == o.y);
         }
     }
+
+    public override int GetHashCode() => base.GetHashCode();
+
     public double magnitude() => Math.Sqrt(x * x + y * y);
 
     public static Vector vec(double x, double y) => new Vector(x, y);
