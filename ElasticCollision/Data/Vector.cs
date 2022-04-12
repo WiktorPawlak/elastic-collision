@@ -11,21 +11,6 @@ public class Vector
         y = Y;
     }
 
-    public override bool Equals(object other)
-    {
-        var o = other as Vector;
-        if (o == null)
-        {
-            return false;
-        }
-        else
-        {
-            return (x == o.x) && (y == o.y);
-        }
-    }
-
-    public override int GetHashCode() => base.GetHashCode();
-
     public double magnitude() => Math.Sqrt(x * x + y * y);
 
     public static Vector vec(double x, double y) => new Vector(x, y);
@@ -42,4 +27,13 @@ public class Vector
     public static Vector operator -(Vector l, Vector r) => l + (-r);
 
     public static double distance(Vector l, Vector r) => (l - r).magnitude();
+
+    public override bool Equals(object obj)
+    {
+        return obj is Vector vector &&
+               x == vector.x &&
+               y == vector.y;
+    }
+
+    public override int GetHashCode() => HashCode.Combine(x, y);
 }
