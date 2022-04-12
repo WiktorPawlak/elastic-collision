@@ -9,6 +9,7 @@ public class Vector
         x = X;
         y = Y;
     }
+
     public override bool Equals(object other)
     {
         var o = other as Vector;
@@ -38,4 +39,18 @@ public class Vector
         return vec(x, y);
     }
 
+    public static Vector operator -(Vector v)
+    {
+        return vec(-v.x, -v.y);
+    }
+
+    public static Vector operator -(Vector l, Vector r)
+    {
+        return l + (-r);
+    }
+
+    public static double distance(Vector l, Vector r)
+    {
+        return (l - r).magnitude();
+    }
 }
