@@ -25,5 +25,16 @@ namespace DataTest
             var b = vec(5, 5) + vec(5, 5);
             Assert.Equal(vec(10, 10), b);
         }
+        [Fact]
+        public void TestMagnitude()
+        {
+            Assert.Equal(0, vec(0, 0).magnitude());
+            Assert.Equal(1, vec(1, 0).magnitude());
+            Assert.Equal(2, vec(0, -2).magnitude());
+            Assert.Equal(5, vec(3, 4).magnitude());
+            Assert.Equal(5, vec(4, 3).magnitude());
+            Assert.Equal(5, vec(-4, -3).magnitude());
+        }
+
     }
 }

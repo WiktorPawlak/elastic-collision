@@ -1,3 +1,4 @@
+using System;
 public class Vector
 {
     public double x { get; }
@@ -20,9 +21,10 @@ public class Vector
             return (x == o.x) && (y == o.y);
         }
     }
-    // ╔═════════╗
-    // ║ funkcje ║
-    // ╚═════════╝
+    public double magnitude()
+    {
+        return Math.Sqrt(x * x + y * y);
+    }
 
     public static Vector vec(double x, double y)
     {
