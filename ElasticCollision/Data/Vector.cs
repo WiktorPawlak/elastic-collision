@@ -3,7 +3,7 @@ public class Vector
     public double x { get; }
     public double y { get; }
 
-    public Vector(double X, double Y)
+    private Vector(double X, double Y)
     {
         x = X;
         y = Y;
