@@ -6,7 +6,6 @@ namespace DataTest
 {
     public class VectorTest
     {
-
         [Fact]
         public void TestCreation()
         {

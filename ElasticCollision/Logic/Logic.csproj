@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>ElasticCollision.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>ElasticCollision.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
