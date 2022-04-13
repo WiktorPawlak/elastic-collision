@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace ElasticCollision.Presentation
 {
-    public class ViewModel
+    public class ViewModel : INotifyPropertyChanged
     {
         public ViewModel(Model collisionModel = default)
         {
@@ -10,5 +11,7 @@ namespace ElasticCollision.Presentation
         }
 
         private Model CollisionModel { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
