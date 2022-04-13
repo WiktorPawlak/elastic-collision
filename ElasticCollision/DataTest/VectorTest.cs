@@ -61,6 +61,14 @@ namespace DataTest
             Assert.Equal(5, distance(vec(10, -10), vec(7, -6)));
         }
 
+        [Fact]
+        public void TestScaling()
+        {
+            Assert.Equal(vec(0, 0), vec(53, 531) * 0);
+            Assert.Equal(vec(0, 0), 0 * vec(53, 531));
+            Assert.Equal(vec(-1, 1), -0.5 * vec(2, -2));
+        }
+
 
 
     }

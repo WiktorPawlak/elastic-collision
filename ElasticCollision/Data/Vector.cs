@@ -26,6 +26,9 @@ public class Vector
 
     public static Vector operator -(Vector l, Vector r) => l + (-r);
 
+    public static Vector operator *(Vector v, double f) => vec(v.x * f, v.y * f);
+    public static Vector operator *(double f, Vector v) => v * f;
+
     public static double distance(Vector l, Vector r) => (l - r).magnitude();
 
     public override bool Equals(object obj)
@@ -35,5 +38,5 @@ public class Vector
                y == vector.y;
     }
 
-    public override int GetHashCode() => HashCode.Combine(x, y);
+    //    public override int GetHashCode() => HashCode.Combine(x, y);
 }
