@@ -1,13 +1,12 @@
 using System;
-using Xunit;
 using ElasticCollision.Data;
+using Xunit;
+using static ElasticCollision.Data.Vector;
 
 namespace DataTest
 {
     public class VectorTest
     {
-        public delegate Vector Vec(double x, double y);
-        public readonly Vec vec = Vector.CreateVector;
 
         [Fact]
         public void TestCreation()
