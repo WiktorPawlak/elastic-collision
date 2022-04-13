@@ -1,6 +1,6 @@
 using System;
 /// pair of x, y coordinates, used as vectors, coordinates, deltas of the above
-public class Vector
+public record Vector
 {
     public double x { get; }
     public double y { get; }
@@ -31,12 +31,5 @@ public class Vector
 
     public static double distance(Vector l, Vector r) => (l - r).magnitude();
 
-    public override bool Equals(object obj)
-    {
-        return obj is Vector vector &&
-               x == vector.x &&
-               y == vector.y;
-    }
 
-    //    public override int GetHashCode() => HashCode.Combine(x, y);
 }
