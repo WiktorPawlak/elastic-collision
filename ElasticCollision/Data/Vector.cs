@@ -27,6 +27,14 @@ namespace ElasticCollision.Data
                    Y == vector.Y;
         }
 
+        public override int GetHashCode()
+        {
+            int hashCode = 1861411795;
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            return hashCode;
+        }
+
         public static Vector operator +(Vector l, Vector r)
         {
             var x = l.X + r.X;
