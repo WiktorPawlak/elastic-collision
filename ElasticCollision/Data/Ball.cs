@@ -1,10 +1,11 @@
+using System;
+
 namespace ElasticCollision.Data
 {
-
     public record Ball(
-         double radius,
-         double mass,
-         Vector location,
-         Vector velocity
+         double Radius,
+         double Mass,
+         Vector Location,
+         Vector Velocity
     );
 }

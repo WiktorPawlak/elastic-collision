@@ -10,10 +10,10 @@ namespace DataTest
         public void TestModificationWorksTheWayIThinkItWorks()
         {
             Ball a = new(10, 20, vec(1, 2), vec(3, 4));
-            var b = a with { location = vec(10, 20) };
-            Assert.Equal(vec(1, 2), a.location);
-            Assert.Equal(vec(10, 20), b.location);
-            Assert.Equal(vec(3, 4), b.velocity);
+            var b = a with { Location = vec(10, 20) };
+            Assert.Equal(vec(1, 2), a.Location);
+            Assert.Equal(vec(10, 20), b.Location);
+            Assert.Equal(vec(3, 4), b.Velocity);
 
         }
 

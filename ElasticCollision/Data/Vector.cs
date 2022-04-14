@@ -3,26 +3,26 @@ using System;
 
 namespace ElasticCollision.Data
 {
-    public record class Vector(double x, double y)
+    public record class Vector(double X, double Y)
     {
         public static Vector vec(double x, double y) => new Vector(x, y);
 
-        public double Magnitude() => Math.Sqrt(x * x + y * y);
+        public double Magnitude() => Math.Sqrt(X * X + Y * Y);
 
         public static double Distance(Vector l, Vector r) => (l - r).Magnitude();
 
         public static Vector operator +(Vector l, Vector r)
         {
-            var x = l.x + r.x;
-            var y = l.y + r.y;
+            var x = l.X + r.X;
+            var y = l.Y + r.Y;
             return vec(x, y);
         }
 
-        public static Vector operator -(Vector v) => vec(-v.x, -v.y);
+        public static Vector operator -(Vector v) => vec(-v.X, -v.Y);
 
         public static Vector operator -(Vector l, Vector r) => l + (-r);
 
-        public static Vector operator *(Vector v, double f) => vec(v.x * f, v.y * f);
+        public static Vector operator *(Vector v, double f) => vec(v.X * f, v.Y * f);
 
         public static Vector operator *(double f, Vector v) => v * f;
     }

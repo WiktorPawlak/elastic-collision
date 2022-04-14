@@ -12,19 +12,19 @@ namespace DataTest
         public void TestCreation()
         {
             Vector v1 = vec(0, 0);
-            Assert.Equal(0, v1.x);
-            Assert.Equal(0, v1.y);
+            Assert.Equal(0, v1.X);
+            Assert.Equal(0, v1.Y);
             Vector v2 = vec(5, -9);
-            Assert.Equal(5, v2.x);
-            Assert.Equal(-9, v2.y);
+            Assert.Equal(5, v2.X);
+            Assert.Equal(-9, v2.Y);
         }
 
         [Fact]
         public void TestAddition()
         {
             var a = vec(0, 0) + vec(0, 0);
-            Assert.Equal(0, a.x);
-            Assert.Equal(0, a.y);
+            Assert.Equal(0, a.X);
+            Assert.Equal(0, a.Y);
             var b = vec(5, 5) + vec(5, 5);
             Assert.Equal(vec(10, 10), b);
         }
@@ -58,9 +58,9 @@ namespace DataTest
         [Fact]
         public void TestDistance()
         {
-            Assert.Equal(0, Vector.Distance(vec(0, 0), vec(0, 0)));
-            Assert.Equal(0, Vector.Distance(vec(-1, 1), vec(-1, 1)));
-            Assert.Equal(5, Vector.Distance(vec(10, -10), vec(7, -6)));
+            Assert.Equal(0, Distance(vec(0, 0), vec(0, 0)));
+            Assert.Equal(0, Distance(vec(-1, 1), vec(-1, 1)));
+            Assert.Equal(5, Distance(vec(10, -10), vec(7, -6)));
         }
 
         [Fact]
