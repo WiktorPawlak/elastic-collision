@@ -12,12 +12,12 @@ namespace ElasticCollision.Logic
 
         private class CollisionLogic : LogicAPI
         {
+            private readonly DataAPI _ballData;
+
             public CollisionLogic(DataAPI dataLayerAPI)
             {
-                BallData = dataLayerAPI;
+                _ballData = dataLayerAPI;
             }
-
-            private readonly DataAPI BallData;
         }
     }
 }

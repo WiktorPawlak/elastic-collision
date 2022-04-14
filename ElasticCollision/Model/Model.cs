@@ -1,15 +1,17 @@
 ﻿using ElasticCollision.Logic;
 using System;
+using System.Collections.ObjectModel;
 
 namespace ElasticCollision.Presentation
 {
     public class Model
     {
+        private readonly LogicAPI _collisionLogic = default;
+        private ObservableCollection<object> _balls;
+
         public Model(LogicAPI collisionLogic = null)
         {
-            CollisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
+            _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
         }
-
-        private readonly LogicAPI CollisionLogic = default;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ElasticCollision.ViewModel
+namespace ElasticCollision.Presentation
 {
-    public class RelayCommand : ICommand
+    internal class RelayCommand : ICommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
