@@ -1,9 +1,9 @@
 using System;
-using ElasticCollision.Data;
+using ElasticCollision.Logic;
 using Xunit;
-using static ElasticCollision.Data.Vector;
+using static ElasticCollision.Logic.Vector;
 
-namespace DataTest
+namespace LogicTest
 {
     public class VectorTest
     {

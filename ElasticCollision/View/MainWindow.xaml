@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ElasticCollision.Presentation;assembly=ElasticCollision.ViewModel"
         mc:Ignorable="d"
-        Title="Elastic Collision" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Elastic Collision" Height="450" Width="800" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <vm:ViewModel/>
+        <vm:ViewModel />
     </Window.DataContext>
     <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
@@ -31,13 +32,13 @@
         </DockPanel>
         <Border BorderThickness="4"
                 Grid.Column="1"
-                BorderBrush="Black"
+                BorderBrush="White"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Width="555"
                 Height="400">
             <Canvas Name="BallSpace"
-                Background="White"
+                Background="Black"
                 HorizontalAlignment="Center"
                 Width="545"
                 Height="390"

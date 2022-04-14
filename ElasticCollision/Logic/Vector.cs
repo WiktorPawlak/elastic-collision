@@ -1,7 +1,7 @@
 using System;
 /// pair of x, y coordinates, used as vectors, coordinates, deltas of the above
 
-namespace ElasticCollision.Data
+namespace ElasticCollision.Logic
 {
     public record class Vector(double X, double Y)
     {

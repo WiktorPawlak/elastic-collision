@@ -1,6 +1,6 @@
 using System;
 
-namespace ElasticCollision.Data
+namespace ElasticCollision.Logic
 {
     public record Ball(
          double Radius,

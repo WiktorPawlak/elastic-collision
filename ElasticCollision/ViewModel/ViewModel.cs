@@ -18,6 +18,7 @@ namespace ElasticCollision.Presentation
 
         private void GenerateBall()
         {
+            RaisePropertyChanged(nameof(RadiusBox));
             throw new NotImplementedException();
         }
     }
