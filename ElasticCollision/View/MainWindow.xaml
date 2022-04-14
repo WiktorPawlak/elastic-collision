@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElasticCollision.Presentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Elastic Collision" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid Background="DarkGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="60*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0"
+                   Background="LightGray">
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock Text="Radius" Padding="10" />
+                <TextBox TextAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         TextWrapping="Wrap" Width="60"/>
+            </DockPanel>
+            <Button x:Name="ButtonAddBall"
+                    Content="Add ball"
+                    VerticalAlignment="Top"
+                    Padding="20" />
+        </DockPanel>
+        <Border BorderThickness="4"
+                Grid.Column="1"
+                BorderBrush="Black"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="555"
+                Height="400">
+            <Canvas x:Name="CanvasMain"
+                Background="White"
+                HorizontalAlignment="Center"
+                Width="545"
+                Height="390"
+                Grid.Column="1"  />
+        </Border>
     </Grid>
 </Window>
