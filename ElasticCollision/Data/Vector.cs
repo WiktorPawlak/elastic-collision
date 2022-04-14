@@ -3,47 +3,27 @@ using System;
 
 namespace ElasticCollision.Data
 {
-    public class Vector
+    public record class Vector(double x, double y)
     {
-        public double X { get; private set; }
-        public double Y { get; private set; }
+        public static Vector vec(double x, double y) => new Vector(x, y);
 
-        private Vector(double X, double Y) // use `vec` instead
-        {
-            this.X = X;
-            this.Y = Y;
-        }
-
-        public double Magnitude() => Math.Sqrt(X * X + Y * Y);
+        public double Magnitude() => Math.Sqrt(x * x + y * y);
 
         public static double Distance(Vector l, Vector r) => (l - r).Magnitude();
 
-        public static Vector CreateVector(double x, double y) => new Vector(x, y);
-
-        public override bool Equals(object obj)
-        {
-            return obj is Vector vector &&
-                   X == vector.X &&
-                   Y == vector.Y;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = 1861411795;
-            hashCode = hashCode * -1521134295 + X.GetHashCode();
-            hashCode = hashCode * -1521134295 + Y.GetHashCode();
-            return hashCode;
-        }
-
         public static Vector operator +(Vector l, Vector r)
         {
-            var x = l.X + r.X;
-            var y = l.Y + r.Y;
-            return CreateVector(x, y);
+            var x = l.x + r.x;
+            var y = l.y + r.y;
+            return vec(x, y);
         }
-        public static Vector operator -(Vector v) => CreateVector(-v.X, -v.Y);
+
+        public static Vector operator -(Vector v) => vec(-v.x, -v.y);
+
         public static Vector operator -(Vector l, Vector r) => l + (-r);
-        public static Vector operator *(Vector v, double f) => CreateVector(v.X * f, v.Y * f);
+
+        public static Vector operator *(Vector v, double f) => vec(v.x * f, v.y * f);
+
         public static Vector operator *(double f, Vector v) => v * f;
     }
 }

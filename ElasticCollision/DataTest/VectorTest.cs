@@ -1,31 +1,30 @@
 using System;
-using Xunit;
 using ElasticCollision.Data;
+using Xunit;
+using static ElasticCollision.Data.Vector;
 
 namespace DataTest
 {
     public class VectorTest
     {
-        public delegate Vector Vec(double x, double y);
-        public readonly Vec vec = Vector.CreateVector;
 
         [Fact]
         public void TestCreation()
         {
             Vector v1 = vec(0, 0);
-            Assert.Equal(0, v1.X);
-            Assert.Equal(0, v1.Y);
+            Assert.Equal(0, v1.x);
+            Assert.Equal(0, v1.y);
             Vector v2 = vec(5, -9);
-            Assert.Equal(5, v2.X);
-            Assert.Equal(-9, v2.Y);
+            Assert.Equal(5, v2.x);
+            Assert.Equal(-9, v2.y);
         }
 
         [Fact]
         public void TestAddition()
         {
             var a = vec(0, 0) + vec(0, 0);
-            Assert.Equal(0, a.X);
-            Assert.Equal(0, a.Y);
+            Assert.Equal(0, a.x);
+            Assert.Equal(0, a.y);
             var b = vec(5, 5) + vec(5, 5);
             Assert.Equal(vec(10, 10), b);
         }
