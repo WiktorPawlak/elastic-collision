@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ElasticCollision.Presentation"
+        xmlns:vm="clr-namespace:ElasticCollision.Presentation;assembly=ElasticCollision.ViewModel"
         mc:Ignorable="d"
         Title="Elastic Collision" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
     <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*" />
@@ -15,11 +18,13 @@
                    Background="LightGray">
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock Text="Radius" Padding="10" />
-                <TextBox TextAlignment="Center"
+                <TextBox Name="RadiusBox"
+                         Text="{Binding RadiusBox}"
+                         TextAlignment="Center"
                          VerticalContentAlignment="Center"
                          TextWrapping="Wrap" Width="60"/>
             </DockPanel>
-            <Button x:Name="ButtonAddBall"
+            <Button Name="AddBallButton"
                     Content="Add ball"
                     VerticalAlignment="Top"
                     Padding="20" />
@@ -31,7 +36,7 @@
                 VerticalAlignment="Center"
                 Width="555"
                 Height="400">
-            <Canvas x:Name="CanvasMain"
+            <Canvas Name="BallSpace"
                 Background="White"
                 HorizontalAlignment="Center"
                 Width="545"

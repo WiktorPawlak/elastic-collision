@@ -1,16 +1,18 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace ElasticCollision.Presentation
 {
     public class ViewModel : ViewModelBase
     {
+        private Model _collisionModel { get; set; }
+        public int RadiusBox { get; set; } = 10;
         public ICommand AddBallCommand { get; set; }
 
-        public ViewModel(Model collisionModel = default) : base(collisionModel)
+        public ViewModel() => _collisionModel = default;
+        public ViewModel(Model collisionModel = default)
         {
+            _collisionModel = collisionModel ?? new Model();
             AddBallCommand = new RelayCommand(() => GenerateBall());
         }
 
