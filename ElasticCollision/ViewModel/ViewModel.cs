@@ -1,17 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace ElasticCollision.Presentation
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class ViewModel : ViewModelBase
     {
-        public ViewModel(Model collisionModel = default)
+        public ICommand AddBallCommand { get; set; }
+
+        public ViewModel(Model collisionModel = default) : base(collisionModel)
         {
-            CollisionModel = collisionModel ?? new Model();
+            AddBallCommand = new RelayCommand(() => GenerateBall());
         }
 
-        private Model CollisionModel { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private void GenerateBall()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
