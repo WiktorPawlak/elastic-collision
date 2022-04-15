@@ -1,49 +1,45 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
 
 namespace ElasticCollision.Logic
 {
     public abstract class LogicAPI
     {
-        private Random _randomNumPool = new Random();
 
-        public abstract Ball CreateBall(double radius, double mass, Vector loc, Vector velocity);
-        public abstract Vector GetRandomLocation(int width, int height);
+        public abstract WorldState GetState();
+
+        // WorldWatcher dostaje nowy stan świata w każdej klatce
+        public delegate void WorldWatcher(WorldState state);
+        public abstract void AddWatcher(WorldWatcher del);
+
+        public abstract void StartSimulation();
+        public abstract void StopSimulation();
+        // może jeszcze jakieś kontrolki do FPS świata,
+        // bo ΔT będzie raczej zakodowana na sztywno
+        public abstract void CreateBall(Ball newOne);
+        public abstract void addBallse(int count);
+        // we ball, i tak musielibyśmy korzystać z `Vector`
+        // ewentualnie dać tutaj (x, y, ɸ)
         public static LogicAPI CreateCollisionLogic(DataAPI data = default)
         {
-            return new CollisionLogic(data == null ? DataAPI.CreateBallData() : data);
+            return new CollisionLogic(data ?? DataAPI.CreateBallData());
         }
 
-        private class CollisionLogic : LogicAPI
+        private class CollisionLogic(DataAPI dataLayerAPI)
         {
-            private readonly DataAPI _ballData;
+        private Random _randomNumPool = new Random();
+        private readonly DataAPI _ballData;
+        public CollisionLogic(DataAPI dataLayerAPI)
+        {
+            _ballData = dataLayerAPI;
+        }
 
-            public CollisionLogic(DataAPI dataLayerAPI)
-            {
-                _ballData = dataLayerAPI;
-            }
-
-            public override Ball CreateBall(double radius, double mass, Vector loc, Vector velocity)
-            {
-                return new(radius, mass, loc, velocity);
-                //if (this._collisionSolver.IsPositionOccupied(ball))
-                //{
-                //    throw new ArgumentException("Position is already ocupied.");
-                //}
-            }
-
-            public override Vector GetRandomLocation(int width, int height)
-            {
-                Vector loc = new Vector(
-                    _randomNumPool.Next(0, width),
-                    _randomNumPool.Next(0, height)
-                    );
-                return loc;
-            }
-
-
+        private Vector GetRandomLocation(int width, int height)
+        {
+            Vector loc = new Vector(
+                _randomNumPool.Next(0, width),
+                _randomNumPool.Next(0, height)
+                );
+            return loc;
         }
     }
 }
