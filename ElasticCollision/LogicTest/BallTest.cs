@@ -41,6 +41,19 @@ namespace LogicTest
             Assert.False(b.Within(ar1));
             Assert.False(d.Within(ar1));
         }
+        [Fact]
+        public void TestMovement()
+        {
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(0, 0), vec(1, 0));
+            Ball c = new(5, 0, vec(5, 0), vec(0, 5));
+            Assert.Equal(a.Budge(0).Location, vec(0, 0));
+            Assert.Equal(a.Budge(20).Location, vec(0, 0));
+            Assert.Equal(b.Budge(0).Location, vec(0, 0));
+            Assert.Equal(b.Budge(1).Location, vec(1, 0));
+            Assert.Equal(b.Budge(10).Location, vec(10, 0));
+            Assert.Equal(c.Budge(10).Location, vec(5, 50));
+        }
 
     }
 }
