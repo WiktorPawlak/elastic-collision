@@ -1,5 +1,5 @@
 using System;
-using static ElasticCollision.Logic.Vector
+using static ElasticCollision.Logic.Vector;
 namespace ElasticCollision.Logic
 {
     public record Ball(

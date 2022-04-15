@@ -21,8 +21,8 @@ namespace ElasticCollision.Presentation
             //rand loc & validate; if false next rand loc
             //const speed
             //mass??
-            Vector location = _collisionLogic.GetRandomLocation(Width, Height);
-            return _collisionLogic.CreateBall(Radius, 10, location, Velocity);
+            //Vector location = _collisionLogic.GetRandomLocation(Width, Height);
+            //return _collisionLogic.CreateBall(Radius, 10, location, Velocity);
             //TODO::Random location&predefined speed
         }
     }

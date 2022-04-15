@@ -24,22 +24,53 @@ namespace ElasticCollision.Logic
             return new CollisionLogic(data ?? DataAPI.CreateBallData());
         }
 
-        private class CollisionLogic(DataAPI dataLayerAPI)
+        private class CollisionLogic : LogicAPI
         {
-        private Random _randomNumPool = new Random();
-        private readonly DataAPI _ballData;
-        public CollisionLogic(DataAPI dataLayerAPI)
-        {
-            _ballData = dataLayerAPI;
-        }
+            private Random _randomNumPool = new Random();
+            private readonly DataAPI _ballData;
+            public CollisionLogic(DataAPI dataLayerAPI)
+            {
+                _ballData = dataLayerAPI;
+            }
 
-        private Vector GetRandomLocation(int width, int height)
-        {
-            Vector loc = new Vector(
-                _randomNumPool.Next(0, width),
-                _randomNumPool.Next(0, height)
-                );
-            return loc;
+            private Vector GetRandomLocation(int width, int height)
+            {
+                Vector loc = new Vector(
+                    _randomNumPool.Next(0, width),
+                    _randomNumPool.Next(0, height)
+                    );
+                return loc;
+            }
+
+            public override WorldState GetState()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void AddWatcher(WorldWatcher del)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void StartSimulation()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void StopSimulation()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void CreateBall(Ball newOne)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void addBallse(int count)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
