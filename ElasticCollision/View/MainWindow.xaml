@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ElasticCollision.Presentation;assembly=ElasticCollision.ViewModel"
         mc:Ignorable="d"
-        Title="Elastic Collision" Height="450" Width="800" ResizeMode="NoResize"
+        Title="Elastic Collision" Height="600" Width="800" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:ViewModel />
@@ -18,56 +18,52 @@
         <DockPanel Grid.Column="0"
                    Background="LightGray">
             <DockPanel DockPanel.Dock="Top">
-                <TextBlock Text="Radius" Padding="10" />
-                <TextBox Name="RadiusBox"
-                         Text="{Binding RadiusBox}"
+                <TextBlock Text="Number of balls" Padding="10" />
+                <TextBox Name="BallsCount"
+                         Text="{Binding BallsCount}"
                          TextAlignment="Center"
                          VerticalContentAlignment="Center"
                          TextWrapping="Wrap" Width="60"/>
             </DockPanel>
-            <Button Name="AddBallButton"
-                    Content="Add ball"
+            <Button Name="AddBallsButton"
+                    Content="Add balls"
                     VerticalAlignment="Top"
                     Padding="20" 
-                    Command="{Binding AddBallCommand}"/>
+                    Command="{Binding AddBallsCommand}"/>
         </DockPanel>
         <Border BorderThickness="4"
                 Grid.Column="1"
                 BorderBrush="White"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Width="555"
-                Height="400">
-            <Canvas Name="BallSpace"
-                    Background="Black"
-                    HorizontalAlignment="Center"
-                    Width="545"
-                    Height="390"
-                    Grid.Column="1">
-                <Ellipse Name="Elipse1"
-                         Width= "57"
-                         Height="50"
-                         Fill="Blue"
-                         Canvas.Left="0"
-                         Canvas.Top="0">
-                    <Ellipse.Triggers>
-                        <EventTrigger RoutedEvent="Ellipse.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                Storyboard.TargetName="Elipse1"
-                                Storyboard.TargetProperty="Height"
-                                From="10.0"
-                                To="250.0"
-                                Duration="0:0:5"
-                                AutoReverse="True"
-                                RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Ellipse.Triggers>
-                </Ellipse>
-            </Canvas>
+                Width="508"
+                Height="508">
+            <ItemsControl ItemsSource="{Binding Balls}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Name="BallSpace"
+                                Background="Black"
+                                Width="500"
+                                Height="500"
+                                Grid.Column="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Path Fill="Tomato">
+                            <Path.Data>
+                                <EllipseGeometry RadiusX="{Binding Radius}" RadiusY="{Binding Radius}" />
+                            </Path.Data>
+                        </Path>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Border>
     </Grid>
 </Window>

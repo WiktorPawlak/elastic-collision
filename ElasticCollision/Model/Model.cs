@@ -6,18 +6,24 @@ namespace ElasticCollision.Presentation
     public class Model
     {
         private readonly LogicAPI _collisionLogic = default;
+        public readonly int Radius = 15;
+        public readonly int Width = 550;
+        public readonly int Height = 400;
+        public Vector Velocity = Vector.vec(5, 5);
 
         public Model(LogicAPI collisionLogic = null)
         {
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
         }
 
-        public void AddBall(int radius)
+        public Ball GiveBall()
         {
             //rand loc & validate; if false next rand loc
             //const speed
             //mass??
-            _collisionLogic.CreateBall(radius, 10, Vector.vec(50, 50), Vector.vec(10, 10)); //TODO::Random location&predefined speed
+            Vector location = _collisionLogic.GetRandomLocation(Width, Height);
+            return _collisionLogic.CreateBall(Radius, 10, location, Velocity);
+            //TODO::Random location&predefined speed
         }
     }
 }
