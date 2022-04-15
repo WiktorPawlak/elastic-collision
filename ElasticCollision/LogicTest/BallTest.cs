@@ -20,11 +20,15 @@ namespace LogicTest
         [Fact]
         public void TestBallsTouching()
         {
-            Ball a = new(10, 20, vec(1, 2), vec(3, 4));
-            Ball b = new(10, 20, vec(1, 2), vec(3, 4));
-
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball d = new(15, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(9, 1), vec(0, 0));
+            Ball c = new(5, 0, vec(18, 0), vec(0, 0));
+            Assert.True(a.Touching(d));
+            Assert.True(a.Touching(b));
+            Assert.True(b.Touching(c));
+            Assert.False(a.Touching(c));
+            Assert.True(d.Touching(c));
         }
-
-
     }
 }
