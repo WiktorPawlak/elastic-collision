@@ -26,5 +26,14 @@ namespace ElasticCollision.Logic
             return area.Shrink(Radius).Contains(Location);
         }
 
+        public Ball Collide(Area area)
+        {
+            var shrunk = area.Shrink(Radius);
+            var X = shrunk.ContainsHorizontally(Location) ? Velocity.X : -Velocity.X;
+            var Y = shrunk.ContainsVertically(Location) ? Velocity.Y : -Velocity.Y;
+            return this with { Velocity = vec(X, Y) };
+            // lokalizacji nie "naprawiamy", w nadzieji, że Δt będzie na tyle mały
+            // że to nie będzie miało znaczenia
+        }
     };
 }

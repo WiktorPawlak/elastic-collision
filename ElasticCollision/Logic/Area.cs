@@ -14,11 +14,17 @@ namespace ElasticCollision.Logic
         }
         public bool Contains(Vector loc)
         {
-            return UpperLeftCorner.X <= loc.X &&
-                loc.X <= LowerRightCorner.X &&
-                UpperLeftCorner.Y <= loc.Y &&
+            return ContainsVertically(loc) && ContainsHorizontally(loc);
+        }
+        public bool ContainsVertically(Vector loc)
+        {
+            return UpperLeftCorner.Y <= loc.Y &&
                 loc.Y <= LowerRightCorner.Y;
         }
+        public bool ContainsHorizontally(Vector loc)
+        {
+            return UpperLeftCorner.X <= loc.X &&
+            loc.X <= LowerRightCorner.X;
+        }
     }
-
 }
