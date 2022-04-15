@@ -1,6 +1,5 @@
 ﻿using ElasticCollision.Logic;
 using System;
-using System.Collections.Specialized;
 
 namespace ElasticCollision.Presentation
 {
@@ -11,31 +10,14 @@ namespace ElasticCollision.Presentation
         public Model(LogicAPI collisionLogic = null)
         {
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
-            _collisionLogic.CollectionChangedHandler += CollectionChangedHandler;
         }
-        private void CollectionChangedHandler(object sender,
-                          NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+
+        public void AddBall(int radius)
         {
-            //foreach (PhysicalBall changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<PhysicalBall>())
-            //{
-            //    switch (notifyCollectionChangedEventArgs.Action)
-            //    {
-            //        case NotifyCollectionChangedAction.Add:
-            //            this.CanvasMain.Children.Add(changedObject.WpfShape);
-            //            break;
-            //        case NotifyCollectionChangedAction.Remove:
-            //            this.CanvasMain.Children.Remove(changedObject.WpfShape);
-            //            break;
-            //        case NotifyCollectionChangedAction.Replace:
-            //            break;
-            //        case NotifyCollectionChangedAction.Move:
-            //            break;
-            //        case NotifyCollectionChangedAction.Reset:
-            //            break;
-            //        default:
-            //            throw new ArgumentOutOfRangeException();
-            //    }
-            //}
+            //rand loc & validate; if false next rand loc
+            //const speed
+            //mass??
+            _collisionLogic.CreateBall(radius, 10, Vector.vec(50, 50), Vector.vec(10, 10)); //TODO::Random location&predefined speed
         }
     }
 }

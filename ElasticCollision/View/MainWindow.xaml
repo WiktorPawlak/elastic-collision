@@ -28,7 +28,8 @@
             <Button Name="AddBallButton"
                     Content="Add ball"
                     VerticalAlignment="Top"
-                    Padding="20" />
+                    Padding="20" 
+                    Command="{Binding AddBallCommand}"/>
         </DockPanel>
         <Border BorderThickness="4"
                 Grid.Column="1"
@@ -38,11 +39,35 @@
                 Width="555"
                 Height="400">
             <Canvas Name="BallSpace"
-                Background="Black"
-                HorizontalAlignment="Center"
-                Width="545"
-                Height="390"
-                Grid.Column="1"  />
+                    Background="Black"
+                    HorizontalAlignment="Center"
+                    Width="545"
+                    Height="390"
+                    Grid.Column="1">
+                <Ellipse Name="Elipse1"
+                         Width= "57"
+                         Height="50"
+                         Fill="Blue"
+                         Canvas.Left="0"
+                         Canvas.Top="0">
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Ellipse.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                Storyboard.TargetName="Elipse1"
+                                Storyboard.TargetProperty="Height"
+                                From="10.0"
+                                To="250.0"
+                                Duration="0:0:5"
+                                AutoReverse="True"
+                                RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+            </Canvas>
         </Border>
     </Grid>
 </Window>
