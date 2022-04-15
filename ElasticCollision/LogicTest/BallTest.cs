@@ -17,6 +17,14 @@ namespace LogicTest
             Assert.Equal(vec(3, 4), b.Velocity);
 
         }
+        [Fact]
+        public void TestBallsTouching()
+        {
+            Ball a = new(10, 20, vec(1, 2), vec(3, 4));
+            Ball b = new(10, 20, vec(1, 2), vec(3, 4));
+
+        }
+
 
     }
 }
