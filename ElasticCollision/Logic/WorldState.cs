@@ -4,5 +4,6 @@ namespace ElasticCollision.Logic
 {
     public record WorldState(
          ImmutableList<Ball> Balls,
+         Area area
     );
 }

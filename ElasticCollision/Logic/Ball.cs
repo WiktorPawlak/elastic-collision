@@ -15,5 +15,16 @@ namespace ElasticCollision.Logic
             double reach = Radius + other.Radius;
             return distance <= reach;
         }
+        public Ball Budge(double Δt)
+        {
+            // (っ◔◡◔)っ ♥ thesaurus ♥
+            return this with { Location = Location + (Velocity * Δt) };
+        }
+
+        public bool Within(Area area)
+        {
+            return area.Shrink(Radius).Contains(Location);
+        }
+
     };
 }

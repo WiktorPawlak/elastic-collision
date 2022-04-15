@@ -30,5 +30,17 @@ namespace LogicTest
             Assert.False(a.Touching(c));
             Assert.True(d.Touching(c));
         }
+        [Fact]
+        public void TestBallingArea()
+        {
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(20, 20), vec(0, 0));
+            Ball d = new(15, 0, vec(0, 0), vec(0, 0));
+            Area ar1 = new(vec(-10, -10), vec(10, 10));
+            Assert.True(a.Within(ar1));
+            Assert.False(b.Within(ar1));
+            Assert.False(d.Within(ar1));
+        }
+
     }
 }
