@@ -16,14 +16,10 @@ namespace ElasticCollision.Presentation
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
         }
 
-        public Ball GiveBall()
+        public BallModel GiveBall()
         {
-            //rand loc & validate; if false next rand loc
-            //const speed
-            //mass??
-            //Vector location = _collisionLogic.GetRandomLocation(Width, Height);
-            //return _collisionLogic.CreateBall(Radius, 10, location, Velocity);
-            //TODO::Random location&predefined speed
+            //Ball ball = _collisionLogic.
+            throw new NotImplementedException();
         }
     }
 }

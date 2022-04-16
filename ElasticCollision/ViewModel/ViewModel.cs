@@ -32,34 +32,35 @@ namespace ElasticCollision.Presentation
         {
             for (var i = 0; i < BallsCount; i++)
             {
-                Balls.Add((BallModel)_collisionModel.GiveBall());
+                Balls.Add(_collisionModel.GiveBall());
             }
         }
 
         private void CollectionChangedHandler(object sender,
                 NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            foreach (BallModel changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<BallModel>())
-            {
-                switch (notifyCollectionChangedEventArgs.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        RaisePropertyChanged(nameof(Balls));
-                        //this.CanvasMain.Children.Add(changedObject.WpfShape);
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        //this.CanvasMain.Children.Remove(changedObject.WpfShape);
-                        break;
-                    case NotifyCollectionChangedAction.Replace:
-                        break;
-                    case NotifyCollectionChangedAction.Move:
-                        break;
-                    case NotifyCollectionChangedAction.Reset:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
+            throw new ArgumentOutOfRangeException();
+            //foreach (BallModel changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<BallModel>())
+            //{
+            //    switch (notifyCollectionChangedEventArgs.Action)
+            //    {
+            //        case NotifyCollectionChangedAction.Add:
+            //            RaisePropertyChanged(nameof(Balls));
+            //            //this.CanvasMain.Children.Add(changedObject.WpfShape);
+            //            break;
+            //        case NotifyCollectionChangedAction.Remove:
+            //            //this.CanvasMain.Children.Remove(changedObject.WpfShape);
+            //            break;
+            //        case NotifyCollectionChangedAction.Replace:
+            //            break;
+            //        case NotifyCollectionChangedAction.Move:
+            //            break;
+            //        case NotifyCollectionChangedAction.Reset:
+            //            break;
+            //        default:
+            //            throw new ArgumentOutOfRangeException();
+            //    }
+            //}
         }
     }
 }

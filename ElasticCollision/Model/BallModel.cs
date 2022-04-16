@@ -25,14 +25,5 @@ namespace ElasticCollision.Presentation
         {
             _ball = ball;
         }
-        //public BallModel(double Radius, double Mass, Vector Location, Vector Velocity) : base(Radius, Mass, Location, Velocity)
-        //{
-        //}
-
-        //public BallModel(Ball original) : base(original)
-        //{
-        //}
-
-
     }
 }
