@@ -77,10 +77,7 @@ namespace ElasticCollision.Logic
 
             private void notifyObservers()
             {
-                foreach (WorldWatcher watcher in watchers)
-                {
-                    watcher.Invoke(state);
-                }
+                watchers.ForEach(x => x.Invoke(state));
             }
 
             public void updateLoop()
