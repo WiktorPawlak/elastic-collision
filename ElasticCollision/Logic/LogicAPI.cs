@@ -26,21 +26,12 @@ namespace ElasticCollision.Logic
 
         private class CollisionLogic : LogicAPI
         {
-            private Random _randomNumPool = new Random();
             private readonly DataAPI _ballData;
             public CollisionLogic(DataAPI dataLayerAPI)
             {
                 _ballData = dataLayerAPI;
             }
 
-            private Vector GetRandomLocation(int width, int height)
-            {
-                Vector loc = new Vector(
-                    _randomNumPool.Next(0, width),
-                    _randomNumPool.Next(0, height)
-                    );
-                return loc;
-            }
 
             public override WorldState GetState()
             {

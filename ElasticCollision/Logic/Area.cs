@@ -1,4 +1,6 @@
 using System;
+using ExtensionMethods;
+
 using static ElasticCollision.Logic.Vector;
 namespace ElasticCollision.Logic
 {
@@ -25,6 +27,13 @@ namespace ElasticCollision.Logic
         {
             return UpperLeftCorner.X <= loc.X &&
             loc.X <= LowerRightCorner.X;
+        }
+        public Vector GetRandomLocation()
+        {
+            var rng = new Random();
+            double x = rng.NextDoubleInRange(UpperLeftCorner.X, LowerRightCorner.X);
+            double y = rng.NextDoubleInRange(LowerRightCorner.Y, UpperLeftCorner.Y);
+            return vec(x, y);
         }
     }
 }
