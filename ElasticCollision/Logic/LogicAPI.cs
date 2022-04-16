@@ -16,7 +16,7 @@ namespace ElasticCollision.Logic
         // może jeszcze jakieś kontrolki do FPS świata,
         // bo ΔT będzie raczej zakodowana na sztywno
         public abstract void CreateBall(Ball newOne);
-        public abstract void addBallse(int count);
+        public abstract void addBalls(int count, double radius, double mass);
         // we ball, i tak musielibyśmy korzystać z `Vector`
         // ewentualnie dać tutaj (x, y, ɸ)
         public static LogicAPI CreateCollisionLogic(DataAPI data = default)
@@ -58,7 +58,7 @@ namespace ElasticCollision.Logic
                 throw new NotImplementedException();
             }
 
-            public override void addBallse(int count)
+            public override void addBalls(int count, double radius, double mass)
             {
                 throw new NotImplementedException();
             }
