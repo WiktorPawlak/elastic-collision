@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using static ElasticCollision.Logic.Vector;
 
 namespace ElasticCollision.Logic
@@ -31,6 +34,7 @@ namespace ElasticCollision.Logic
             private WorldState state;
             private bool running;
             private List<WorldWatcher> watchers;
+            private Task updater;
 
             private readonly DataAPI _useless;
             public CollisionLogic(DataAPI dataLayerAPI)
@@ -53,17 +57,39 @@ namespace ElasticCollision.Logic
                 if (!running)
                 {
                     running = true;
-                    throw new NotImplementedException();
-                    // jeszcze nie wiem jak zrobić wątek
+                    updater = Task.Run(updateLoop);
                 }
             }
 
-            public override void StopSimulation()
+            public override async void StopSimulation()
             {
                 if (running)
                 {
                     running = false;
-                    // tutaj jeszcze będziemy czekać aż wątek skończy działać i dopiero wrócimy
+                    await updater;
+                }
+            }
+
+            public void nextTick()
+            {
+                state = state.Proceed(0.01);
+            }
+
+            private void notifyObservers()
+            {
+                foreach (WorldWatcher watcher in watchers)
+                {
+                    watcher.Invoke(state);
+                }
+            }
+
+            public void updateLoop()
+            {
+                while (running)
+                {
+                    Thread.Sleep(10);
+                    nextTick();
+                    notifyObservers();
                 }
             }
 
@@ -93,6 +119,7 @@ namespace ElasticCollision.Logic
                     }
                 }
             }
+
         }
     }
 }
