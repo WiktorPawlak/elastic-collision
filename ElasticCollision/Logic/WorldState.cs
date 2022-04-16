@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq; // my beloved
 namespace ElasticCollision.Logic
 {
     public record WorldState(
@@ -7,7 +7,7 @@ namespace ElasticCollision.Logic
          Area area
     )
     {
-        public WorldState Move(double Δt)
+        public WorldState Proceed(double Δt)
         {
             var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(area));
             // tutaj będzie kod zderzający piłeczki
@@ -17,5 +17,6 @@ namespace ElasticCollision.Logic
             // te drugie zderzyć i dodać obie grupy
             return this with { Balls = newBalls };
         }
+
     }
 }
