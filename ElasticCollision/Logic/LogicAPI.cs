@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using static ElasticCollision.Logic.Vector;
 
 namespace ElasticCollision.Logic
 {
     public abstract class LogicAPI
     {
 
-        public abstract WorldState GetState();
+        public abstract WorldState GetCurrentState();
 
         // WorldWatcher dostaje nowy stan świata w każdej klatce
         public delegate void WorldWatcher(WorldState state);
@@ -26,41 +28,70 @@ namespace ElasticCollision.Logic
 
         private class CollisionLogic : LogicAPI
         {
-            private readonly DataAPI _ballData;
+            private WorldState state;
+            private bool running;
+            private List<WorldWatcher> watchers;
+
+            private readonly DataAPI _useless;
             public CollisionLogic(DataAPI dataLayerAPI)
             {
-                _ballData = dataLayerAPI;
+                _useless = dataLayerAPI;
+                running = false;
+                watchers = new List<WorldWatcher>();
+                state = new(new List<Ball>(), new Area(vec(0, 0), vec(1000, 1000)));
             }
 
-
-            public override WorldState GetState()
-            {
-                throw new NotImplementedException();
-            }
+            public override WorldState GetCurrentState() => state;
 
             public override void AddWatcher(WorldWatcher del)
             {
-                throw new NotImplementedException();
+                watchers.Add(del);
             }
 
             public override void StartSimulation()
             {
-                throw new NotImplementedException();
+                if (!running)
+                {
+                    running = true;
+                    throw new NotImplementedException();
+                    // jeszcze nie wiem jak zrobić wątek
+                }
             }
 
             public override void StopSimulation()
             {
-                throw new NotImplementedException();
+                if (running)
+                {
+                    running = false;
+                    // tutaj jeszcze będziemy czekać aż wątek skończy działać i dopiero wrócimy
+                }
             }
 
             public override void CreateBall(Ball newOne)
             {
-                throw new NotImplementedException();
+                if (running)
+                {
+                    throw new Exception("nie teraz");
+                }
+                else
+                {
+                    state = state.AddBall(newOne);
+                }
             }
 
             public override void addBalls(int count, double radius, double mass)
             {
-                throw new NotImplementedException();
+                if (running)
+                {
+                    throw new Exception("nie teraz");
+                }
+                else
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        state = state.AddBall(radius, mass);
+                    }
+                }
             }
         }
     }
