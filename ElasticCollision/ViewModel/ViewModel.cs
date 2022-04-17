@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace ElasticCollision.Presentation
@@ -21,8 +22,8 @@ namespace ElasticCollision.Presentation
         public ViewModel(Model collisionModel = default)
         {
             _collisionModel = collisionModel ?? new Model();
-            Balls = new ObservableCollection<BallModel>();
-            Balls.CollectionChanged += CollectionChangedHandler;
+            //Balls = new ObservableCollection<BallModel>();
+            //Balls.CollectionChanged += CollectionChangedHandler;
             AddBallsCommand = new RelayCommand(() => RequestBall());
             Width = _collisionModel.Width;
             Height = _collisionModel.Height;
@@ -30,37 +31,35 @@ namespace ElasticCollision.Presentation
 
         private void RequestBall()
         {
-            for (var i = 0; i < BallsCount; i++)
-            {
-                Balls.Add(_collisionModel.GiveBall());
-            }
+            Balls = new ObservableCollection<BallModel>(_collisionModel.GiveBalls(BallsCount));
+            //Balls.Refresh();
         }
 
-        private void CollectionChangedHandler(object sender,
-                NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            throw new ArgumentOutOfRangeException();
-            //foreach (BallModel changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<BallModel>())
-            //{
-            //    switch (notifyCollectionChangedEventArgs.Action)
-            //    {
-            //        case NotifyCollectionChangedAction.Add:
-            //            RaisePropertyChanged(nameof(Balls));
-            //            //this.CanvasMain.Children.Add(changedObject.WpfShape);
-            //            break;
-            //        case NotifyCollectionChangedAction.Remove:
-            //            //this.CanvasMain.Children.Remove(changedObject.WpfShape);
-            //            break;
-            //        case NotifyCollectionChangedAction.Replace:
-            //            break;
-            //        case NotifyCollectionChangedAction.Move:
-            //            break;
-            //        case NotifyCollectionChangedAction.Reset:
-            //            break;
-            //        default:
-            //            throw new ArgumentOutOfRangeException();
-            //    }
-            //}
-        }
+        //private void CollectionChangedHandler(object sender,
+        //        NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        //{
+        //    throw new ArgumentOutOfRangeException();
+        //    //foreach (BallModel changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<BallModel>())
+        //    //{
+        //    //    switch (notifyCollectionChangedEventArgs.Action)
+        //    //    {
+        //    //        case NotifyCollectionChangedAction.Add:
+        //    //            RaisePropertyChanged(nameof(Balls));
+        //    //            //this.CanvasMain.Children.Add(changedObject.WpfShape);
+        //    //            break;
+        //    //        case NotifyCollectionChangedAction.Remove:
+        //    //            //this.CanvasMain.Children.Remove(changedObject.WpfShape);
+        //    //            break;
+        //    //        case NotifyCollectionChangedAction.Replace:
+        //    //            break;
+        //    //        case NotifyCollectionChangedAction.Move:
+        //    //            break;
+        //    //        case NotifyCollectionChangedAction.Reset:
+        //    //            break;
+        //    //        default:
+        //    //            throw new ArgumentOutOfRangeException();
+        //    //    }
+        //    //}
+        //}
     }
 }

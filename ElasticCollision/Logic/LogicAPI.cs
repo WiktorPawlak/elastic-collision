@@ -21,7 +21,7 @@ namespace ElasticCollision.Logic
         // może jeszcze jakieś kontrolki do FPS świata,
         // bo ΔT będzie raczej zakodowana na sztywno
         public abstract void CreateBall(Ball newOne);
-        public abstract void addBalls(int count, double radius, double mass);
+        public abstract void AddBalls(int count, double radius, double mass);
         // we ball, i tak musielibyśmy korzystać z `Vector`
         // ewentualnie dać tutaj (x, y, ɸ)
         public static LogicAPI CreateCollisionLogic(DataAPI data = default)
@@ -42,7 +42,7 @@ namespace ElasticCollision.Logic
                 _useless = dataLayerAPI;
                 running = false;
                 watchers = new List<WorldWatcher>();
-                state = new(new List<Ball>(), new Area(vec(0, 0), vec(1000, 1000)));
+                state = new(new List<Ball>(), new Area(vec(0, 0), vec(500, 500)));
             }
 
             public override WorldState GetCurrentState() => state;
@@ -102,7 +102,7 @@ namespace ElasticCollision.Logic
                 }
             }
 
-            public override void addBalls(int count, double radius, double mass)
+            public override void AddBalls(int count, double radius, double mass)
             {
                 if (running)
                 {
@@ -114,9 +114,9 @@ namespace ElasticCollision.Logic
                     {
                         state = state.AddBall(radius, mass);
                     }
+                    notifyObservers();
                 }
             }
-
         }
     }
 }
