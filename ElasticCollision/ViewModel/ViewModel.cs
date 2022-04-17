@@ -1,8 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace ElasticCollision.Presentation
@@ -25,42 +23,24 @@ namespace ElasticCollision.Presentation
             //Balls = new ObservableCollection<BallModel>();
             //Balls.CollectionChanged += CollectionChangedHandler;
             AddBallsCommand = new RelayCommand(() => RequestBall());
+            Balls = new ObservableCollection<BallModel>();
+            CollisionModel.AddFrameUpdater(Framer);
             Width = CollisionModel.Width;
             Height = CollisionModel.Height;
         }
 
         private void RequestBall()
         {
-            Balls = new ObservableCollection<BallModel>(CollisionModel.GiveBalls(BallsCount));
-            RaisePropertyChanged(nameof(Balls));
-            //Balls.Refresh();
+            foreach (var ball in CollisionModel.GiveBalls(BallsCount))
+            {
+                Balls.Add(ball);
+            }
         }
 
-        //private void CollectionChangedHandler(object sender,
-        //        NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        //{
-        //    throw new ArgumentOutOfRangeException();
-        //    //foreach (BallModel changedObject in notifyCollectionChangedEventArgs.NewItems.Cast<BallModel>())
-        //    //{
-        //    //    switch (notifyCollectionChangedEventArgs.Action)
-        //    //    {
-        //    //        case NotifyCollectionChangedAction.Add:
-        //    //            RaisePropertyChanged(nameof(Balls));
-        //    //            //this.CanvasMain.Children.Add(changedObject.WpfShape);
-        //    //            break;
-        //    //        case NotifyCollectionChangedAction.Remove:
-        //    //            //this.CanvasMain.Children.Remove(changedObject.WpfShape);
-        //    //            break;
-        //    //        case NotifyCollectionChangedAction.Replace:
-        //    //            break;
-        //    //        case NotifyCollectionChangedAction.Move:
-        //    //            break;
-        //    //        case NotifyCollectionChangedAction.Reset:
-        //    //            break;
-        //    //        default:
-        //    //            throw new ArgumentOutOfRangeException();
-        //    //    }
-        //    //}
-        //}
+        private void Framer(IEnumerable<BallModel> ballModels)
+        {
+            Balls = new ObservableCollection<BallModel>(ballModels);
+            RaisePropertyChanged(nameof(Balls));
+        }
     }
 }

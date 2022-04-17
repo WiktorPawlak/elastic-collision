@@ -25,7 +25,7 @@ namespace ElasticCollision.Logic
         public WorldState AddBall(double radius, double mass)
         {
             var location = area.Shrink(radius).GetRandomLocation();
-            var velocity = new Vector(10, 10);
+            var velocity = new Vector(100, 100);
             return AddBall(new Ball(radius, mass, location, velocity));
         }
     }
