@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ElasticCollision.Presentation
@@ -10,6 +11,7 @@ namespace ElasticCollision.Presentation
         private Model CollisionModel { get; set; }
         public ObservableCollection<BallModel> Balls { get; set; }
         public int Width { get; }
+        private int test;
         public int Height { get; }
         public int BallsCount { get; set; } = 10;
         public ICommand AddBallsCommand { get; set; }
@@ -31,16 +33,16 @@ namespace ElasticCollision.Presentation
 
         private void RequestBall()
         {
-            foreach (var ball in CollisionModel.GiveBalls(BallsCount))
-            {
-                Balls.Add(ball);
-            }
+            CollisionModel.GiveBalls(BallsCount);
         }
 
         private void Framer(IEnumerable<BallModel> ballModels)
         {
+            test++;
             Balls = new ObservableCollection<BallModel>(ballModels);
             RaisePropertyChanged(nameof(Balls));
+            Debug.WriteLine(test);
+            test--;
         }
     }
 }
