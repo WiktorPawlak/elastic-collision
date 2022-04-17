@@ -9,7 +9,7 @@ namespace ElasticCollision.Presentation
 {
     public class ViewModel : ViewModelBase
     {
-        private Model _collisionModel { get; set; }
+        private Model CollisionModel { get; set; }
         public ObservableCollection<BallModel> Balls { get; set; }
         public int Width { get; }
         public int Height { get; }
@@ -21,17 +21,18 @@ namespace ElasticCollision.Presentation
         }
         public ViewModel(Model collisionModel = default)
         {
-            _collisionModel = collisionModel ?? new Model();
+            CollisionModel = collisionModel ?? new Model();
             //Balls = new ObservableCollection<BallModel>();
             //Balls.CollectionChanged += CollectionChangedHandler;
             AddBallsCommand = new RelayCommand(() => RequestBall());
-            Width = _collisionModel.Width;
-            Height = _collisionModel.Height;
+            Width = CollisionModel.Width;
+            Height = CollisionModel.Height;
         }
 
         private void RequestBall()
         {
-            Balls = new ObservableCollection<BallModel>(_collisionModel.GiveBalls(BallsCount));
+            Balls = new ObservableCollection<BallModel>(CollisionModel.GiveBalls(BallsCount));
+            RaisePropertyChanged(nameof(Balls));
             //Balls.Refresh();
         }
 
