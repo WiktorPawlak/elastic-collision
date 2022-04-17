@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace ElasticCollision.Presentation
 {
@@ -14,6 +15,7 @@ namespace ElasticCollision.Presentation
         public readonly int Width = 550;
         public readonly int Height = 400;
         public readonly int Mass = 1;
+        private object _frameDrop = new();
 
         public delegate void FrameUpdater(IEnumerable<BallModel> ballModels);
         public Model(LogicAPI collisionLogic = null)
@@ -31,8 +33,18 @@ namespace ElasticCollision.Presentation
 
         public void Update(WorldState state)
         {
-            BallModels = state.Balls.Select(ball => new BallModel(ball));
-            _frameUpdater.Invoke(BallModels);
+            if (Monitor.TryEnter(_frameDrop))
+            {
+                try
+                {
+                    BallModels = state.Balls.Select(ball => new BallModel(ball));
+                    _frameUpdater.Invoke(BallModels);
+                }
+                finally
+                {
+                    Monitor.Exit(_frameDrop);
+                }
+            }
         }
 
         public void AddFrameUpdater(FrameUpdater frameUpdater)

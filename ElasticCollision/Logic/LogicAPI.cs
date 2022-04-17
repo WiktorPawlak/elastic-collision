@@ -85,7 +85,7 @@ namespace ElasticCollision.Logic
                 {
                     Thread.Sleep(10);
                     nextTick();
-                    notifyObservers();
+                    Task.Run(notifyObservers);
                 }
             }
 

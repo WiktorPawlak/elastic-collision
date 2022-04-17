@@ -1,3 +1,5 @@
+using ExtensionMethods;
+using System;
 using System.Collections.Generic;
 using System.Linq; // my beloved
 namespace ElasticCollision.Logic
@@ -7,6 +9,8 @@ namespace ElasticCollision.Logic
          Area area
     )
     {
+        private static Random rng = new Random();
+
         public WorldState Proceed(double Δt)
         {
             var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(area));
@@ -25,7 +29,11 @@ namespace ElasticCollision.Logic
         public WorldState AddBall(double radius, double mass)
         {
             var location = area.Shrink(radius).GetRandomLocation();
-            var velocity = new Vector(100, 100);
+
+            double x = rng.NextDoubleInRange(-100, 100);
+            double y = rng.NextDoubleInRange(-100, 100);
+
+            var velocity = new Vector(x, y);
             return AddBall(new Ball(radius, mass, location, velocity));
         }
     }
