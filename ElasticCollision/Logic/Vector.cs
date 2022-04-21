@@ -40,5 +40,11 @@ namespace ElasticCollision.Logic
             var P3 = this;
             return (P1 * P3 * P1) / (P1 * P1);
         }
+
+        // other should be parallel
+        public bool SameDir(Vector other)
+        {
+            return (this * other) > 0;
+        }
     }
 }

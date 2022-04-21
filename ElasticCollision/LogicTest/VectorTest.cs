@@ -90,6 +90,17 @@ namespace LogicTest
             Assert.Equal(vec(-1, -1), vec(-1, -1).On(vec(1, 1)));
             Assert.Equal(vec(-1, -1), vec(0, -2).On(vec(1, 1)));
         }
+        [Fact]
+        public void TestVectorsPointSameDirection()
+        {
+            Assert.True(vec(0, 1).SameDir(vec(0, 1)));
+            Assert.False(vec(0, -1).SameDir(vec(0, 1)));
+            Assert.True(vec(2, 2).SameDir(vec(1, 1)));
+            Assert.False(vec(2, 2).SameDir(vec(-10, -10)));
+            Assert.True(vec(-2, 2).SameDir(vec(-1, 1)));
+            Assert.False(vec(-2, 2).SameDir(vec(10, -10)));
+        }
+
 
 
     }
