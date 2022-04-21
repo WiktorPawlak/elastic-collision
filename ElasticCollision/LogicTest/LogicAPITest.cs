@@ -1,9 +1,9 @@
-﻿using ElasticCollision.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElasticCollision.Logic;
 using Xunit;
 
 namespace LogicTest
@@ -11,14 +11,6 @@ namespace LogicTest
     public class LogicAPITest
     {
         private readonly LogicAPI _logicAPITest = LogicAPI.CreateCollisionLogic(new DataAPITestFixture());
-
-        [Fact]
-        public void TestCreateBallNegative()
-        {
-            _logicAPITest.StartSimulation();
-            Ball ball = new(5, 5, Vector.vec(0, 0), Vector.vec(0, 0));
-            Assert.Throws<Exception>(() => _logicAPITest.CreateBall(ball));
-        }
 
         [Fact]
         public void TestAddBallsNegative()
