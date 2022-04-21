@@ -1,8 +1,8 @@
-﻿using ElasticCollision.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using ElasticCollision.Logic;
 
 namespace ElasticCollision.Presentation
 {
@@ -21,7 +21,7 @@ namespace ElasticCollision.Presentation
         public Model(LogicAPI collisionLogic = null)
         {
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
-            _collisionLogic.AddWatcher(Update);
+            _collisionLogic.AddObserver(Update);
         }
 
         public void GiveBalls(int ballsCount)

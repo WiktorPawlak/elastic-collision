@@ -10,9 +10,9 @@ namespace ElasticCollision.Logic
     {
         public abstract WorldState GetCurrentState();
 
-        // WorldWatcher dostaje nowy stan świata w każdej klatce
-        public delegate void WorldWatcher(WorldState state);
-        public abstract void AddWatcher(WorldWatcher del);
+        // WorldObserver dostaje nowy stan świata w każdej klatce
+        public delegate void WorldObserver(WorldState state);
+        public abstract void AddObserver(WorldObserver del);
 
         public abstract void StartSimulation();
         public abstract void NextTick(); // advance simulation by one tick
@@ -31,7 +31,7 @@ namespace ElasticCollision.Logic
         {
             private WorldState _state;
             private bool _running;
-            private readonly List<WorldWatcher> _watchers;
+            private readonly List<WorldObserver> _watchers;
             private Task _updater;
             private readonly Vector _orientationPoint;
             private readonly Vector _worldDimensions;
@@ -41,7 +41,7 @@ namespace ElasticCollision.Logic
             {
                 _dataLayer = dataLayerAPI;
                 _running = false;
-                _watchers = new List<WorldWatcher>();
+                _watchers = new List<WorldObserver>();
                 _orientationPoint = vec(0, 0);
                 _worldDimensions = vec(500, 500);
                 _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
@@ -49,7 +49,7 @@ namespace ElasticCollision.Logic
 
             public override WorldState GetCurrentState() => _state;
 
-            public override void AddWatcher(WorldWatcher del)
+            public override void AddObserver(WorldObserver del)
             {
                 _watchers.Add(del);
             }

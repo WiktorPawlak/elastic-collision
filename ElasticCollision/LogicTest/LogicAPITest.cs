@@ -10,13 +10,23 @@ namespace LogicTest
 {
     public class LogicAPITest
     {
-        private readonly LogicAPI _logicAPITest = LogicAPI.CreateCollisionLogic(new DataAPITestFixture());
+        private readonly LogicAPI sub = LogicAPI.CreateCollisionLogic(new DataAPITestFixture());
 
         [Fact]
         public void TestAddBallsNegative()
         {
-            _logicAPITest.StartSimulation();
-            Assert.Throws<Exception>(() => _logicAPITest.AddBalls(10, 10, 10));
+            sub.StartSimulation();
+            Assert.Throws<Exception>(() => sub.AddBalls(10, 10, 10));
         }
+        [Fact]
+        public void TestAddingBalls()
+        {
+            Assert.Empty(sub.GetCurrentState().Balls);
+            sub.AddBalls(1, 1, 1);
+            Assert.Single(sub.GetCurrentState().Balls);
+            sub.AddBalls(10, 1, 1);
+            Assert.Equal(11, sub.GetCurrentState().Balls.Count());
+        }
+
     }
 }
