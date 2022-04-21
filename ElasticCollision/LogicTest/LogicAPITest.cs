@@ -62,11 +62,17 @@ namespace LogicTest
             var ctr = new CallCounter();
             sub.AddObserver(ctr.Update);
             Assert.Equal(0, ctr.count);
+            sub.AddBalls(10, 10, 10);
+            Thread.Sleep(10);
+            Assert.Equal(1, ctr.count);
+            sub.NextTick();
+            Thread.Sleep(10);
+            Assert.Equal(2, ctr.count);
             sub.StartSimulation();
             Thread.Sleep(50);
             sub.StopSimulation();
             Thread.Sleep(10);
-            Assert.NotEqual(0, ctr.count);
+            Assert.True(ctr.count > 2);
             Assert.True(50 > ctr.count); // aż tak szybko nie chcemy
             Assert.Equal(sub.GetCurrentState(), ctr.last);
 
