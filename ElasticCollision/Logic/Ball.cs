@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using static ElasticCollision.Logic.Vector;
 namespace ElasticCollision.Logic
 {
@@ -62,6 +64,15 @@ namespace ElasticCollision.Logic
             var direction = other.Location - this.Location;
             var relative_velocity = (this.Velocity - other.Velocity).On(direction);
             return -(relative_velocity * other.Mass);
+        }
+
+        public Ball Collide(IEnumerable<Ball> Neighbors)
+        {
+            var TotalImpulse = Neighbors
+                .Where(other => this.Touching(other) && this.Approaching(other)) // filter
+                .Select(other => this.CollisionImpulse(other)) // map
+                .Aggregate((a, b) => a + b); // reduce
+            return this.ApplyImpulse(TotalImpulse); // tylko z pozamienianymi nazwami
         }
     };
 }

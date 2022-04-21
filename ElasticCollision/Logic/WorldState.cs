@@ -1,7 +1,7 @@
-using ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq; // my beloved
+using ExtensionMethods;
 namespace ElasticCollision.Logic
 {
     public record WorldState(
@@ -13,12 +13,7 @@ namespace ElasticCollision.Logic
 
         public WorldState Proceed(double Δt)
         {
-            var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(Area));
-            // tutaj będzie kod zderzający piłeczki
-            // zasadniczo trzeba podzielić je na dwie kolekcje
-            // > piłeczki które nie zderzyły się z innymi piłeczkami
-            // > pary przecinających się piłeczek
-            // te drugie zderzyć i dodać obie grupy
+            var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(Balls).Collide(Area));
             return this with { Balls = newBalls };
         }
 

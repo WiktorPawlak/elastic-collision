@@ -104,6 +104,9 @@ namespace LogicTest
             Assert.True(b_f.Approaching(a));
             Assert.True(a_b.Approaching(a));
 
+            Assert.False(a.Approaching(a));
+            Assert.False(a_f.Approaching(a_f));
+
             Assert.False(b_b.Approaching(a));
             Assert.False(a_f.Approaching(a));
         }
