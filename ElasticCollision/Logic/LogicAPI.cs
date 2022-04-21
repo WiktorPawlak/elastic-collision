@@ -15,6 +15,7 @@ namespace ElasticCollision.Logic
         public abstract void AddWatcher(WorldWatcher del);
 
         public abstract void StartSimulation();
+        public abstract void NextTick(); // advance simulation by one tick
         public abstract void StopSimulation();
         // może jeszcze jakieś kontrolki do FPS świata,
         // bo ΔT będzie raczej zakodowana na sztywno
@@ -71,9 +72,10 @@ namespace ElasticCollision.Logic
                 }
             }
 
-            public void NextTick()
+            public override void NextTick()
             {
                 _state = _state.Proceed(0.05);
+                Task.Run(NotifyObservers);
             }
 
             private void NotifyObservers()
@@ -87,7 +89,6 @@ namespace ElasticCollision.Logic
                 {
                     Thread.Sleep(40);
                     NextTick();
-                    Task.Run(NotifyObservers);
                 }
             }
 
