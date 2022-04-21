@@ -14,7 +14,7 @@ namespace ElasticCollision.Logic
         public WorldState Proceed(double Δt)
         {
             var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(Balls).Collide(Area));
-            return this with { Balls = newBalls };
+            return this with { Balls = new List<Ball>(newBalls) };
         }
 
         public WorldState AddBall(Ball ball)
