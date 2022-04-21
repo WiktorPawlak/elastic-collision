@@ -31,11 +31,16 @@ namespace ElasticCollision.Logic
         public Ball Collide(Area area)
         {
             var shrunk = area.Shrink(Radius);
-            var X = shrunk.ContainsHorizontally(Location) ? Velocity.X : -Velocity.X;
-            var Y = shrunk.ContainsVertically(Location) ? Velocity.Y : -Velocity.Y;
+            var X = Velocity.X;
+            var Y = Velocity.Y;
+
+            if (Location.X < shrunk.UpperLeftCorner.X) { X = Math.Abs(X); }
+            if (Location.X > shrunk.LowerRightCorner.X) { X = -Math.Abs(X); }
+
+            if (Location.Y > shrunk.UpperLeftCorner.Y) { Y = -Math.Abs(Y); }
+            if (Location.Y < shrunk.LowerRightCorner.Y) { Y = Math.Abs(Y); }
+
             return this with { Velocity = vec(X, Y) };
-            // lokalizacji nie "naprawiamy", w nadzieji, że Δt będzie na tyle mały
-            // że to nie będzie miało znaczenia
         }
         public double KineticEnergy
         {

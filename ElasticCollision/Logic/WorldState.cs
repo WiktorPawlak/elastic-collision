@@ -13,7 +13,7 @@ namespace ElasticCollision.Logic
 
         public WorldState Proceed(double Δt)
         {
-            var newBalls = Balls.Select(ball => ball.Budge(Δt).Collide(Balls).Collide(Area));
+            var newBalls = Balls.Select(ball => ball.Collide(Balls).Collide(Area).Budge(Δt));
             return this with { Balls = newBalls };
         }
 
