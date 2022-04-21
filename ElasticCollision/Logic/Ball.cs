@@ -52,13 +52,16 @@ namespace ElasticCollision.Logic
 
         public bool Approaching(Ball other)
         {
-            var direction = this.Location - other.Location;
+            var direction = other.Location - this.Location;
             var relative_velocity = (this.Velocity - other.Velocity).On(direction);
-            return !direction.SameDir(relative_velocity);
+            return direction.SameDir(relative_velocity);
         }
-        public Vector CollisionImpulse(Ball ball)
+
+        public Vector CollisionImpulse(Ball other) // for self
         {
-            return vec(0, 0);
+            var direction = other.Location - this.Location;
+            var relative_velocity = (this.Velocity - other.Velocity).On(direction);
+            return -(relative_velocity * other.Mass);
         }
     };
 }

@@ -112,6 +112,13 @@ namespace LogicTest
         [Fact]
         public void TestBallImpact() //unu
         {
+            Ball a = new(10, 10, vec(-4, 0), vec(1, 0));
+            Ball b = new(10, 10, vec(4, 0), vec(-1, 0));
+            Ball c = new(10, 10, vec(4, 3), vec(-1, 0));
+            Assert.Equal(a.CollisionImpulse(b), -b.CollisionImpulse(a));
+            Assert.NotEqual(a.CollisionImpulse(b), a.CollisionImpulse(c));
+            Assert.True(a.CollisionImpulse(c).Y < 0);
+            Assert.Equal(a.CollisionImpulse(b), vec(-20, 0));
 
         }
 
