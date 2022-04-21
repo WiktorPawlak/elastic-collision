@@ -28,7 +28,7 @@ namespace ElasticCollision.Logic
             return UpperLeftCorner.X <= loc.X &&
             loc.X <= LowerRightCorner.X;
         }
-        private static Random rng = new Random();
+        private static readonly Random rng = new Random();
 
         public Vector GetRandomLocation()
         {
