@@ -22,10 +22,9 @@ namespace ElasticCollision.Logic
         public abstract void AddBalls(int count, double radius, double mass);
         // we ball, i tak musielibyśmy korzystać z `Vector`
         // ewentualnie dać tutaj (x, y, ɸ)
-        public static LogicAPI CreateCollisionLogic(int width, int height, DataAPI data = default)
+        public static LogicAPI CreateCollisionLogic(DataAPI data = default)
         {
-            return new CollisionLogic(data ?? DataAPI.CreateBallData(),
-                width, height);
+            return new CollisionLogic(data ?? DataAPI.CreateBallData());
         }
 
         private class CollisionLogic : LogicAPI
@@ -38,13 +37,13 @@ namespace ElasticCollision.Logic
             private readonly Vector _worldDimensions;
             private readonly DataAPI _dataLayer;
 
-            public CollisionLogic(DataAPI dataLayerAPI, int width, int height)
+            public CollisionLogic(DataAPI dataLayerAPI)
             {
                 _dataLayer = dataLayerAPI;
                 _running = false;
                 _watchers = new List<WorldWatcher>();
                 _orientationPoint = vec(0, 0);
-                _worldDimensions = vec(width, height);
+                _worldDimensions = vec(500, 500);
                 _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
             }
 
@@ -75,7 +74,7 @@ namespace ElasticCollision.Logic
 
             public void NextTick()
             {
-                _state = _state.Proceed(0.01);
+                _state = _state.Proceed(0.05);
             }
 
             private void NotifyObservers()
@@ -87,7 +86,7 @@ namespace ElasticCollision.Logic
             {
                 while (_running)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(40);
                     NextTick();
                     Task.Run(NotifyObservers);
                 }

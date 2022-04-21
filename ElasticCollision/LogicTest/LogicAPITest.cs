@@ -10,8 +10,7 @@ namespace LogicTest
 {
     public class LogicAPITest
     {
-        private readonly LogicAPI _logicAPITest = LogicAPI.CreateCollisionLogic(500,
-            500, new DataAPITestFixture());
+        private readonly LogicAPI _logicAPITest = LogicAPI.CreateCollisionLogic(new DataAPITestFixture());
 
         [Fact]
         public void TestCreateBallNegative()

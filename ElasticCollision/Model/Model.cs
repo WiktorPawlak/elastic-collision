@@ -20,7 +20,7 @@ namespace ElasticCollision.Presentation
         public delegate void FrameUpdater(IEnumerable<BallModel> ballModels);
         public Model(LogicAPI collisionLogic = null)
         {
-            _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic(Width, Height);
+            _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
             _collisionLogic.AddWatcher(Update);
         }
 
