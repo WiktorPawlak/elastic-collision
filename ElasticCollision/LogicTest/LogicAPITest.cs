@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Logic;
 using Xunit;
@@ -28,6 +29,10 @@ namespace LogicTest
             Assert.Single(sub.GetCurrentState().Balls);
             sub.AddBalls(10, 1, 1);
             Assert.Equal(11, sub.GetCurrentState().Balls.Count());
+            sub.StartSimulation();
+            sub.StopSimulation();
+            sub.AddBalls(1, 1, 1);
+            Assert.Equal(12, sub.GetCurrentState().Balls.Count());
         }
         [Fact]
         public void testSimulationSimple()
@@ -38,6 +43,29 @@ namespace LogicTest
             sub.NextTick();
             Assert.Equal(10, sub.GetCurrentState().Balls.Count());
             Assert.NotEqual(old, sub.GetCurrentState());
+
+        }
+
+        private class CallCounter
+        {
+            public int count { get; set; }
+            public void Update(WorldState state)
+            {
+                count++;
+            }
+        }
+        [Fact]
+        public void TestSimulationHappens()
+        {
+            var ctr = new CallCounter();
+            sub.AddObserver(ctr.Update);
+            Assert.Equal(0, ctr.count);
+            sub.StartSimulation();
+            Thread.Sleep(50);
+            sub.StopSimulation();
+            Assert.NotEqual(0, ctr.count);
+            Assert.True(50 > ctr.count); // aż tak szybko nie chcemy
+
         }
 
     }
