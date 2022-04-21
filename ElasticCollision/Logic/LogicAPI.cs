@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ElasticCollision.Data;
 using static ElasticCollision.Logic.Vector;
 
 namespace ElasticCollision.Logic
@@ -87,7 +88,7 @@ namespace ElasticCollision.Logic
             {
                 while (_running)
                 {
-                    Thread.Sleep(40);
+                    Thread.Sleep(5);
                     NextTick();
                 }
             }
