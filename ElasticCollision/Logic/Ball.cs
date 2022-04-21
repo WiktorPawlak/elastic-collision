@@ -49,5 +49,16 @@ namespace ElasticCollision.Logic
         {
             return this with { Velocity = Velocity + Momentum * (1 / Mass) };
         }
+
+        public bool Approaching(Ball other)
+        {
+            var direction = this.Location - other.Location;
+            var relative_velocity = (this.Velocity - other.Velocity).On(direction);
+            return !direction.SameDir(relative_velocity);
+        }
+        public Vector CollisionImpulse(Ball ball)
+        {
+            return vec(0, 0);
+        }
     };
 }

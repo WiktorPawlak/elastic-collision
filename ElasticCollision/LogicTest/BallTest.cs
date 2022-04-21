@@ -30,6 +30,7 @@ namespace LogicTest
             Assert.False(a.Touching(c));
             Assert.True(d.Touching(c));
         }
+
         [Fact]
         public void TestBallingArea()
         {
@@ -89,6 +90,29 @@ namespace LogicTest
             Assert.Equal(vec(1, 0), b.ApplyImpulse(vec(10, 0)).Velocity);
             Assert.Equal(vec(0, 0), a.ApplyImpulse(vec(-10, 0)).Velocity);
             Assert.Equal(vec(10, 0), c.ApplyImpulse(vec(10, 0)).Velocity);
+        }
+
+        [Fact]
+        public void TestBallApproaching()
+        {
+            Ball a = new(10, 10, vec(0, 0), vec(0, 0));
+            Ball b_f = new(10, 10, vec(-1, 5), vec(1, 0));
+            Ball b_b = new(10, 10, vec(-1, 5), vec(-1, 0));
+            Ball a_f = new(10, 10, vec(1, 0), vec(1, 0));
+            Ball a_b = new(10, 10, vec(1, 0), vec(-10, 0));
+
+            Assert.True(b_f.Approaching(a));
+            Assert.True(a_b.Approaching(a));
+
+            Assert.False(b_b.Approaching(a));
+            Assert.False(a_f.Approaching(a));
+        }
+
+
+        [Fact]
+        public void TestBallImpact() //unu
+        {
+
         }
 
 
