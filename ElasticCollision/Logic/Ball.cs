@@ -71,7 +71,7 @@ namespace ElasticCollision.Logic
             var TotalImpulse = Neighbors
                 .Where(other => this.Touching(other) && this.Approaching(other)) // filter
                 .Select(other => this.CollisionImpulse(other)) // map
-                .Aggregate((a, b) => a + b); // reduce
+                .Aggregate(vec(0, 0), (a, b) => a + b); // reduce
             return this.ApplyImpulse(TotalImpulse); // tylko z pozamienianymi nazwami
         }
     };
