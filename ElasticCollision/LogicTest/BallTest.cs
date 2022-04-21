@@ -71,6 +71,13 @@ namespace LogicTest
             Assert.Equal(c.Budge(3).Collide(a).Velocity, vec(-1, 1));
         }
 
+        [Fact]
+        public void TestKEcalculation()
+        {
+            Ball b = new(10, 10, vec(0, 0), vec(1, 0));
+            Assert.Equal(5, b.KineticEnergy);
+        }
+
 
     }
 }

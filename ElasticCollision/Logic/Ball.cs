@@ -35,5 +35,13 @@ namespace ElasticCollision.Logic
             // lokalizacji nie "naprawiamy", w nadzieji, że Δt będzie na tyle mały
             // że to nie będzie miało znaczenia
         }
+        public double KineticEnergy
+        {
+            get
+            {
+                double speed = Velocity.Magnitude;
+                return speed * speed * Mass * 0.5;
+            }
+        }
     };
 }

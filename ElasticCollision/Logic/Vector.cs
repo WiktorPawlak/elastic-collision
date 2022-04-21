@@ -7,9 +7,9 @@ namespace ElasticCollision.Logic
     {
         public static Vector vec(double x, double y) => new Vector(x, y);
 
-        public double Magnitude() => Math.Sqrt(X * X + Y * Y);
+        public double Magnitude { get { return Math.Sqrt(X * X + Y * Y); } }
 
-        public static double Distance(Vector l, Vector r) => (l - r).Magnitude();
+        public static double Distance(Vector l, Vector r) => (l - r).Magnitude;
 
         public static Vector operator +(Vector l, Vector r)
         {

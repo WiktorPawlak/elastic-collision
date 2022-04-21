@@ -32,12 +32,12 @@ namespace LogicTest
         [Fact]
         public void TestMagnitude()
         {
-            Assert.Equal(0, vec(0, 0).Magnitude());
-            Assert.Equal(1, vec(1, 0).Magnitude());
-            Assert.Equal(2, vec(0, -2).Magnitude());
-            Assert.Equal(5, vec(3, 4).Magnitude());
-            Assert.Equal(5, vec(4, 3).Magnitude());
-            Assert.Equal(5, vec(-4, -3).Magnitude());
+            Assert.Equal(0, vec(0, 0).Magnitude);
+            Assert.Equal(1, vec(1, 0).Magnitude);
+            Assert.Equal(2, vec(0, -2).Magnitude);
+            Assert.Equal(5, vec(3, 4).Magnitude);
+            Assert.Equal(5, vec(4, 3).Magnitude);
+            Assert.Equal(5, vec(-4, -3).Magnitude);
         }
 
         [Fact]
