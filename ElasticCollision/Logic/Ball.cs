@@ -43,5 +43,11 @@ namespace ElasticCollision.Logic
                 return speed * speed * Mass * 0.5;
             }
         }
+        public Vector Momentum { get { return Velocity * Mass; } }
+
+        public Ball ApplyImpulse(Vector Momentum)
+        {
+            return this with { Velocity = Velocity + Momentum * (1 / Mass) };
+        }
     };
 }

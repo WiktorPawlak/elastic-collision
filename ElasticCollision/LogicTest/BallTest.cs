@@ -78,6 +78,19 @@ namespace LogicTest
             Assert.Equal(5, b.KineticEnergy);
         }
 
+        [Fact]
+        public void TestMomentum()
+        {
+            Ball a = new(10, 10, vec(0, 0), vec(1, 0));
+            Ball b = new(10, 10, vec(0, 0), vec(0, 0));
+            Ball c = new(1, 1, vec(0, 0), vec(0, 0));
+            Assert.Equal(vec(10, 0), a.Momentum);
+            Assert.Equal(vec(0, 0), b.Momentum);
+            Assert.Equal(vec(1, 0), b.ApplyImpulse(vec(10, 0)).Velocity);
+            Assert.Equal(vec(0, 0), a.ApplyImpulse(vec(-10, 0)).Velocity);
+            Assert.Equal(vec(10, 0), c.ApplyImpulse(vec(10, 0)).Velocity);
+        }
+
 
     }
 }
