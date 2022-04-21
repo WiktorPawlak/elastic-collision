@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ElasticCollision.Logic
+namespace ElasticCollision.Data
 {
     public abstract class DataAPI
     {

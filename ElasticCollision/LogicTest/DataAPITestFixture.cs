@@ -1,4 +1,4 @@
-﻿using ElasticCollision.Logic;
+﻿using ElasticCollision.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

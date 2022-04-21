@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ElasticCollision.Data;
 using static ElasticCollision.Logic.Vector;
 
 namespace ElasticCollision.Logic
@@ -74,7 +75,7 @@ namespace ElasticCollision.Logic
 
             public void NextTick()
             {
-                _state = _state.Proceed(0.05);
+                _state = _state.Proceed(0.03);
             }
 
             private void NotifyObservers()
@@ -86,7 +87,7 @@ namespace ElasticCollision.Logic
             {
                 while (_running)
                 {
-                    Thread.Sleep(40);
+                    Thread.Sleep(5);
                     NextTick();
                     Task.Run(NotifyObservers);
                 }
