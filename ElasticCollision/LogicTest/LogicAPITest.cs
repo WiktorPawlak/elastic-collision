@@ -48,10 +48,12 @@ namespace LogicTest
 
         private class CallCounter
         {
-            public int count { get; set; }
+            public int count;
+            public WorldState last;
             public void Update(WorldState state)
             {
                 count++;
+                last = state;
             }
         }
         [Fact]
@@ -65,6 +67,7 @@ namespace LogicTest
             sub.StopSimulation();
             Assert.NotEqual(0, ctr.count);
             Assert.True(50 > ctr.count); // aż tak szybko nie chcemy
+            Assert.Equal(sub.GetCurrentState(), ctr.last);
 
         }
 
