@@ -18,7 +18,6 @@ namespace ElasticCollision.Logic
         public abstract void StopSimulation();
         // może jeszcze jakieś kontrolki do FPS świata,
         // bo ΔT będzie raczej zakodowana na sztywno
-        public abstract void CreateBall(Ball newOne);
         public abstract void AddBalls(int count, double radius, double mass);
         // we ball, i tak musielibyśmy korzystać z `Vector`
         // ewentualnie dać tutaj (x, y, ɸ)
@@ -89,18 +88,6 @@ namespace ElasticCollision.Logic
                     Thread.Sleep(40);
                     NextTick();
                     Task.Run(NotifyObservers);
-                }
-            }
-
-            public override void CreateBall(Ball newOne)
-            {
-                if (_running)
-                {
-                    throw new Exception("Simulation is still running!");
-                }
-                else
-                {
-                    _state = _state.AddBall(newOne);
                 }
             }
 
