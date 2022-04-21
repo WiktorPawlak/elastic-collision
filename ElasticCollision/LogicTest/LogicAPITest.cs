@@ -65,6 +65,7 @@ namespace LogicTest
             sub.StartSimulation();
             Thread.Sleep(50);
             sub.StopSimulation();
+            Thread.Sleep(10);
             Assert.NotEqual(0, ctr.count);
             Assert.True(50 > ctr.count); // aż tak szybko nie chcemy
             Assert.Equal(sub.GetCurrentState(), ctr.last);
