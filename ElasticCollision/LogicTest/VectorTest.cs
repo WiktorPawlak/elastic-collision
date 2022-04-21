@@ -76,5 +76,21 @@ namespace LogicTest
             Assert.Equal(1, vec(2, -1) * vec(1, 1));
         }
 
+        [Fact]
+        public void TestRel()
+        {
+            Assert.Equal(vec(0, 0), vec(0, 0).On(vec(0, 1)));
+            Assert.Equal(vec(0, 0), vec(1, 0).On(vec(0, 1)));
+            Assert.Equal(vec(0, 1), vec(1, 1).On(vec(0, 1)));
+            Assert.Equal(vec(0, 1), vec(1, 1).On(vec(0, -1)));
+            Assert.Equal(vec(0, 1), vec(1, 1).On(vec(0, 1000)));
+            Assert.Equal(vec(0, 0), vec(0, 1).On(vec(1, 0)));
+            Assert.Equal(vec(0, 0), vec(0, 1).On(vec(-1, 0)));
+            Assert.Equal(vec(1, 0), vec(1, 1).On(vec(0.5, 0)));
+            Assert.Equal(vec(-1, -1), vec(-1, -1).On(vec(1, 1)));
+            Assert.Equal(vec(-1, -1), vec(0, -2).On(vec(1, 1)));
+        }
+
+
     }
 }

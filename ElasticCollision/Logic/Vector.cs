@@ -26,7 +26,19 @@ namespace ElasticCollision.Logic
 
         public static Vector operator *(double f, Vector v) => v * f;
 
+        public static Vector operator /(Vector v, double f) => vec(v.X / f, v.Y / f);
+
+        public static Vector operator /(double f, Vector v) => v / f;
+
         /// iloczyn skalarny
         public static double operator *(Vector a, Vector b) => a.X * b.X + a.Y * b.Y;
+
+        public Vector On(Vector basis)
+        {
+            // https://www.obliczeniowo.com.pl/64
+            var P1 = basis;
+            var P3 = this;
+            return (P1 * P3 * P1) / (P1 * P1);
+        }
     }
 }
