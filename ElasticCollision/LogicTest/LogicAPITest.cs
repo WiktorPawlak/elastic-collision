@@ -22,10 +22,22 @@ namespace LogicTest
         public void TestAddingBalls()
         {
             Assert.Empty(sub.GetCurrentState().Balls);
-            sub.AddBalls(1, 1, 1);
+            sub.AddBalls(1, 5, 6);
+            Assert.Equal(5, sub.GetCurrentState().Balls.First().Radius);
+            Assert.Equal(6, sub.GetCurrentState().Balls.First().Mass);
             Assert.Single(sub.GetCurrentState().Balls);
             sub.AddBalls(10, 1, 1);
             Assert.Equal(11, sub.GetCurrentState().Balls.Count());
+        }
+        [Fact]
+        public void testSimulationSimple()
+        {
+            sub.AddBalls(10, 10, 10);
+            var old = sub.GetCurrentState();
+            Assert.Equal(old, sub.GetCurrentState());
+            sub.NextTick();
+            Assert.Equal(10, sub.GetCurrentState().Balls.Count());
+            Assert.NotEqual(old, sub.GetCurrentState());
         }
 
     }
