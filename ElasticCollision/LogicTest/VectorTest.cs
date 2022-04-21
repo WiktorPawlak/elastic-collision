@@ -70,5 +70,11 @@ namespace LogicTest
             Assert.Equal(vec(0, 0), 0 * vec(53, 531));
             Assert.Equal(vec(-1, 1), -0.5 * vec(2, -2));
         }
+        [Fact]
+        public void TestMultiplication()
+        {
+            Assert.Equal(1, vec(2, -1) * vec(1, 1));
+        }
+
     }
 }
