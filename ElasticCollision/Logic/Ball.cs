@@ -37,8 +37,8 @@ namespace ElasticCollision.Logic
             if (Location.X < shrunk.UpperLeftCorner.X) { X = Math.Abs(X); }
             if (Location.X > shrunk.LowerRightCorner.X) { X = -Math.Abs(X); }
 
-            if (Location.Y > shrunk.UpperLeftCorner.Y) { Y = -Math.Abs(Y); }
-            if (Location.Y < shrunk.LowerRightCorner.Y) { Y = Math.Abs(Y); }
+            if (Location.Y < shrunk.UpperLeftCorner.Y) { Y = Math.Abs(Y); }
+            if (Location.Y > shrunk.LowerRightCorner.Y) { Y = -Math.Abs(Y); }
 
             return this with { Velocity = vec(X, Y) };
         }
