@@ -6,10 +6,9 @@ using ElasticCollision.Logic;
 
 namespace ElasticCollision.Presentation
 {
-    public class Model
+    public class Model : Observable<IEnumerable<BallModel>>
     {
         private readonly LogicAPI _collisionLogic = default;
-        private FrameUpdater _frameUpdater;
         public IEnumerable<BallModel> BallModels;
         public readonly int Radius = 15;
         public readonly int Width = 500;
@@ -17,7 +16,6 @@ namespace ElasticCollision.Presentation
         public readonly int Mass = 1;
         private object _frameDrop = new();
 
-        public delegate void FrameUpdater(IEnumerable<BallModel> ballModels);
         public Model(LogicAPI collisionLogic = null)
         {
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
@@ -38,18 +36,13 @@ namespace ElasticCollision.Presentation
                 try
                 {
                     BallModels = state.Balls.Select(ball => new BallModel(ball));
-                    _frameUpdater.Invoke(BallModels);
+                    NotifyObservers(BallModels);
                 }
                 finally
                 {
                     Monitor.Exit(_frameDrop);
                 }
             }
-        }
-
-        public void AddFrameUpdater(FrameUpdater frameUpdater)
-        {
-            _frameUpdater = frameUpdater;
         }
     }
 }

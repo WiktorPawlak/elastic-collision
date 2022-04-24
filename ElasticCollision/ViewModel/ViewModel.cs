@@ -24,7 +24,7 @@ namespace ElasticCollision.Presentation
             //Balls.CollectionChanged += CollectionChangedHandler;
             AddBallsCommand = new RelayCommand(() => RequestBall());
             Balls = new ObservableCollection<BallModel>();
-            CollisionModel.AddFrameUpdater(Framer);
+            CollisionModel.AddObserver(Framer);
             Width = CollisionModel.Width;
             Height = CollisionModel.Height;
         }
