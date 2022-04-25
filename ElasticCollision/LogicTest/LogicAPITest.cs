@@ -60,7 +60,7 @@ namespace LogicTest
         public void TestSimulationHappens()
         {
             var ctr = new CallCounter();
-            sub.AddObserver(ctr.Update);
+            sub.Observable.Add(ctr.Update);
             Assert.Equal(0, ctr.count);
             sub.AddBalls(10, 10, 10);
             Thread.Sleep(10);

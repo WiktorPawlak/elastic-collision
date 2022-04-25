@@ -6,8 +6,9 @@ using ElasticCollision.Logic;
 
 namespace ElasticCollision.Presentation
 {
-    public class Model : Observable<IEnumerable<BallModel>>
+    public class Model
     {
+        public readonly Observable<IEnumerable<BallModel>> Observable = new();
         private readonly LogicAPI _collisionLogic = default;
         public IEnumerable<BallModel> BallModels;
         public readonly int Radius = 15;
@@ -19,7 +20,7 @@ namespace ElasticCollision.Presentation
         public Model(LogicAPI collisionLogic = null)
         {
             _collisionLogic = collisionLogic ?? LogicAPI.CreateCollisionLogic();
-            _collisionLogic.AddObserver(Update);
+            _collisionLogic.Observable.Add(Update);
         }
 
         public void GiveBalls(int ballsCount)
@@ -36,7 +37,7 @@ namespace ElasticCollision.Presentation
                 try
                 {
                     BallModels = state.Balls.Select(ball => new BallModel(ball));
-                    NotifyObservers(BallModels);
+                    Observable.Notify(BallModels);
                 }
                 finally
                 {

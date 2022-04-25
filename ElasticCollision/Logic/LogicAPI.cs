@@ -7,10 +7,10 @@ using static ElasticCollision.Logic.Vector;
 
 namespace ElasticCollision.Logic
 {
-    public abstract class LogicAPI : Observable<WorldState>
+    public abstract class LogicAPI
     {
         public abstract WorldState GetCurrentState();
-
+        public Observable<WorldState> Observable = new();
         // WorldObserver dostaje nowy stan świata w każdej klatce
 
         public abstract void StartSimulation();
@@ -67,7 +67,7 @@ namespace ElasticCollision.Logic
             public override void NextTick()
             {
                 _state = _state.Proceed(0.05);
-                Task.Run(() => NotifyObservers(_state));
+                Task.Run(() => Observable.Notify(_state));
             }
 
             public void UpdateLoop()
@@ -91,7 +91,7 @@ namespace ElasticCollision.Logic
                     {
                         _state = _state.AddBall(radius, mass);
                     }
-                    NotifyObservers(_state);
+                    Observable.Notify(_state);
                 }
             }
         }
