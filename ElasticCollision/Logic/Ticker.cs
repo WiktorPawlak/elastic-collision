@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,8 +27,14 @@ namespace ElasticCollision.Logic
         {
             while (running)
             {
-                Thread.Sleep(cycleLength);
+                var timer = Stopwatch.StartNew();
                 callback.Invoke();
+                timer.Stop();
+                int remaining = (cycleLength - (int)timer.ElapsedMilliseconds);
+                if (remaining > 0)
+                {
+                    Thread.Sleep(remaining);
+                }
             }
         }
 

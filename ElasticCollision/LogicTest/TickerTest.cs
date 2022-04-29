@@ -28,7 +28,7 @@ namespace LogicTest
             var ticker = new Ticker(ctr.inc, 10);
             Assert.Equal(0, ctr.count);
             ticker.Start();
-            Thread.Sleep(15);
+            Thread.Sleep(5);
             Assert.Equal(1, ctr.count);
         }
 
@@ -52,8 +52,8 @@ namespace LogicTest
             Assert.Equal(0, ctr.count);
             ticker.Start();
             Thread.Sleep(100);
-            Assert.True(90 < ctr.count);
-            Assert.True(110 > ctr.count);
+            Assert.True(80 < ctr.count);
+            Assert.True(120 > ctr.count);
         }
 
         [Fact]
@@ -67,5 +67,40 @@ namespace LogicTest
             Assert.True(8 < ctr.count);
             Assert.True(12 > ctr.count);
         }
+
+        private class SlowCounter
+        {
+            public int count;
+            int delay;
+            public SlowCounter(int delay) => this.delay = delay;
+            public void inc()
+            {
+                Thread.Sleep(delay);
+                count++;
+            }
+        }
+        [Fact]
+        public void TestSlowCounter() //unu
+        {
+            var ctr = new SlowCounter(0);
+            var ticker = new Ticker(ctr.inc, 10);
+            Assert.Equal(0, ctr.count);
+            ticker.Start();
+            Thread.Sleep(100);
+            Assert.True(8 < ctr.count);
+            Assert.True(12 > ctr.count);
+        }
+        [Fact]
+        public void TestTimeIndependence() //unu
+        {
+            var ctr = new SlowCounter(3);
+            var ticker = new Ticker(ctr.inc, 10);
+            Assert.Equal(0, ctr.count);
+            ticker.Start();
+            Thread.Sleep(100);
+            Assert.True(8 < ctr.count);
+            Assert.True(12 > ctr.count);
+        }
+
     }
 }
