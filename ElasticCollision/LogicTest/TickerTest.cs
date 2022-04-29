@@ -33,6 +33,18 @@ namespace LogicTest
         }
 
         [Fact]
+        public void TestStopping() //unu
+        {
+            var ctr = new Counter();
+            var ticker = new Ticker(ctr.inc, 1);
+            Assert.Equal(0, ctr.count);
+            ticker.Start();
+            ticker.Stop();
+            Thread.Sleep(15);
+            Assert.True(3 > ctr.count);
+        }
+
+        [Fact]
         public void TestSpeed() //unu
         {
             var ctr = new Counter();
