@@ -14,10 +14,13 @@ namespace LogicTest
         private readonly LogicAPI sub = LogicAPI.CreateCollisionLogic(new DataAPITestFixture());
 
         [Fact]
-        public void TestAddBallsNegative()
+        public void TestAddingBallsWhileRunning()
         {
             sub.StartSimulation();
-            Assert.Throws<Exception>(() => sub.AddBalls(10, 10, 10));
+            sub.AddBalls(10, 10, 10);
+            Assert.Equal(10, sub.GetCurrentState().Balls.Count());
+            Thread.Sleep(30);
+            Assert.Equal(10, sub.GetCurrentState().Balls.Count());
         }
         [Fact]
         public void TestAddingBalls()

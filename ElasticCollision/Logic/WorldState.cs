@@ -31,5 +31,9 @@ namespace ElasticCollision.Logic
             var velocity = new Vector(x, y);
             return AddBall(new Ball(radius, mass, location, velocity));
         }
+        public WorldState AddBalls(int count, double radius, double mass)
+        {
+            return Enumerable.Range(0, count).Aggregate(this, (state, _) => state.AddBall(radius, mass));
+        }
     }
 }

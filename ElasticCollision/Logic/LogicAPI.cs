@@ -59,16 +59,15 @@ namespace ElasticCollision.Logic
             {
                 if (_ticker.running)
                 {
-                    throw new Exception("Simulation is still running!");
+                    _ticker.Stop();
+                    _state = _state.AddBalls(count, radius, mass);
+                    _ticker.Start();
                 }
                 else
                 {
-                    for (int i = 0; i < count; i++)
-                    {
-                        _state = _state.AddBall(radius, mass);
-                    }
-                    Observable.Notify(_state);
+                    _state = _state.AddBalls(count, radius, mass);
                 }
+                Observable.Notify(_state);
             }
         }
     }
