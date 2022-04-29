@@ -40,7 +40,7 @@ namespace ElasticCollision.Logic
                 _orientationPoint = vec(0, 0);
                 _worldDimensions = vec(500, 500);
                 _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
-                _ticker = new(NextTick, 5);
+                _ticker = new(NextTick, 16);
             }
 
             public override WorldState GetCurrentState() => _state;
