@@ -47,7 +47,7 @@ namespace ElasticCollision.Logic
 
             public override void StartSimulation() => _ticker.Start();
 
-            public override async void StopSimulation() => _ticker.Stop();
+            public override void StopSimulation() => _ticker.Stop();
 
             public override void NextTick()
             {
