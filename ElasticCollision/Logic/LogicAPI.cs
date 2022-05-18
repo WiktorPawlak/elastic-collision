@@ -28,22 +28,16 @@ namespace ElasticCollision.Logic
 
         private class CollisionLogic : LogicAPI
         {
-            private WorldState _state;
-            private readonly Vector _orientationPoint;
-            private readonly Vector _worldDimensions;
             private readonly DataAPI _dataLayer;
             private readonly Ticker _ticker;
 
             public CollisionLogic(DataAPI dataLayerAPI)
             {
                 _dataLayer = dataLayerAPI;
-                _orientationPoint = vec(0, 0);
-                _worldDimensions = vec(500, 500);
-                _state = new(new List<BallLogic>(), new Area(_orientationPoint, _worldDimensions));
                 _ticker = new(NextTick, 16);
             }
 
-            public override WorldState GetCurrentState() => _state;
+            public override WorldState GetCurrentState() => _dataLayer.GetState();
 
             public override void StartSimulation() => _ticker.Start();
 
@@ -51,8 +45,8 @@ namespace ElasticCollision.Logic
 
             public override void NextTick()
             {
-                _state = _state.Proceed(0.05);
-                Task.Run(() => Observable.Notify(_state));
+                _dataLayer.MoveBalls(0.05);
+                Task.Run(() => Observable.Notify(GetCurrentState()));
             }
 
             public override void AddBalls(int count, double radius, double mass)
@@ -60,12 +54,12 @@ namespace ElasticCollision.Logic
                 if (_ticker.running)
                 {
                     _ticker.Stop();
-                    _state = _state.AddBalls(count, radius, mass);
+                    _dataLayer.AddBalls(count, radius, mass);
                     _ticker.Start();
                 }
                 else
                 {
-                    _state = _state.AddBalls(count, radius, mass);
+                    _dataLayer.AddBalls(count, radius, mass);
                 }
                 Observable.Notify(_state);
             }
