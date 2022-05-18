@@ -17,8 +17,6 @@ namespace ElasticCollision.Data
             var newBalls = Balls
                 .AsParallel()
                 .Select(ball => ball
-                        .Collide(Balls)
-                        .Collide(Area)
                         .Budge(Δt));
             return this with { Balls = new List<Ball>(newBalls) };
         }
@@ -43,9 +41,10 @@ namespace ElasticCollision.Data
             return Enumerable.Range(0, count).Aggregate(this, (state, _) => state.AddBall(radius, mass));
         }
 
-        public WorldState ApplyForces(List<Vector> forces)
+        public WorldState ApplyForces(IEnumerable<Vector> forces)
         {
-            return this;
+            var newBalls = Balls.Zip(forces, (ball, force) => ball.ApplyImpulse(force));
+            return this with { Balls = new List<Ball>(newBalls) }; ;
         }
     }
 }

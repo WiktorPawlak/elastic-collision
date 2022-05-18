@@ -11,27 +11,27 @@ namespace LogicTest
     {
         public override void ApplyForces(List<Vector> forces)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public override WorldState GetState()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public override void SetState(WorldState newState)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public override void AddBalls(int count, double radius, double mass)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public override void MoveBalls(double v)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

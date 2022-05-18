@@ -5,7 +5,7 @@ namespace ElasticCollision.Data
 {
     public abstract class DataAPI
     {
-        public abstract void ApplyForces(List<Vector> forces);
+        public abstract void ApplyForces(IEnumerable<Vector> forces);
         public abstract WorldState GetState();
         public abstract void SetState(WorldState newState); // temp
         public abstract void AddBalls(int count, double radius, double mass);
@@ -28,7 +28,7 @@ namespace ElasticCollision.Data
                 _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
             }
 
-            public override void ApplyForces(List<Vector> forces)
+            public override void ApplyForces(IEnumerable<Vector> forces)
             {
                 _state = _state.ApplyForces(forces);
             }

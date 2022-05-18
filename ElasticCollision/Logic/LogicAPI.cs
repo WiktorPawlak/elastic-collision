@@ -46,6 +46,7 @@ namespace ElasticCollision.Logic
             public override void NextTick()
             {
                 _dataLayer.MoveBalls(0.05);
+                Collide();
                 IEnumerable<BallLogic> balls = GetCurrentState().Balls.Select(ball => new BallLogic(ball));
                 Task.Run(() => Observable.Notify(new List<BallLogic>(balls)));
             }
@@ -62,6 +63,14 @@ namespace ElasticCollision.Logic
                 {
                     _dataLayer.AddBalls(count, radius, mass);
                 }
+            }
+
+            private void Collide()
+            {
+                WorldState state = _dataLayer.GetState();
+                var forces = state.Balls
+                    .Select(ball => Collisions.CalculateForces(ball, state.Area, state.Balls));
+                _dataLayer.ApplyForces(forces);
             }
         }
     }

@@ -25,10 +25,10 @@ namespace LogicTest
         public void TestStarting() //unu
         {
             var ctr = new Counter();
-            var ticker = new Ticker(ctr.inc, 10);
+            var ticker = new Ticker(ctr.inc, 100);
             Assert.Equal(0, ctr.count);
             ticker.Start();
-            Thread.Sleep(5);
+            Thread.Sleep(50);
             Assert.Equal(1, ctr.count);
         }
 
@@ -45,18 +45,6 @@ namespace LogicTest
         }
 
         [Fact]
-        public void TestSpeed() //unu
-        {
-            var ctr = new Counter();
-            var ticker = new Ticker(ctr.inc, 1);
-            Assert.Equal(0, ctr.count);
-            ticker.Start();
-            Thread.Sleep(100);
-            Assert.True(80 < ctr.count);
-            Assert.True(120 > ctr.count);
-        }
-
-        [Fact]
         public void TestSpeed2() //unu
         {
             var ctr = new Counter();
@@ -64,8 +52,8 @@ namespace LogicTest
             Assert.Equal(0, ctr.count);
             ticker.Start();
             Thread.Sleep(100);
-            Assert.True(8 < ctr.count);
-            Assert.True(12 > ctr.count);
+            Assert.True(4 < ctr.count);
+            Assert.True(20 > ctr.count);
         }
 
         private class SlowCounter
@@ -87,8 +75,8 @@ namespace LogicTest
             Assert.Equal(0, ctr.count);
             ticker.Start();
             Thread.Sleep(100);
-            Assert.True(8 < ctr.count);
-            Assert.True(12 > ctr.count);
+            Assert.True(4 < ctr.count);
+            Assert.True(20 > ctr.count);
         }
         [Fact]
         public void TestTimeIndependence() //unu
@@ -98,8 +86,8 @@ namespace LogicTest
             Assert.Equal(0, ctr.count);
             ticker.Start();
             Thread.Sleep(100);
-            Assert.True(8 < ctr.count);
-            Assert.True(12 > ctr.count);
+            Assert.True(4 < ctr.count);
+            Assert.True(20 > ctr.count);
         }
 
     }
