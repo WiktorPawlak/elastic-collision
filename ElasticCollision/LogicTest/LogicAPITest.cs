@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Logic;
 using Xunit;
+using static LogicTest.DataAPITestFixture;
 
 namespace LogicTest
 {
@@ -59,6 +60,7 @@ namespace LogicTest
                 last = state;
             }
         }
+
         [Fact]
         public void TestSimulationHappens()
         {

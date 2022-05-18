@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Data;
+using System.Linq;
 using static ElasticCollision.Data.Vector;
 
 namespace ElasticCollision.Logic
@@ -10,9 +11,8 @@ namespace ElasticCollision.Logic
     public abstract class LogicAPI
     {
         public abstract WorldState GetCurrentState();
-        public Observable<WorldState> Observable = new();
+        public Observable<List<BallLogic>> Observable = new();
         // WorldObserver dostaje nowy stan świata w każdej klatce
-
         public abstract void StartSimulation();
         public abstract void NextTick(); // advance simulation by one tick
         public abstract void StopSimulation();
@@ -46,7 +46,8 @@ namespace ElasticCollision.Logic
             public override void NextTick()
             {
                 _dataLayer.MoveBalls(0.05);
-                Task.Run(() => Observable.Notify(GetCurrentState()));
+                IEnumerable<BallLogic> balls = GetCurrentState().Balls.Select(ball => new BallLogic(ball));
+                Task.Run(() => Observable.Notify(new List<BallLogic>(balls)));
             }
 
             public override void AddBalls(int count, double radius, double mass)
@@ -61,7 +62,6 @@ namespace ElasticCollision.Logic
                 {
                     _dataLayer.AddBalls(count, radius, mass);
                 }
-                Observable.Notify(_state);
             }
         }
     }

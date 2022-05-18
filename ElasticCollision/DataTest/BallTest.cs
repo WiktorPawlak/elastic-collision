@@ -1,16 +1,16 @@
 using System;
-using ElasticCollision.Logic;
+using ElasticCollision.Data;
 using Xunit;
-using static ElasticCollision.Logic.Vector;
+using static ElasticCollision.Data.Vector;
 
-namespace LogicTest
+namespace DataTest
 {
     public class BallTest
     {
         [Fact]
         public void TestModificationWorksTheWayIThinkItWorks()
         {
-            BallLogic a = new(10, 20, vec(1, 2), vec(3, 4));
+            Ball a = new(10, 20, vec(1, 2), vec(3, 4));
             var b = a with { Location = vec(10, 20) };
             Assert.Equal(vec(1, 2), a.Location);
             Assert.Equal(vec(10, 20), b.Location);
@@ -20,10 +20,10 @@ namespace LogicTest
         [Fact]
         public void TestBallsTouching()
         {
-            BallLogic a = new(5, 0, vec(0, 0), vec(0, 0));
-            BallLogic d = new(15, 0, vec(0, 0), vec(0, 0));
-            BallLogic b = new(5, 0, vec(9, 1), vec(0, 0));
-            BallLogic c = new(5, 0, vec(18, 0), vec(0, 0));
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball d = new(15, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(9, 1), vec(0, 0));
+            Ball c = new(5, 0, vec(18, 0), vec(0, 0));
             Assert.True(a.Touching(d));
             Assert.True(a.Touching(b));
             Assert.True(b.Touching(c));
@@ -34,9 +34,9 @@ namespace LogicTest
         [Fact]
         public void TestBallingArea()
         {
-            BallLogic a = new(5, 0, vec(0, 0), vec(0, 0));
-            BallLogic b = new(5, 0, vec(20, 20), vec(0, 0));
-            BallLogic d = new(15, 0, vec(0, 0), vec(0, 0));
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(20, 20), vec(0, 0));
+            Ball d = new(15, 0, vec(0, 0), vec(0, 0));
             Area ar1 = new(vec(-10, -10), vec(10, 10));
             Assert.True(a.Within(ar1));
             Assert.False(b.Within(ar1));
@@ -45,9 +45,9 @@ namespace LogicTest
         [Fact]
         public void TestMovement()
         {
-            BallLogic a = new(5, 0, vec(0, 0), vec(0, 0));
-            BallLogic b = new(5, 0, vec(0, 0), vec(1, 0));
-            BallLogic c = new(5, 0, vec(5, 0), vec(0, 5));
+            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
+            Ball b = new(5, 0, vec(0, 0), vec(1, 0));
+            Ball c = new(5, 0, vec(5, 0), vec(0, 5));
             Assert.Equal(a.Budge(0).Location, vec(0, 0));
             Assert.Equal(a.Budge(20).Location, vec(0, 0));
             Assert.Equal(b.Budge(0).Location, vec(0, 0));
@@ -59,13 +59,13 @@ namespace LogicTest
         public void TestWallCollision()
         {
             Area a = new(vec(-10, -10), vec(10, 10));
-            BallLogic b = new(5, 0, vec(0, 0), vec(1, 0));
+            Ball b = new(5, 0, vec(0, 0), vec(1, 0));
             Assert.True(b.Budge(5).Within(a));
             Assert.Equal(b.Collide(a), b);
             Assert.False(b.Budge(6).Within(a));
             Assert.Equal(b.Budge(6).Collide(a).Velocity, vec(-1, 0));
             Assert.True(b.Budge(6).Collide(a).Budge(2).Location.X <= 5);
-            BallLogic c = new(5, 0, vec(4, -4), vec(1, 1));
+            Ball c = new(5, 0, vec(4, -4), vec(1, 1));
             Assert.True(c.Budge(1).Within(a));
             Assert.Equal(c.Collide(a), c);
             Assert.False(c.Budge(3).Within(a));
@@ -75,16 +75,16 @@ namespace LogicTest
         [Fact]
         public void TestKEcalculation()
         {
-            BallLogic b = new(10, 10, vec(0, 0), vec(1, 0));
+            Ball b = new(10, 10, vec(0, 0), vec(1, 0));
             Assert.Equal(5, b.KineticEnergy);
         }
 
         [Fact]
         public void TestMomentum()
         {
-            BallLogic a = new(10, 10, vec(0, 0), vec(1, 0));
-            BallLogic b = new(10, 10, vec(0, 0), vec(0, 0));
-            BallLogic c = new(1, 1, vec(0, 0), vec(0, 0));
+            Ball a = new(10, 10, vec(0, 0), vec(1, 0));
+            Ball b = new(10, 10, vec(0, 0), vec(0, 0));
+            Ball c = new(1, 1, vec(0, 0), vec(0, 0));
             Assert.Equal(vec(10, 0), a.Momentum);
             Assert.Equal(vec(0, 0), b.Momentum);
             Assert.Equal(vec(1, 0), b.ApplyImpulse(vec(10, 0)).Velocity);
@@ -95,11 +95,11 @@ namespace LogicTest
         [Fact]
         public void TestBallApproaching()
         {
-            BallLogic a = new(10, 10, vec(0, 0), vec(0, 0));
-            BallLogic b_f = new(10, 10, vec(-1, 5), vec(1, 0));
-            BallLogic b_b = new(10, 10, vec(-1, 5), vec(-1, 0));
-            BallLogic a_f = new(10, 10, vec(1, 0), vec(1, 0));
-            BallLogic a_b = new(10, 10, vec(1, 0), vec(-10, 0));
+            Ball a = new(10, 10, vec(0, 0), vec(0, 0));
+            Ball b_f = new(10, 10, vec(-1, 5), vec(1, 0));
+            Ball b_b = new(10, 10, vec(-1, 5), vec(-1, 0));
+            Ball a_f = new(10, 10, vec(1, 0), vec(1, 0));
+            Ball a_b = new(10, 10, vec(1, 0), vec(-10, 0));
 
             Assert.True(b_f.Approaching(a));
             Assert.True(a_b.Approaching(a));
@@ -115,9 +115,9 @@ namespace LogicTest
         [Fact]
         public void TestBallImpact() //unu
         {
-            BallLogic a = new(10, 10, vec(-4, 0), vec(1, 0));
-            BallLogic b = new(10, 10, vec(4, 0), vec(-1, 0));
-            BallLogic c = new(10, 10, vec(4, 3), vec(-1, 0));
+            Ball a = new(10, 10, vec(-4, 0), vec(1, 0));
+            Ball b = new(10, 10, vec(4, 0), vec(-1, 0));
+            Ball c = new(10, 10, vec(4, 3), vec(-1, 0));
             Assert.Equal(a.CollisionImpulse(b), -b.CollisionImpulse(a));
             Assert.NotEqual(a.CollisionImpulse(b), a.CollisionImpulse(c));
             Assert.True(a.CollisionImpulse(c).Y < 0);

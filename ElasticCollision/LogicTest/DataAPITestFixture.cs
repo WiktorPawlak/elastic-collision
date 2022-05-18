@@ -7,7 +7,31 @@ using System.Threading.Tasks;
 
 namespace LogicTest
 {
-    internal class DataAPITestFixture : DataAPI
+    public class DataAPITestFixture : DataAPI
     {
+        public override void ApplyForces(List<Vector> forces)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override WorldState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetState(WorldState newState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void AddBalls(int count, double radius, double mass)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void MoveBalls(double v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

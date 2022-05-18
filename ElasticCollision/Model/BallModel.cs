@@ -8,11 +8,11 @@ namespace ElasticCollision.Presentation
         private BallLogic _ball;
         public double X
         {
-            get { return _ball.Location.X; }
+            get { return _ball.X; }
         }
         public double Y
         {
-            get { return _ball.Location.Y; }
+            get { return _ball.Y; }
         }
         public double Radius
         {

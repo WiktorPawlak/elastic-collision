@@ -30,13 +30,13 @@ namespace ElasticCollision.Presentation
             _collisionLogic.StartSimulation();
         }
 
-        public void Update(WorldState state)
+        public void Update(List<BallLogic> balls)
         {
             if (Monitor.TryEnter(_frameDrop))
             {
                 try
                 {
-                    BallModels = state.Balls.Select(ball => new BallModel(ball));
+                    BallModels = balls.Select(ball => new BallModel(ball));
                     Observable.Notify(BallModels);
                 }
                 finally
