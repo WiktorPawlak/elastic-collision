@@ -5,7 +5,7 @@ namespace ElasticCollision.Presentation
 {
     public class BallModel
     {
-        private Ball _ball;
+        private BallLogic _ball;
         public double X
         {
             get { return _ball.Location.X; }
@@ -19,7 +19,7 @@ namespace ElasticCollision.Presentation
             get { return _ball.Radius; }
         }
 
-        public BallModel(Ball ball)
+        public BallModel(BallLogic ball)
         {
             _ball = ball;
         }

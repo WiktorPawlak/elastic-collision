@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static ElasticCollision.Logic.Vector;
-namespace ElasticCollision.Logic
+using System.Text;
+
+namespace ElasticCollision.Data
 {
     public record Ball(
          double Radius,
@@ -13,13 +14,13 @@ namespace ElasticCollision.Logic
     {
         public bool Touching(Ball other)
         {
-            double distance = Distance(Location, other.Location);
+            double distance = Vector.Distance(Location, other.Location);
             double reach = Radius + other.Radius;
             return distance <= reach;
         }
+
         public Ball Budge(double Δt)
         {
-            // (っ◔◡◔)っ ♥ thesaurus ♥
             return this with { Location = Location + (Velocity * Δt) };
         }
 
@@ -40,7 +41,7 @@ namespace ElasticCollision.Logic
             if (Location.Y < shrunk.UpperLeftCorner.Y) { Y = Math.Abs(Y); }
             if (Location.Y > shrunk.LowerRightCorner.Y) { Y = -Math.Abs(Y); }
 
-            return this with { Velocity = vec(X, Y) };
+            return this with { Velocity = Vector.vec(X, Y) };
         }
         public double KineticEnergy
         {
@@ -76,8 +77,8 @@ namespace ElasticCollision.Logic
             var TotalImpulse = Neighbors
                 .Where(other => this.Touching(other) && this.Approaching(other)) // filter
                 .Select(other => this.CollisionImpulse(other)) // map
-                .Aggregate(vec(0, 0), (a, b) => a + b); // reduce
+                .Aggregate(Vector.vec(0, 0), (a, b) => a + b); // reduce
             return this.ApplyImpulse(TotalImpulse); // tylko z pozamienianymi nazwami
         }
-    };
+    }
 }

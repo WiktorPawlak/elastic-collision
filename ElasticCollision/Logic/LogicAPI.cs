@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Data;
-using static ElasticCollision.Logic.Vector;
+using static ElasticCollision.Data.Vector;
 
 namespace ElasticCollision.Logic
 {
@@ -39,7 +39,7 @@ namespace ElasticCollision.Logic
                 _dataLayer = dataLayerAPI;
                 _orientationPoint = vec(0, 0);
                 _worldDimensions = vec(500, 500);
-                _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
+                _state = new(new List<BallLogic>(), new Area(_orientationPoint, _worldDimensions));
                 _ticker = new(NextTick, 16);
             }
 

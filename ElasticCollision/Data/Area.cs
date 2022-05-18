@@ -1,8 +1,8 @@
 using System;
 using ExtensionMethods;
 
-using static ElasticCollision.Logic.Vector;
-namespace ElasticCollision.Logic
+using static ElasticCollision.Data.Vector;
+namespace ElasticCollision.Data
 {
     public record Area(
          Vector UpperLeftCorner,

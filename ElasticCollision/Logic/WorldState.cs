@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq; // my beloved
+using ElasticCollision.Data;
 using ExtensionMethods;
 namespace ElasticCollision.Logic
 {
     public record WorldState(
-         IEnumerable<Ball> Balls,
+         IEnumerable<BallLogic> Balls,
          Area Area
     )
     {
@@ -19,10 +20,10 @@ namespace ElasticCollision.Logic
                         .Collide(Balls)
                         .Collide(Area)
                         .Budge(Δt));
-            return this with { Balls = new List<Ball>(newBalls) };
+            return this with { Balls = new List<BallLogic>(newBalls) };
         }
 
-        public WorldState AddBall(Ball ball)
+        public WorldState AddBall(BallLogic ball)
         {
             return this with { Balls = Balls.Append(ball) };
         }
@@ -34,7 +35,7 @@ namespace ElasticCollision.Logic
             double y = rng.NextDoubleInRange(-100, 100);
 
             var velocity = new Vector(x, y);
-            return AddBall(new Ball(radius, mass, location, velocity));
+            return AddBall(new BallLogic(radius, mass, location, velocity));
         }
         public WorldState AddBalls(int count, double radius, double mass)
         {
