@@ -9,7 +9,7 @@ namespace LogicTest
 {
     public class DataAPITestFixture : DataAPI
     {
-        public override void ApplyForces(List<Vector> forces)
+        public override void ApplyForces(IEnumerable<Vector> forces)
         {
             return;
         }
