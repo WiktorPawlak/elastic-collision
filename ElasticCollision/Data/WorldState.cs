@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ExtensionMethods;
 
@@ -16,8 +17,9 @@ namespace ElasticCollision.Data
         {
             var newBalls = Balls
                 .AsParallel()
+                .AsOrdered()
                 .Select(ball => ball
-                        .Budge(Δt));
+                .Budge(Δt));
             return this with { Balls = new List<Ball>(newBalls) };
         }
 
@@ -44,7 +46,15 @@ namespace ElasticCollision.Data
         public WorldState ApplyForces(IEnumerable<Vector> forces)
         {
             var newBalls = Balls.Zip(forces, (ball, force) => ball.ApplyImpulse(force));
-            return this with { Balls = new List<Ball>(newBalls) }; ;
+            var newState = this with { Balls = new List<Ball>(newBalls) };
+
+            return newState.ScaleVelocity(Math.Sqrt(KinecticEnergy / newState.KinecticEnergy));
+        }
+
+        private WorldState ScaleVelocity(double scale)
+        {
+            var newBalls = Balls.Select(ball => (ball with { Velocity = ball.Velocity * scale }));
+            return this with { Balls = new List<Ball>(newBalls) };
         }
 
         public double KinecticEnergy

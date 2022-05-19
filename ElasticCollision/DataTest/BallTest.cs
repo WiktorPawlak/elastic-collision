@@ -55,22 +55,6 @@ namespace DataTest
             Assert.Equal(b.Budge(10).Location, vec(10, 0));
             Assert.Equal(c.Budge(10).Location, vec(5, 50));
         }
-        [Fact]
-        public void TestWallCollision()
-        {
-            Area a = Area.FromCorners(vec(-10, -10), vec(10, 10));
-            Ball b = new(5, 0, vec(0, 0), vec(1, 0));
-            Assert.True(b.Budge(5).Within(a));
-            Assert.Equal(b.Collide(a), b);
-            Assert.False(b.Budge(6).Within(a));
-            Assert.Equal(b.Budge(6).Collide(a).Velocity, vec(-1, 0));
-            Assert.True(b.Budge(6).Collide(a).Budge(2).Location.X <= 5);
-            Ball c = new(5, 0, vec(4, -4), vec(1, 1));
-            Assert.True(c.Budge(1).Within(a));
-            Assert.Equal(c.Collide(a), c);
-            Assert.False(c.Budge(3).Within(a));
-            Assert.Equal(c.Budge(3).Collide(a).Velocity, vec(-1, 1));
-        }
 
         [Fact]
         public void TestKEcalculation()
@@ -122,9 +106,6 @@ namespace DataTest
             Assert.NotEqual(a.CollisionImpulse(b), a.CollisionImpulse(c));
             Assert.True(a.CollisionImpulse(c).Y < 0);
             Assert.Equal(a.CollisionImpulse(b), vec(-20, 0));
-
         }
-
-
     }
 }

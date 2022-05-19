@@ -55,7 +55,7 @@ namespace ElasticCollision.Logic
                 .Aggregate(Vector.vec(0, 0), (a, b) => a + b);
         }
 
-        public static Vector CalculateForces(Ball self, Area area, IEnumerable<Ball> neighbours)
+        public static Vector CalculateForces(Ball self, Area area, List<Ball> neighbours)
         {
             return CollideBalls(self, neighbours) + CollideWalls(area, self);
         }

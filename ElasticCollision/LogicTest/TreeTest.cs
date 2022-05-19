@@ -8,7 +8,7 @@ namespace LogicTest
     public class TreeTest
     {
         [Fact]
-        public void testInitialization()
+        public void TestInitialization()
         {
             var tree = new BinaryTree(Direction.Horizontal, new(0, 100));
             Assert.False(tree.A.exists);
@@ -23,7 +23,7 @@ namespace LogicTest
             Assert.Single(tree.A.subtree.balls);
         }
         [Fact]
-        public void testNeighbors()
+        public void TestNeighbors()
         {
             var tree = new BinaryTree(Direction.Horizontal, new(0, 100));
             Ball a = new Ball(10, 10, new(45, 0), new(0, 0));

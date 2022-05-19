@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace ElasticCollision.Logic
             public CollisionLogic(DataAPI dataLayerAPI)
             {
                 _dataLayer = dataLayerAPI;
-                _ticker = new(NextTick, 16);
+                _ticker = new(NextTick, 5);
             }
 
             public override WorldState GetCurrentState() => _dataLayer.GetState();
@@ -44,7 +45,7 @@ namespace ElasticCollision.Logic
 
             public override void NextTick()
             {
-                _dataLayer.MoveBalls(0.05);
+                _dataLayer.MoveBalls(0.03);
                 Collide();
                 IEnumerable<BallLogic> balls = GetCurrentState().Balls.Select(ball => new BallLogic(ball));
                 Task.Run(() => Observable.Notify(new List<BallLogic>(balls)));
@@ -69,8 +70,13 @@ namespace ElasticCollision.Logic
                 WorldState state = _dataLayer.GetState();
                 var tree = NonBinaryTree.Create(state.Area.Shrink(-20), state.Balls);
                 var forces = state.Balls
+                    .AsParallel()
+                    .AsOrdered()
                     .Select(ball => Collisions.CalculateForces(ball, state.Area, tree.Neighbors(ball)));
                 _dataLayer.ApplyForces(forces);
+
+                Debug.WriteLine(state.Balls.Select(ball => (tree.Neighbors(ball).Count))
+                                           .Average());
             }
         }
     }
