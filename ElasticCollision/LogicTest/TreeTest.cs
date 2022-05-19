@@ -11,16 +11,16 @@ namespace LogicTest
         public void TestInitialization()
         {
             var tree = new BinaryTree(Direction.Horizontal, new(0, 100));
-            Assert.False(tree.A.exists);
-            Assert.False(tree.B.exists);
+            Assert.False(tree.A.Exists);
+            Assert.False(tree.B.Exists);
             tree.Insert(new Ball(10, 10, new(45, 0), new(0, 0)));
-            Assert.False(tree.A.exists);
-            Assert.False(tree.B.exists);
-            Assert.Single(tree.balls);
+            Assert.False(tree.A.Exists);
+            Assert.False(tree.B.Exists);
+            Assert.Single(tree.Balls);
             tree.Insert(new Ball(10, 10, new(20, 0), new(0, 0)));
-            Assert.Single(tree.A.subtree.balls);
+            Assert.Single(tree.A.Subtree.Balls);
             tree.Insert(new Ball(10, 10, new(10, 0), new(0, 0)));
-            Assert.Single(tree.A.subtree.balls);
+            Assert.Single(tree.A.Subtree.Balls);
         }
         [Fact]
         public void TestNeighbors()

@@ -11,20 +11,20 @@ namespace ElasticCollision.Logic
     {
         public class Child
         {
-            public Area area { get; }
+            public Area Area { get; }
             private NonBinaryTree _tree;
-            public bool exists { get { return _tree != null; } }
-            public NonBinaryTree subtree
+            public bool Exists { get { return _tree != null; } }
+            public NonBinaryTree Subtree
             {
                 get
                 {
-                    if (_tree == null) _tree = new NonBinaryTree(area);
+                    if (_tree == null) _tree = new NonBinaryTree(Area);
                     return _tree;
                 }
             }
             public Child(Area area)
             {
-                this.area = area;
+                this.Area = area;
             }
         }
 
@@ -56,15 +56,15 @@ namespace ElasticCollision.Logic
         }
         public void Insert(Ball ball)
         {
-            if (ball.Within(A.area)) { A.subtree.Insert(ball); }
-            else if (ball.Within(B.area)) { B.subtree.Insert(ball); }
+            if (ball.Within(A.Area)) { A.Subtree.Insert(ball); }
+            else if (ball.Within(B.Area)) { B.Subtree.Insert(ball); }
             else { bals.Insert(ball); }
         }
         public List<Ball> Neighbors(Ball ball)
         {
             IEnumerable<Ball> tmp = bals.Neighbors(ball);
-            if (ball.Intersects(A.area) && A.exists) tmp = tmp.Concat(A.subtree.Neighbors(ball));
-            if (ball.Intersects(B.area) && B.exists) tmp = tmp.Concat(B.subtree.Neighbors(ball));
+            if (ball.Intersects(A.Area) && A.Exists) tmp = tmp.Concat(A.Subtree.Neighbors(ball));
+            if (ball.Intersects(B.Area) && B.Exists) tmp = tmp.Concat(B.Subtree.Neighbors(ball));
             return new List<Ball>(tmp);
         }
         public static NonBinaryTree Create(Area area, IEnumerable<Ball> balls)
@@ -84,28 +84,28 @@ namespace ElasticCollision.Logic
     {
         public class Child
         {
-            public Interval interval { get; }
+            public Interval Interval { get; }
             private BinaryTree _tree;
-            private Direction _dir;
-            public bool exists { get { return _tree != null; } }
-            public BinaryTree subtree
+            private readonly Direction _dir;
+            public bool Exists { get { return _tree != null; } }
+            public BinaryTree Subtree
             {
                 get
                 {
-                    if (_tree == null) _tree = new BinaryTree(_dir, interval);
+                    if (_tree == null) _tree = new BinaryTree(_dir, Interval);
                     return _tree;
                 }
             }
             public Child(Interval basis, Direction dir)
             {
-                interval = basis;
+                Interval = basis;
                 _dir = dir;
             }
         }
 
 
-        public List<Ball> balls { get; }
-        public Direction dir { get; }
+        public List<Ball> Balls { get; }
+        public Direction Dir { get; }
         public Child A;
         public Child B;
         public BinaryTree(Direction dir, Interval basis)
@@ -113,27 +113,27 @@ namespace ElasticCollision.Logic
             var (a, b) = basis.Split();
             A = new(a, dir);
             B = new(b, dir);
-            this.dir = dir;
-            balls = new List<Ball>();
+            this.Dir = dir;
+            Balls = new List<Ball>();
         }
 
         public void Insert(Ball ball)
         {
-            if (Fits(A.interval, ball)) { A.subtree.Insert(ball); }
-            else if (Fits(B.interval, ball)) { B.subtree.Insert(ball); }
-            else { balls.Add(ball); }
+            if (Fits(A.Interval, ball)) { A.Subtree.Insert(ball); }
+            else if (Fits(B.Interval, ball)) { B.Subtree.Insert(ball); }
+            else { Balls.Add(ball); }
         }
 
         public List<Ball> Neighbors(Ball ball)
         {
-            IEnumerable<Ball> tmp = balls;
-            if (Intersects(A.interval, ball) && A.exists) tmp = tmp.Concat(A.subtree.Neighbors(ball));
-            if (Intersects(B.interval, ball) && B.exists) tmp = tmp.Concat(B.subtree.Neighbors(ball));
+            IEnumerable<Ball> tmp = Balls;
+            if (Intersects(A.Interval, ball) && A.Exists) tmp = tmp.Concat(A.Subtree.Neighbors(ball));
+            if (Intersects(B.Interval, ball) && B.Exists) tmp = tmp.Concat(B.Subtree.Neighbors(ball));
             return new List<Ball>(tmp);
         }
         private double RelevantLocation(Vector loc)
         {
-            return (dir == Direction.Horizontal) ? loc.X : loc.Y;
+            return (Dir == Direction.Horizontal) ? loc.X : loc.Y;
 
         }
         private bool Fits(Interval interval, Ball ball)
