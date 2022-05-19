@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Data;
 using System.Linq;
-using static ElasticCollision.Data.Vector;
 
 namespace ElasticCollision.Logic
 {

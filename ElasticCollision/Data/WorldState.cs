@@ -46,5 +46,14 @@ namespace ElasticCollision.Data
             var newBalls = Balls.Zip(forces, (ball, force) => ball.ApplyImpulse(force));
             return this with { Balls = new List<Ball>(newBalls) }; ;
         }
+
+        public double KinecticEnergy
+        {
+            get
+            {
+                return Balls.Select(ball => ball.KineticEnergy)
+                  .Sum();
+            }
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace ElasticCollision.Data
 
             return this with { Velocity = Vector.vec(X, Y) };
         }
+
         public double KineticEnergy
         {
             get
@@ -51,6 +52,7 @@ namespace ElasticCollision.Data
                 return speed * speed * Mass * 0.5;
             }
         }
+
         public Vector Momentum { get { return Velocity * Mass; } }
 
         public Ball ApplyImpulse(Vector Momentum)

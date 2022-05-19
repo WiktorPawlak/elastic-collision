@@ -33,11 +33,6 @@ namespace ElasticCollision.Logic
             return 2 * arm * ball.Mass;
         }
 
-        public static Vector Momentum(Ball ball)
-        {
-            return ball.Velocity * ball.Mass;
-        }
-
         public static bool Approaching(Ball a, Ball b)
         {
             var direction = b.Location - a.Location;
