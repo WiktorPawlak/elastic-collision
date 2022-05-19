@@ -28,6 +28,10 @@ namespace ElasticCollision.Data
         {
             return area.Shrink(Radius).Contains(Location);
         }
+        public bool Intersects(Area area)
+        {
+            return area.Shrink(-2 * Radius).Contains(Location);
+        }
 
         public Ball Collide(Area area)
         {

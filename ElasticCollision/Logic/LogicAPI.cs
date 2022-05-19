@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ElasticCollision.Data;
-using System.Linq;
 
 namespace ElasticCollision.Logic
 {
@@ -67,8 +67,9 @@ namespace ElasticCollision.Logic
             private void Collide()
             {
                 WorldState state = _dataLayer.GetState();
+                var tree = NonBinaryTree.Create(state.Area.Shrink(-20), state.Balls);
                 var forces = state.Balls
-                    .Select(ball => Collisions.CalculateForces(ball, state.Area, state.Balls));
+                    .Select(ball => Collisions.CalculateForces(ball, state.Area, tree.Neighbors(ball)));
                 _dataLayer.ApplyForces(forces);
             }
         }

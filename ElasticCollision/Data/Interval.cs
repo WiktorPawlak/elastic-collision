@@ -8,6 +8,7 @@ namespace ElasticCollision.Data
     public record Interval(double low, double high)
     {
         public double midpoint { get { return (low + high) / 2; } }
+        public double length { get { return (high - low); } }
 
         public Interval Shrink(double r) => new Interval(low + r, high - r);
 
