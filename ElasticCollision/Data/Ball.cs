@@ -35,11 +35,11 @@ namespace ElasticCollision.Data
             var X = Velocity.X;
             var Y = Velocity.Y;
 
-            if (Location.X < shrunk.UpperLeftCorner.X) { X = Math.Abs(X); }
-            if (Location.X > shrunk.LowerRightCorner.X) { X = -Math.Abs(X); }
+            if (Location.X < shrunk.Left) { X = Math.Abs(X); }
+            if (Location.X > shrunk.Right) { X = -Math.Abs(X); }
 
-            if (Location.Y < shrunk.UpperLeftCorner.Y) { Y = Math.Abs(Y); }
-            if (Location.Y > shrunk.LowerRightCorner.Y) { Y = -Math.Abs(Y); }
+            if (Location.Y < shrunk.Top) { Y = Math.Abs(Y); }
+            if (Location.Y > shrunk.Bottom) { Y = -Math.Abs(Y); }
 
             return this with { Velocity = Vector.vec(X, Y) };
         }

@@ -5,8 +5,8 @@ using static ElasticCollision.Data.Vector;
 namespace ElasticCollision.Data
 {
     public record Area(
-         Vector UpperLeftCorner,
-         Vector LowerRightCorner
+         Interval Horizontal,
+         Interval Vertical
     )
     {
 
@@ -14,23 +14,26 @@ namespace ElasticCollision.Data
         public double Bottom { get { return LowerRightCorner.Y; } }
         public double Left { get { return UpperLeftCorner.X; } }
         public double Right { get { return LowerRightCorner.X; } }
+        public Vector UpperLeftCorner { get { return vec(Horizontal.low, Vertical.low); } }
+        public Vector LowerRightCorner { get { return vec(Horizontal.high, Vertical.high); } }
+
+        public static Area FromCorners(Vector tl, Vector br)
+        {
+            var vert = new Interval(tl.Y, br.Y);
+            var hori = new Interval(tl.X, br.X);
+            return new Area(hori, vert);
+        }
+
         public Area Shrink(double r)
         {
-            return new Area(UpperLeftCorner + vec(r, r),
-                   LowerRightCorner - vec(r, r));
+            return new Area(Horizontal.Shrink(r), Vertical.Shrink(r));
         }
+
         public bool Contains(Vector loc)
         {
-            return ContainsVertically(loc) && ContainsHorizontally(loc);
+            return Vertical.contains(loc.Y) && Horizontal.contains(loc.X);
         }
-        public bool ContainsVertically(Vector loc)
-        {
-            return Top <= loc.Y && loc.Y <= Bottom;
-        }
-        public bool ContainsHorizontally(Vector loc)
-        {
-            return Left <= loc.X && loc.X <= Right;
-        }
+
         private static readonly Random rng = new Random();
 
         public Vector GetRandomLocation()
@@ -45,22 +48,18 @@ namespace ElasticCollision.Data
         ///  o
         public (Area, Area) SplitHorizontally()
         {
-            var midpoint = (Top + Bottom) / 2;
-            var left = vec(Left, midpoint);
-            var right = vec(Right, midpoint);
-            return (this with { LowerRightCorner = right },
-               this with { UpperLeftCorner = left });
+            var (top, bottom) = Vertical.Split();
+            return (this with { Vertical = top },
+               this with { Vertical = bottom });
         }
         ///  |
         /// o|o
         ///  |
         public (Area, Area) SplitVertically()
         {
-            var midpoint = (Left + Right) / 2;
-            var top = vec(midpoint, Top);
-            var bottom = vec(midpoint, Bottom);
-            return (this with { LowerRightCorner = bottom },
-               this with { UpperLeftCorner = top });
+            var (left, right) = Horizontal.Split();
+            return (this with { Horizontal = left },
+               this with { Horizontal = right });
         }
 
     }

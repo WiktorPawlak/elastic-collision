@@ -10,7 +10,7 @@ namespace DataTest
         [Fact]
         public void TestGettingRandomLocation()
         {
-            Area a = new(vec(3, 3), vec(9, 9));
+            Area a = Area.FromCorners(vec(3, 3), vec(9, 9));
             for (var i = 0; i < 50; i++)
             {
                 Assert.True(a.Contains(a.GetRandomLocation()));
@@ -21,7 +21,7 @@ namespace DataTest
         {
             var TopLeft = vec(0, 10);
             var BottomRight = vec(20, 60);
-            Area a = new(TopLeft, BottomRight);
+            Area a = Area.FromCorners(TopLeft, BottomRight);
             Assert.Equal(0, a.Left);
             Assert.Equal(20, a.Right);
             Assert.Equal(10, a.Top);
@@ -33,7 +33,7 @@ namespace DataTest
         {
             var TopLeft = vec(0, 0);
             var BottomRight = vec(20, 60);
-            Area parent = new(TopLeft, BottomRight);
+            Area parent = Area.FromCorners(TopLeft, BottomRight);
             var (h1, h2) = parent.SplitHorizontally();
             var (v1, v2) = parent.SplitVertically();
             // unchanged
@@ -52,5 +52,18 @@ namespace DataTest
 
 
         }
+        [Fact]
+        public void TestShrinking()
+        {
+            Area a = new(new(0, 10), new(0, 10));
+            Area minus1 = new(new(1, 9), new(1, 9));
+            Assert.Equal(minus1, a.Shrink(1));
+            Area b = new(new(-10, 10), new(0, 5));
+            Area bminus1 = new(new(-9, 9), new(1, 4));
+            Area bplus1 = new(new(-11, 11), new(-1, 6));
+            Assert.Equal(bminus1, b.Shrink(1));
+            Assert.Equal(bplus1, b.Shrink(-1));
+        }
+
     }
 }

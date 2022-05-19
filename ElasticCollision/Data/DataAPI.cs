@@ -25,7 +25,7 @@ namespace ElasticCollision.Data
             {
                 _orientationPoint = Vector.vec(0, 0);
                 _worldDimensions = Vector.vec(500, 500);
-                _state = new(new List<Ball>(), new Area(_orientationPoint, _worldDimensions));
+                _state = new(new List<Ball>(), Area.FromCorners(_orientationPoint, _worldDimensions));
             }
 
             public override void ApplyForces(IEnumerable<Vector> forces)

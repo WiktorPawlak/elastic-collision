@@ -37,7 +37,7 @@ namespace DataTest
             Ball a = new(5, 0, vec(0, 0), vec(0, 0));
             Ball b = new(5, 0, vec(20, 20), vec(0, 0));
             Ball d = new(15, 0, vec(0, 0), vec(0, 0));
-            Area ar1 = new(vec(-10, -10), vec(10, 10));
+            Area ar1 = Area.FromCorners(vec(-10, -10), vec(10, 10));
             Assert.True(a.Within(ar1));
             Assert.False(b.Within(ar1));
             Assert.False(d.Within(ar1));
@@ -58,7 +58,7 @@ namespace DataTest
         [Fact]
         public void TestWallCollision()
         {
-            Area a = new(vec(-10, -10), vec(10, 10));
+            Area a = Area.FromCorners(vec(-10, -10), vec(10, 10));
             Ball b = new(5, 0, vec(0, 0), vec(1, 0));
             Assert.True(b.Budge(5).Within(a));
             Assert.Equal(b.Collide(a), b);
