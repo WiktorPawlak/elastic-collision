@@ -17,19 +17,6 @@ namespace DataTest
             Assert.Equal(vec(3, 4), b.Velocity);
 
         }
-        [Fact]
-        public void TestBallsTouching()
-        {
-            Ball a = new(5, 0, vec(0, 0), vec(0, 0));
-            Ball d = new(15, 0, vec(0, 0), vec(0, 0));
-            Ball b = new(5, 0, vec(9, 1), vec(0, 0));
-            Ball c = new(5, 0, vec(18, 0), vec(0, 0));
-            Assert.True(a.Touching(d));
-            Assert.True(a.Touching(b));
-            Assert.True(b.Touching(c));
-            Assert.False(a.Touching(c));
-            Assert.True(d.Touching(c));
-        }
 
         [Fact]
         public void TestBallingArea()
@@ -76,36 +63,6 @@ namespace DataTest
             Assert.Equal(vec(10, 0), c.ApplyImpulse(vec(10, 0)).Velocity);
         }
 
-        [Fact]
-        public void TestBallApproaching()
-        {
-            Ball a = new(10, 10, vec(0, 0), vec(0, 0));
-            Ball b_f = new(10, 10, vec(-1, 5), vec(1, 0));
-            Ball b_b = new(10, 10, vec(-1, 5), vec(-1, 0));
-            Ball a_f = new(10, 10, vec(1, 0), vec(1, 0));
-            Ball a_b = new(10, 10, vec(1, 0), vec(-10, 0));
 
-            Assert.True(b_f.Approaching(a));
-            Assert.True(a_b.Approaching(a));
-
-            Assert.False(a.Approaching(a));
-            Assert.False(a_f.Approaching(a_f));
-
-            Assert.False(b_b.Approaching(a));
-            Assert.False(a_f.Approaching(a));
-        }
-
-
-        [Fact]
-        public void TestBallImpact() //unu
-        {
-            Ball a = new(10, 10, vec(-4, 0), vec(1, 0));
-            Ball b = new(10, 10, vec(4, 0), vec(-1, 0));
-            Ball c = new(10, 10, vec(4, 3), vec(-1, 0));
-            Assert.Equal(a.CollisionImpulse(b), -b.CollisionImpulse(a));
-            Assert.NotEqual(a.CollisionImpulse(b), a.CollisionImpulse(c));
-            Assert.True(a.CollisionImpulse(c).Y < 0);
-            Assert.Equal(a.CollisionImpulse(b), vec(-20, 0));
-        }
     }
 }

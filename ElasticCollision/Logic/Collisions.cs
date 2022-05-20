@@ -1,7 +1,7 @@
-using ElasticCollision.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ElasticCollision.Data;
 
 namespace ElasticCollision.Logic
 {
