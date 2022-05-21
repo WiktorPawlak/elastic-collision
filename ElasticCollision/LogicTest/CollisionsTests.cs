@@ -18,10 +18,10 @@ namespace ElasticCollision.Logic.Tests
         {
             Area a = Area.FromCorners(vec(-10, -10), vec(10, 10));
             Ball b = new(5, 1, vec(0, 0), vec(1, 0));
-            Assert.True(b.Budge(5).Within(a));
+            Assert.True(a.FullyContains(b.Budge(5)));
             Assert.Equal(vec(0, 0), CollideWalls(a, b));
             Assert.Equal(b.ApplyImpulse(CollideWalls(a, b)), b);
-            Assert.False(b.Budge(6).Within(a));
+            Assert.False(a.FullyContains(b.Budge(6)));
             Ball budged = b.Budge(6);
             Assert.Equal(budged.ApplyImpulse(CollideWalls(a, budged)).Velocity, vec(-1, 0));
             Ball c = new(5, 1, vec(4, -4), vec(1, 1));

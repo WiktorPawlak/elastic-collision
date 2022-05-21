@@ -10,22 +10,22 @@ namespace LogicTest
         [Fact]
         public void TestInitialization()
         {
-            var tree = new BinaryTree(Direction.Horizontal, new(0, 100));
-            Assert.False(tree.A.Exists);
-            Assert.False(tree.B.Exists);
+            var tree = new BinaryTree(new HorizontalInterval(0, 100));
+            Assert.False(tree.Initialized);
             tree.Insert(new Ball(10, 10, new(45, 0), new(0, 0)));
-            Assert.False(tree.A.Exists);
-            Assert.False(tree.B.Exists);
+            Assert.True(tree.Initialized);
+            Assert.False(tree.A.Initialized);
+            Assert.False(tree.B.Initialized);
             Assert.Single(tree.Balls);
             tree.Insert(new Ball(10, 10, new(20, 0), new(0, 0)));
-            Assert.Single(tree.A.Subtree.Balls);
+            Assert.Single(tree.A.Balls);
             tree.Insert(new Ball(10, 10, new(10, 0), new(0, 0)));
-            Assert.Single(tree.A.Subtree.Balls);
+            Assert.Single(tree.A.Balls);
         }
         [Fact]
         public void TestNeighbors()
         {
-            var tree = new BinaryTree(Direction.Horizontal, new(0, 100));
+            var tree = new BinaryTree(new HorizontalInterval(0, 100));
             Ball a = new Ball(10, 10, new(45, 0), new(0, 0));
             Ball b = new Ball(10, 10, new(40, 0), new(0, 0));
             Ball c = new Ball(1, 1, new(5, 0), new(0, 0));
