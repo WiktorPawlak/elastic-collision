@@ -22,10 +22,7 @@ namespace ElasticCollision.Logic
         public bool Initialized { get; private set; } = false;
 
 
-        public Tree(Section basis)
-        {
-            Basis = basis;
-        }
+        public Tree(Section basis) => Basis = basis;
 
         private void MakeChildren()
         {
@@ -37,6 +34,7 @@ namespace ElasticCollision.Logic
                 Initialized = true;
             }
         }
+
         protected abstract Tree CreateChild(Section s);
 
         public void Insert(Ball ball)
@@ -60,19 +58,24 @@ namespace ElasticCollision.Logic
             else { return Container.Neighbors(ball); }
         }
     }
-    public class BallList : BallContainer
-    {
-        private List<Ball> _lst;
-        public BallList() => _lst = new List<Ball>();
-        public void Insert(Ball b) => _lst.Add(b);
-        public List<Ball> Neighbors(Ball b) => _lst;
-    }
 
+    // one-dimensional tree, uses List as storage
     public class BinaryTree : Tree
     {
+        // just a list wrapper
+        private class BallList : BallContainer
+        {
+            private List<Ball> _lst;
+            public BallList() => _lst = new List<Ball>();
+            public void Insert(Ball b) => _lst.Add(b);
+            public List<Ball> Neighbors(Ball b) => _lst;
+        }
+
         public BinaryTree(Section s) : base(s) => Container = new BallList();
         protected override Tree CreateChild(Section s) => new BinaryTree(s);
     }
+
+    // two-dimensional tree, uses BinaryTree as storage
     public class NonBinaryTree : Tree
     {
         public NonBinaryTree(Section s) : base(s)
@@ -80,14 +83,13 @@ namespace ElasticCollision.Logic
             var a = (Area)s;
             Container = new BinaryTree(a.ShorterInterval());
         }
+
         protected override Tree CreateChild(Section s) => new NonBinaryTree(s);
+
         public static NonBinaryTree MakeTree(Area area, IEnumerable<Ball> balls)
         {
             var tree = new NonBinaryTree(area);
-            foreach (var ball in balls)
-            {
-                tree.Insert(ball);
-            }
+            foreach (var ball in balls) { tree.Insert(ball); }
             return tree;
         }
     }
