@@ -19,8 +19,9 @@ namespace ElasticCollision.Data
                 .AsParallel()
                 .AsOrdered()
                 .Select(ball => ball
-                .Budge(Δt));
-            return this with { Balls = new List<Ball>(newBalls) };
+                .Budge(Δt))
+                .ToList();
+            return this with { Balls = newBalls };
         }
 
         public WorldState AddBall(Ball ball)
@@ -45,16 +46,16 @@ namespace ElasticCollision.Data
 
         public WorldState ApplyForces(IEnumerable<Vector> forces)
         {
-            var newBalls = Balls.Zip(forces, (ball, force) => ball.ApplyImpulse(force));
-            var newState = this with { Balls = new List<Ball>(newBalls) };
+            var newBalls = Balls.Zip(forces, (ball, force) => ball.ApplyImpulse(force)).ToList();
+            var newState = this with { Balls = newBalls };
 
             return newState.ScaleVelocity(Math.Sqrt(KinecticEnergy / newState.KinecticEnergy));
         }
 
         private WorldState ScaleVelocity(double scale)
         {
-            var newBalls = Balls.Select(ball => (ball with { Velocity = ball.Velocity * scale }));
-            return this with { Balls = new List<Ball>(newBalls) };
+            var newBalls = Balls.Select(ball => (ball with { Velocity = ball.Velocity * scale })).ToList();
+            return this with { Balls = newBalls };
         }
 
         public double KinecticEnergy
