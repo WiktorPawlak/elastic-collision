@@ -79,21 +79,24 @@ namespace ElasticCollision.Logic
         }
     }
 
-
-
-    public class BinaryTree
+    public interface BallContainer
     {
-        public List<Ball> Balls { get; private set; }
-        public BinaryTree A { get; private set; }
-        public BinaryTree B { get; private set; }
+        public void Insert(Ball b);
+        public List<Ball> Neighbors(Ball b);
+    }
+
+    public abstract class Tree : BallContainer
+    {
+        public BallContainer Container { get; protected set; }
+        public Tree A { get; private set; }
+        public Tree B { get; private set; }
         public Section Basis { get; private set; }
         public bool Initialized { get; private set; } = false;
 
 
-        public BinaryTree(Section basis)
+        public Tree(Section basis)
         {
             Basis = basis;
-            Balls = new List<Ball>();
         }
 
         private void MakeChildren()
@@ -101,18 +104,19 @@ namespace ElasticCollision.Logic
             if (!Initialized)
             {
                 var (a, b) = Basis.SplitSection();
-                A = new BinaryTree(a);
-                B = new BinaryTree(b);
+                A = Create(a);
+                B = Create(b);
                 Initialized = true;
             }
         }
+        protected abstract Tree Create(Section s);
 
         public void Insert(Ball ball)
         {
             MakeChildren();
             if (A.Basis.FullyContains(ball)) { A.Insert(ball); }
             else if (B.Basis.FullyContains(ball)) { B.Insert(ball); }
-            else { Balls.Add(ball); }
+            else { Container.Insert(ball); }
         }
 
         public List<Ball> Neighbors(Ball ball)
@@ -120,12 +124,25 @@ namespace ElasticCollision.Logic
             if (!Basis.Intersects(ball)) { return new List<Ball>(); }
             else if (Initialized)
             {
-                return Balls
+                return Container.Neighbors(ball)
                     .Concat(A.Neighbors(ball))
                     .Concat(B.Neighbors(ball))
                     .ToList();
             }
-            else { return Balls; }
+            else { return Container.Neighbors(ball); }
         }
+    }
+    public class BallList : BallContainer
+    {
+        private List<Ball> _lst;
+        public BallList() => _lst = new List<Ball>();
+        public void Insert(Ball b) => _lst.Add(b);
+        public List<Ball> Neighbors(Ball b) => _lst;
+    }
+
+    public class BinaryTree : Tree
+    {
+        public BinaryTree(Section s) : base(s) => Container = new BallList();
+        protected override Tree Create(Section s) => new BinaryTree(s);
     }
 }

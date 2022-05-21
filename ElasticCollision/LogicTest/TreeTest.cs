@@ -16,11 +16,11 @@ namespace LogicTest
             Assert.True(tree.Initialized);
             Assert.False(tree.A.Initialized);
             Assert.False(tree.B.Initialized);
-            Assert.Single(tree.Balls);
+            Assert.Single(tree.Container.Neighbors(null));
             tree.Insert(new Ball(10, 10, new(20, 0), new(0, 0)));
-            Assert.Single(tree.A.Balls);
+            Assert.Single(tree.A.Container.Neighbors(null));
             tree.Insert(new Ball(10, 10, new(10, 0), new(0, 0)));
-            Assert.Single(tree.A.Balls);
+            Assert.Single(tree.A.Container.Neighbors(null));
         }
         [Fact]
         public void TestNeighbors()
