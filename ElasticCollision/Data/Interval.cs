@@ -1,7 +1,3 @@
-using System;
-using ExtensionMethods;
-
-using static ElasticCollision.Data.Vector;
 namespace ElasticCollision.Data
 {
 
@@ -20,22 +16,23 @@ namespace ElasticCollision.Data
                this with { low = midpoint });
         }
     }
-    public record HorizontalInterval(double low, double high) : Interval(low, high), Section
+    public abstract record DirectionalInterval(double low, double high) : Interval(low, high), Section
     {
-        public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(b.Location.X);
+        public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(Selector(b.Location));
 
-        public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location.X);
+        public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(Selector(b.Location));
 
-        // static typing and its consequences
+        protected abstract double Selector(Vector v);
         public (Section, Section) SplitSection() => (this with { high = midpoint }, this with { low = midpoint });
+    }
+
+    public record HorizontalInterval(double low, double high) : DirectionalInterval(low, high)
+    {
+        protected override double Selector(Vector v) => v.X;
 
     }
-    public record VerticalInterval(double low, double high) : Interval(low, high), Section
+    public record VerticalInterval(double low, double high) : DirectionalInterval(low, high)
     {
-        public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(b.Location.Y);
-
-        public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location.Y);
-
-        public (Section, Section) SplitSection() => (this with { high = midpoint }, this with { low = midpoint });
+        protected override double Selector(Vector v) => v.Y;
     }
 }
