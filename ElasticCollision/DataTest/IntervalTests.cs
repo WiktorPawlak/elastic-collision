@@ -25,8 +25,13 @@ namespace DataTest
             Assert.Equal(10, r.high);
             var h = new HorizontalInterval(0, 10);
             var (hl, hr) = h.Split();
+            var (hll, hrr) = h.SplitSection();
             Assert.Same(h.GetType(), hl.GetType());
             Assert.Same(h.GetType(), hr.GetType());
+            Assert.Same(hl.GetType(), hll.GetType());
+            Assert.NotSame(l.GetType(), hll.GetType());
+            Assert.Same(h.GetType(), hrr.GetType());
+
         }
         [Fact]
         public void TestSection()

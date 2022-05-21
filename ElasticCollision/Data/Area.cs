@@ -62,6 +62,12 @@ namespace ElasticCollision.Data
                this with { Horizontal = right });
         }
 
+        public (Section, Section) SplitSection()
+        {
+            if (Horizontal.length > Vertical.length) { return SplitVertically(); }
+            else { return SplitHorizontally(); }
+        }
+
         public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(b.Location);
 
         public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location);

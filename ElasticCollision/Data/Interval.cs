@@ -13,6 +13,7 @@ namespace ElasticCollision.Data
         public Interval Shrink(double r) => new Interval(low + r, high - r);
 
         public bool Contains(double loc) => low <= loc && loc <= high;
+
         public (Interval, Interval) Split()
         {
             return (this with { high = midpoint },
@@ -25,6 +26,9 @@ namespace ElasticCollision.Data
 
         public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location.X);
 
+        // static typing and its consequences
+        public (Section, Section) SplitSection() => (this with { high = midpoint }, this with { low = midpoint });
+
     }
     public record VerticalInterval(double low, double high) : Interval(low, high), Section
     {
@@ -32,5 +36,6 @@ namespace ElasticCollision.Data
 
         public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location.Y);
 
+        public (Section, Section) SplitSection() => (this with { high = midpoint }, this with { low = midpoint });
     }
 }

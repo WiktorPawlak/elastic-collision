@@ -10,5 +10,6 @@ namespace ElasticCollision.Data
 
         bool Intersects(Ball b);
 
+        (Section, Section) SplitSection();
     }
 }
