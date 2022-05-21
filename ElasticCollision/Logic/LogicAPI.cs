@@ -68,7 +68,7 @@ namespace ElasticCollision.Logic
             private void Collide()
             {
                 WorldState state = _dataLayer.GetState();
-                var tree = NonBinaryTree.Create(state.Area.Shrink(-20), state.Balls);
+                var tree = NonBinaryTree.MakeTree(state.Area.Shrink(-20), state.Balls);
                 var forces = state.Balls
                     .AsParallel()
                     .AsOrdered()

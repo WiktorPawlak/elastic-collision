@@ -62,11 +62,20 @@ namespace ElasticCollision.Data
                this with { Horizontal = right });
         }
 
+        private bool isWiderThanTaller() => Horizontal.length > Vertical.length;
+
         public (Section, Section) SplitSection()
         {
-            if (Horizontal.length > Vertical.length) { return SplitVertically(); }
+            if (isWiderThanTaller()) { return SplitVertically(); }
             else { return SplitHorizontally(); }
         }
+
+        public DirectionalInterval ShorterInterval()
+        {
+            if (isWiderThanTaller()) { return new VerticalInterval(Vertical.low, Vertical.high); }
+            else { return new HorizontalInterval(Horizontal.low, Horizontal.high); }
+        }
+
 
         public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(b.Location);
 
