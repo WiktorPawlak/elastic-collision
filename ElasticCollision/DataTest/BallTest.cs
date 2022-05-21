@@ -25,9 +25,9 @@ namespace DataTest
             Ball b = new(5, 0, vec(20, 20), vec(0, 0));
             Ball d = new(15, 0, vec(0, 0), vec(0, 0));
             Area ar1 = Area.FromCorners(vec(-10, -10), vec(10, 10));
-            Assert.True(a.Within(ar1));
-            Assert.False(b.Within(ar1));
-            Assert.False(d.Within(ar1));
+            Assert.True(ar1.FullyContains(a));
+            Assert.False(ar1.FullyContains(b));
+            Assert.False(ar1.FullyContains(d));
         }
         [Fact]
         public void TestMovement()

@@ -15,10 +15,6 @@ namespace ElasticCollision.Data
 
         public Ball Budge(double Δt) => this with { Location = Location + (Velocity * Δt) };
 
-        public bool Within(Area area) => area.Shrink(Radius).Contains(Location);
-
-        public bool Intersects(Area area) => area.Shrink(-Radius).Contains(Location);
-
         public Vector Momentum { get { return Velocity * Mass; } }
 
         public Ball ApplyImpulse(Vector Momentum) => this with { Velocity = Velocity + Momentum * (1 / Mass) };

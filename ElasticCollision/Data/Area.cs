@@ -7,7 +7,7 @@ namespace ElasticCollision.Data
     public record Area(
          Interval Horizontal,
          Interval Vertical
-    )
+    ) : Section
     {
 
         public double Top { get { return UpperLeftCorner.Y; } }
@@ -31,7 +31,7 @@ namespace ElasticCollision.Data
 
         public bool Contains(Vector loc)
         {
-            return Vertical.contains(loc.Y) && Horizontal.contains(loc.X);
+            return Vertical.Contains(loc.Y) && Horizontal.Contains(loc.X);
         }
 
         private static readonly Random rng = new Random();
@@ -61,6 +61,10 @@ namespace ElasticCollision.Data
             return (this with { Horizontal = left },
                this with { Horizontal = right });
         }
+
+        public bool FullyContains(Ball b) => Shrink(b.Radius).Contains(b.Location);
+
+        public bool Intersects(Ball b) => Shrink(-b.Radius).Contains(b.Location);
 
     }
 }
