@@ -53,7 +53,7 @@ namespace ElasticCollision.Logic
 
             public override void AddBalls(int count, double radius, double mass)
             {
-                if (_ticker.running)
+                if (_ticker.Running)
                 {
                     _ticker.Stop();
                     _dataLayer.AddBalls(count, radius, mass);

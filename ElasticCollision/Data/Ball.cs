@@ -27,6 +27,35 @@ namespace ElasticCollision.Data
                 return speed * speed * Mass * 0.5;
             }
         }
+    }
 
+    public class MobileBall
+    {
+        private readonly Ticker _ticker;
+        private Ball _ball;
+        private readonly int _index;
+
+        public delegate Vector CheckCollisionDelegate(Ball b, int index);
+        private CheckCollisionDelegate CheckCollision { get; }
+
+        public MobileBall(Ball ball, int index, CheckCollisionDelegate onBallMoved)
+        {
+            _ticker = new Ticker(Proceed, 5);
+            _ball = ball;
+            _index = index;
+            CheckCollision = onBallMoved;
+            _ticker.Start();
+        }
+
+        public void Proceed()
+        {
+            _ball = _ball.Budge(0.03);
+            Poke(CheckCollision.Invoke(_ball, _index));
+        }
+
+        public void Poke(Vector momentum)
+        {
+            _ball = _ball.ApplyImpulse(momentum);
+        }
     }
 }

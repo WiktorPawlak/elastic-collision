@@ -3,34 +3,34 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ElasticCollision.Logic
+namespace ElasticCollision.Data
 {
     /// __not__ thread safe, doesn't need to be
     public class Ticker
     {
         public delegate void CallMe();
 
-        private CallMe callback { get; }
-        private int cycleLength { get; }
+        private CallMe Callback { get; }
+        private int CycleLength { get; }
 
-        public bool running { get; private set; } = false;
+        public bool Running { get; private set; } = false;
 
         private Task loop;
 
         public Ticker(CallMe callback, int msDelay)
         {
-            this.callback = callback;
-            this.cycleLength = msDelay;
+            Callback = callback;
+            CycleLength = msDelay;
         }
 
         private void Spin()
         {
-            while (running)
+            while (Running)
             {
                 var timer = Stopwatch.StartNew();
-                callback.Invoke();
+                Callback.Invoke();
                 timer.Stop();
-                int remaining = (cycleLength - (int)timer.ElapsedMilliseconds);
+                int remaining = (CycleLength - (int)timer.ElapsedMilliseconds);
                 if (remaining > 0)
                 {
                     Thread.Sleep(remaining);
@@ -40,18 +40,19 @@ namespace ElasticCollision.Logic
 
         public void Start()
         {
-            if (!running)
+            if (!Running)
             {
-                running = true;
+                Running = true;
                 loop = Task.Run(Spin);
             }
 
         }
+
         public async void Stop()
         {
-            if (running)
+            if (Running)
             {
-                running = false;
+                Running = false;
                 await loop;
             }
         }
