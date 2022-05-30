@@ -1,15 +1,13 @@
-﻿using System;
+﻿using ExtensionMethods;
+using System;
 using System.Collections.Generic;
+using static ElasticCollision.Data.MobileBall;
 
 namespace ElasticCollision.Data
 {
     public abstract class DataAPI
     {
-        public abstract void ApplyForces(IEnumerable<Vector> forces);
-        public abstract WorldState GetState();
-        public abstract void SetState(WorldState newState); // temp
         public abstract void AddBalls(int count, double radius, double mass);
-        public abstract void MoveBalls(double v);
         public static DataAPI CreateBallData()
         {
             return new BallData();
@@ -17,40 +15,38 @@ namespace ElasticCollision.Data
 
         private class BallData : DataAPI
         {
-            private WorldState _state;
-            private readonly Vector _orientationPoint;
-            private readonly Vector _worldDimensions;
+            private static readonly Random rng = new Random();
+            private static int _ballCounter = 0;
+            public Area Area { get; }
+            private CheckCollisionDelegate CheckCollision { get; set; }
 
             public BallData()
             {
-                _orientationPoint = Vector.vec(0, 0);
-                _worldDimensions = Vector.vec(500, 500);
-                _state = new(new List<Ball>(), Area.FromCorners(_orientationPoint, _worldDimensions));
-            }
-
-            public override void ApplyForces(IEnumerable<Vector> forces)
-            {
-                _state = _state.ApplyForces(forces);
-            }
-
-            public override WorldState GetState()
-            {
-                return _state;
-            }
-
-            public override void SetState(WorldState newState)
-            {
-                _state = newState;
+                Vector _orientationPoint = Vector.vec(0, 0);
+                Vector _worldDimensions = Vector.vec(500, 500);
+                Area = Area.FromCorners(_orientationPoint, _worldDimensions);
             }
 
             public override void AddBalls(int count, double radius, double mass)
             {
-                _state = _state.AddBalls(count, radius, mass);
+                for (int i = 0; i < count; i++)
+                {
+                    AddBall(radius, mass);
+                }
             }
 
-            public override void MoveBalls(double v)
+            private void AddBall(double radius, double mass)
             {
-                _state = _state.Proceed(v);
+                var location = Area.Shrink(radius).GetRandomLocation();
+
+                double x = rng.NextDoubleInRange(-100, 100);
+                double y = rng.NextDoubleInRange(-100, 100);
+
+                var velocity = new Vector(x, y);
+
+                Ball ball = new Ball(radius, mass, location, velocity);
+                new MobileBall(ball, _ballCounter, CheckCollision);
+                _ballCounter++;
             }
         }
     }
