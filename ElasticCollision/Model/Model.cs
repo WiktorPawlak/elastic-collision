@@ -25,9 +25,7 @@ namespace ElasticCollision.Presentation
 
         public void GiveBalls(int ballsCount)
         {
-            _collisionLogic.StopSimulation();
             _collisionLogic.AddBalls(ballsCount, Radius, Mass);
-            _collisionLogic.StartSimulation();
         }
 
         public void Update(List<BallLogic> balls)

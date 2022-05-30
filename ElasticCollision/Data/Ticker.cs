@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace ElasticCollision.Data
 {
-    /// __not__ thread safe, doesn't need to be
     public class Ticker
     {
         public delegate void CallMe();

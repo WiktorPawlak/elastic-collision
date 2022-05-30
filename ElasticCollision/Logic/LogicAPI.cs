@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,17 +9,8 @@ namespace ElasticCollision.Logic
 {
     public abstract class LogicAPI
     {
-        public abstract WorldState GetCurrentState();
-        public Observable<List<BallLogic>> Observable = new();
-        // WorldObserver dostaje nowy stan świata w każdej klatce
-        public abstract void StartSimulation();
-        public abstract void NextTick(); // advance simulation by one tick
-        public abstract void StopSimulation();
-        // może jeszcze jakieś kontrolki do FPS świata,
-        // bo ΔT będzie raczej zakodowana na sztywno
+        public abstract Observable<List<BallLogic>> Observable { get; }
         public abstract void AddBalls(int count, double radius, double mass);
-        // we ball, i tak musielibyśmy korzystać z `Vector`
-        // ewentualnie dać tutaj (x, y, ɸ)
         public static LogicAPI CreateCollisionLogic(DataAPI data = default)
         {
             return new CollisionLogic(data ?? DataAPI.CreateBallData());
@@ -29,54 +19,42 @@ namespace ElasticCollision.Logic
         private class CollisionLogic : LogicAPI
         {
             private readonly DataAPI _dataLayer;
-            private readonly Ticker _ticker;
+            public override Observable<List<BallLogic>> Observable { get; } = new Observable<List<BallLogic>>();
+            private BallDictionary _ballDictionary = new BallDictionary();
+            private object _frameDrop = new();
+
+            private class BallDictionary
+            {
+                private Dictionary<int, Ball> _map = new Dictionary<int, Ball>();
+
+                public Ball this[int index]
+                {
+                    set { _map[index] = value; }
+                }
+
+                public List<Ball> GetNeighbours(Area area, Ball ball) => GetTree(area).Neighbors(ball);
+
+                public List<BallLogic> GetLogicBalls() => _map.Values.Select(ball => new BallLogic(ball)).ToList();
+
+                private NonBinaryTree GetTree(Area area) => NonBinaryTree.MakeTree(area.Shrink(-20), _map.Values);
+            }
 
             public CollisionLogic(DataAPI dataLayerAPI)
             {
                 _dataLayer = dataLayerAPI;
-                _ticker = new(NextTick, 5);
+                _dataLayer.CheckCollision = Collide;
             }
 
-            public override WorldState GetCurrentState() => _dataLayer.GetState();
+            public override void AddBalls(int count, double radius, double mass) => _dataLayer.AddBalls(count, radius, mass);
 
-            public override void StartSimulation() => _ticker.Start();
-
-            public override void StopSimulation() => _ticker.Stop();
-
-            public override void NextTick()
+            private Vector Collide(Ball ball, int index)
             {
-                _dataLayer.MoveBalls(0.03);
-                Collide();
-                IEnumerable<BallLogic> balls = GetCurrentState().Balls.Select(ball => new BallLogic(ball));
-                Task.Run(() => Observable.Notify(new List<BallLogic>(balls)));
-            }
-
-            public override void AddBalls(int count, double radius, double mass)
-            {
-                if (_ticker.Running)
+                lock (_frameDrop)
                 {
-                    _ticker.Stop();
-                    _dataLayer.AddBalls(count, radius, mass);
-                    _ticker.Start();
+                    _ballDictionary[index] = ball;
+                    Task.Run(() => Observable.Notify(_ballDictionary.GetLogicBalls()));
+                    return Collisions.CalculateForces(ball, _dataLayer.Area, _ballDictionary.GetNeighbours(_dataLayer.Area, ball));
                 }
-                else
-                {
-                    _dataLayer.AddBalls(count, radius, mass);
-                }
-            }
-
-            private void Collide()
-            {
-                WorldState state = _dataLayer.GetState();
-                var tree = NonBinaryTree.MakeTree(state.Area.Shrink(-20), state.Balls);
-                var forces = state.Balls
-                    .AsParallel()
-                    .AsOrdered()
-                    .Select(ball => Collisions.CalculateForces(ball, state.Area, tree.Neighbors(ball)));
-                _dataLayer.ApplyForces(forces);
-
-                Debug.WriteLine(state.Balls.Select(ball => (tree.Neighbors(ball).Count))
-                                           .Average());
             }
         }
     }
