@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ElasticCollision.Data
+﻿namespace ElasticCollision.Data
 {
     public record Ball(
          double Radius,
@@ -28,34 +23,59 @@ namespace ElasticCollision.Data
             }
         }
     }
+    public record BallWithJunk(
+         double Radius,
+         double Mass,
+         Vector Location,
+         Vector Velocity,
+         int id,
+         PushMe cb,
+         RequestUpdate info
+    ) : Ball(Radius, Mass, Location, Velocity)
+    {
+        public static BallWithJunk addJunk(Ball ball, int id, PushMe cb, RequestUpdate info)
+        {
+            return new BallWithJunk(
+                ball.Radius, ball.Mass, ball.Location, ball.Velocity, id, cb, info
+            );
+        }
+    }
+
+    public delegate void PushMe(Vector impulse);
+    public delegate void UpdateBall(BallWithJunk b);
+    public delegate BallWithJunk RequestUpdate();
 
     public class MobileBall
     {
         private readonly Ticker _ticker;
         private Ball _ball;
-        private readonly int _index;
+        private readonly int _id;
+        private readonly UpdateBall CheckCollision;
+        private object onlyone = new object();
 
-        public delegate Vector CheckCollisionDelegate(Ball b, int index);
-        private CheckCollisionDelegate CheckCollision { get; }
-
-        public MobileBall(Ball ball, int index, CheckCollisionDelegate onBallMoved)
+        public MobileBall(Ball ball, int id, UpdateBall onBallMoved)
         {
             _ticker = new Ticker(Proceed, 5);
             _ball = ball;
-            _index = index;
+            _id = id;
             CheckCollision = onBallMoved;
             _ticker.Start();
         }
 
         public void Proceed()
         {
-            _ball = _ball.Budge(0.03);
-            Poke(CheckCollision.Invoke(_ball, _index));
+            lock (onlyone)
+                _ball = _ball.Budge(0.03);
+
+            CheckCollision.Invoke(update());
+            // dostaniemy 0-2 callbacki
         }
+        public BallWithJunk update() => BallWithJunk.addJunk(_ball, _id, Poke, update);
 
         public void Poke(Vector momentum)
         {
-            _ball = _ball.ApplyImpulse(momentum);
+            lock (onlyone)
+                _ball = _ball.ApplyImpulse(momentum);
         }
     }
 }

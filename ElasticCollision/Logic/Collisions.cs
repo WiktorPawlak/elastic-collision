@@ -14,7 +14,7 @@ namespace ElasticCollision.Logic
             return distance <= reach;
         }
 
-        public static Vector CollideWalls(Area area, Ball ball)
+        public static void CollideWalls(Area area, Ball ball)
         {
             var shrunk = area.Shrink(ball.Radius);
             var X = ball.Velocity.X;
@@ -30,7 +30,7 @@ namespace ElasticCollision.Logic
             Vector arm = Vector.vec(deltaX, deltaY);
 
 
-            return 2 * arm * ball.Mass;
+            ((BallWithJunk)ball).ApplyImpulse(2 * arm * ball.Mass);
         }
 
         public static bool Approaching(Ball a, Ball b)
@@ -40,24 +40,31 @@ namespace ElasticCollision.Logic
             return direction.SameDir(relative_velocity);
         }
 
-        public static Vector CollisionImpulse(Ball self, Ball other)
+        public static Ball CollisionImpulse(Ball self, Ball other)
         {
+            // zwraca drugą kulkę
+            // cały ten kod to jest jeden wielki dramat
+            // AlE KuLkI siĘ SAMe RuSzajOm❕❕❕❕❕❕❕❕❕
             var direction = other.Location - self.Location;
             var relative_velocity = (other.Velocity - self.Velocity).On(direction);
-            return relative_velocity * other.Mass;
+            var our_impulse = relative_velocity * other.Mass;
+            var other_impulse = relative_velocity * -self.Mass;
+            ((BallWithJunk)self).cb.Invoke(our_impulse);
+            ((BallWithJunk)other).cb.Invoke(other_impulse);
+            return other.ApplyImpulse(other_impulse);
         }
 
-        public static Vector CollideBalls(Ball self, IEnumerable<Ball> Neighbors)
+        public static IEnumerable<Ball> CollideBalls(Ball self, IEnumerable<Ball> Neighbors)
         {
             return Neighbors
                 .Where(other => Touching(self, other) && Approaching(self, other))
-                .Select(other => CollisionImpulse(self, other))
-                .Aggregate(Vector.vec(0, 0), (a, b) => a + b);
+                .Select(other => CollisionImpulse(self, other));
         }
 
-        public static Vector CalculateForces(Ball self, Area area, List<Ball> neighbours)
+        public static IEnumerable<Ball> Collide(Ball self, Area area, List<Ball> neighbours)
         {
-            return CollideBalls(self, neighbours) + CollideWalls(area, self);
+            CollideWalls(area, self);
+            return CollideBalls(self, neighbours);
         }
     };
 }

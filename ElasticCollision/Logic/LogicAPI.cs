@@ -21,16 +21,13 @@ namespace ElasticCollision.Logic
             private readonly DataAPI _dataLayer;
             public override Observable<List<BallLogic>> Observable { get; } = new Observable<List<BallLogic>>();
             private BallDictionary _ballDictionary = new BallDictionary();
-            private object _frameDrop = new();
+            private object yay_now_with_oop_i_can_collide_only_one_ball_at_the_same_time = new();
 
             private class BallDictionary
             {
-                private Dictionary<int, Ball> _map = new Dictionary<int, Ball>();
+                private Dictionary<int, BallWithJunk> _map = new Dictionary<int, BallWithJunk>();
 
-                public Ball this[int index]
-                {
-                    set { _map[index] = value; }
-                }
+                public void update(BallWithJunk ball) => _map[ball.id] = ball;
 
                 public List<Ball> GetNeighbours(Area area, Ball ball) => GetTree(area).Neighbors(ball);
 
@@ -47,13 +44,18 @@ namespace ElasticCollision.Logic
 
             public override void AddBalls(int count, double radius, double mass) => _dataLayer.AddBalls(count, radius, mass);
 
-            private Vector Collide(Ball ball, int index)
+            private void Collide(BallWithJunk ball)
             {
-                lock (_frameDrop)
+                lock (yay_now_with_oop_i_can_collide_only_one_ball_at_the_same_time)
                 {
-                    _ballDictionary[index] = ball;
+                    _ballDictionary.update(ball);
                     Task.Run(() => Observable.Notify(_ballDictionary.GetLogicBalls()));
-                    return Collisions.CalculateForces(ball, _dataLayer.Area, _ballDictionary.GetNeighbours(_dataLayer.Area, ball));
+                    var changedBalls = Collisions.Collide(ball, _dataLayer.Area, _ballDictionary.GetNeighbours(_dataLayer.Area, ball));
+                    foreach (BallWithJunk bl in changedBalls)
+                    {
+                        _ballDictionary.update(bl);
+                    }
+                    _ballDictionary.update(ball.info());
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace ElasticCollision.Data
 {
     public abstract class DataAPI
     {
-        public abstract CheckCollisionDelegate CheckCollision { get; set; }
+        public abstract UpdateBall CheckCollision { get; set; }
         public abstract Area Area { get; }
         public abstract void AddBalls(int count, double radius, double mass);
         public static DataAPI CreateBallData()
@@ -20,7 +20,7 @@ namespace ElasticCollision.Data
             private static readonly Random rng = new Random();
             private static int _ballCounter = 0;
             public override Area Area { get; }
-            public override CheckCollisionDelegate CheckCollision { get; set; }
+            public override UpdateBall CheckCollision { get; set; }
 
             public BallData()
             {
