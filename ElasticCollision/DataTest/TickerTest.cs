@@ -36,7 +36,7 @@ namespace DataTest
         public void TestStopping()
         {
             var ctr = new Counter();
-            var ticker = new Ticker(ctr.inc, 1);
+            var ticker = new Ticker(ctr.inc, 10);
             Assert.Equal(0, ctr.count);
             ticker.Start();
             Thread.Sleep(15);
