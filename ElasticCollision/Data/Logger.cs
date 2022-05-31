@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System;
 using System.IO;
 namespace ElasticCollision.Data
 {
@@ -21,6 +22,6 @@ namespace ElasticCollision.Data
             Task.Run(endlessLoop);
         }
 
-        public void log(string t) => fifo.Add(t);
+        public void log(string t) => fifo.Add(DateTime.Now.ToString("HH:mm:ss ") + t);
     }
 }
