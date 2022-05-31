@@ -1,30 +1,26 @@
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System.IO;
 namespace ElasticCollision.Data
 {
-    public interface ILoggable
+    public class Logger
     {
-        string entry();
-    }
-    public class Logger<T> where T : ILoggable
-    {
-        BlockingCollection<T> fifo;
+        BlockingCollection<string> fifo;
+        StreamWriter fs;
 
-        public void consume(T i)
+        private void endlessLoop()
         {
-            i.entry();
+            foreach (string i in fifo.GetConsumingEnumerable())
+                fs.WriteLine(i);
         }
 
-        public void endlessLoop()
+        public Logger(string filename)
         {
-            foreach (T i in fifo.GetConsumingEnumerable())
-                consume(i);
-        }
-
-        public Logger()
-        {
-            fifo = new BlockingCollection<T>();
+            fifo = new BlockingCollection<string>();
+            fs = new(filename);
             Task.Run(endlessLoop);
         }
+
+        public void log(string t) => fifo.Add(t);
     }
 }

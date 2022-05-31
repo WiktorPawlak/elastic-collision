@@ -5,6 +5,8 @@ namespace ElasticCollision.Data
 {
     public record class Vector(double X, double Y)
     {
+        public override string ToString() => "[" + X + "," + Y + "]";
+
         public static Vector vec(double x, double y) => new Vector(x, y);
 
         public double Magnitude { get { return Math.Sqrt(X * X + Y * Y); } }

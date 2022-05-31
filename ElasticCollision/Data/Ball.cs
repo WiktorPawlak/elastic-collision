@@ -7,7 +7,11 @@
          Vector Velocity
     )
     {
-
+        public override string ToString()
+        {
+            return "loc: " + Location.ToString() +
+              " vel: " + Velocity.ToString();
+        }
         public Ball Budge(double Δt) => this with { Location = Location + (Velocity * Δt) };
 
         public Vector Momentum { get { return Velocity * Mass; } }
@@ -52,12 +56,14 @@
         private readonly int _id;
         private readonly UpdateBall CheckCollision;
         private object onlyone = new object();
+        private Logger _log;
 
-        public MobileBall(Ball ball, int id, UpdateBall onBallMoved)
+        public MobileBall(Ball ball, int id, UpdateBall onBallMoved, Logger log)
         {
             _ticker = new Ticker(Proceed, 5);
             _ball = ball;
             _id = id;
+            _log = log;
             CheckCollision = onBallMoved;
             _ticker.Start();
         }
@@ -68,8 +74,9 @@
                 _ball = _ball.Budge(0.03);
 
             CheckCollision.Invoke(update());
-            // dostaniemy 0-2 callbacki
+            _log.log(ToString());
         }
+        public override string ToString() { return "ID: " + _id + " " + _ball.ToString(); }
 
         public BallWithJunk update() => BallWithJunk.addJunk(_ball, _id, Poke, update);
 

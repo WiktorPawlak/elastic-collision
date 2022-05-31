@@ -21,6 +21,7 @@ namespace ElasticCollision.Data
             private static int _ballCounter = 0;
             public override Area Area { get; }
             public override UpdateBall CheckCollision { get; set; }
+            private Logger log = new Logger("/dev/stdout");
 
             public BallData()
             {
@@ -47,7 +48,7 @@ namespace ElasticCollision.Data
                 var velocity = new Vector(x, y);
 
                 Ball ball = new Ball(radius, mass, location, velocity);
-                new MobileBall(ball, _ballCounter, CheckCollision);
+                new MobileBall(ball, _ballCounter, CheckCollision, log);
                 _ballCounter++;
             }
         }
