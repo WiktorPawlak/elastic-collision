@@ -70,6 +70,7 @@
             CheckCollision.Invoke(update());
             // dostaniemy 0-2 callbacki
         }
+
         public BallWithJunk update() => BallWithJunk.addJunk(_ball, _id, Poke, update);
 
         public void Poke(Vector momentum)

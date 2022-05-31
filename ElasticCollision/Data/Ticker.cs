@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ElasticCollision.Data
 {
@@ -13,8 +12,6 @@ namespace ElasticCollision.Data
         private int CycleLength { get; }
 
         public bool Running { get; private set; } = false;
-
-        private Task loop;
 
         public Ticker(CallMe callback, int msDelay)
         {
@@ -42,17 +39,7 @@ namespace ElasticCollision.Data
             if (!Running)
             {
                 Running = true;
-                loop = Task.Run(Spin);
-            }
-
-        }
-
-        public async void Stop()
-        {
-            if (Running)
-            {
-                Running = false;
-                await loop;
+                new Thread(Spin).Start();
             }
         }
     }

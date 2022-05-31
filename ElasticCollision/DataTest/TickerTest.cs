@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
-using ElasticCollision.Logic;
+using ElasticCollision.Data;
 using Xunit;
-namespace LogicTest
+namespace DataTest
 {
     public class TickerTest
     {
@@ -12,7 +12,7 @@ namespace LogicTest
             public void inc() => count++;
         }
         [Fact]
-        public void TestInitialization() //unu
+        public void TestInitialization()
         {
             var ctr = new Counter();
             var ticker = new Ticker(ctr.inc, 10);
@@ -22,7 +22,7 @@ namespace LogicTest
         }
 
         [Fact]
-        public void TestStarting() //unu
+        public void TestStarting()
         {
             var ctr = new Counter();
             var ticker = new Ticker(ctr.inc, 100);
@@ -33,19 +33,18 @@ namespace LogicTest
         }
 
         [Fact]
-        public void TestStopping() //unu
+        public void TestStopping()
         {
             var ctr = new Counter();
             var ticker = new Ticker(ctr.inc, 1);
             Assert.Equal(0, ctr.count);
             ticker.Start();
-            ticker.Stop();
             Thread.Sleep(15);
             Assert.True(3 > ctr.count);
         }
 
         [Fact]
-        public void TestSpeed2() //unu
+        public void TestSpeed2()
         {
             var ctr = new Counter();
             var ticker = new Ticker(ctr.inc, 10);
@@ -68,7 +67,7 @@ namespace LogicTest
             }
         }
         [Fact]
-        public void TestSlowCounter() //unu
+        public void TestSlowCounter()
         {
             var ctr = new SlowCounter(0);
             var ticker = new Ticker(ctr.inc, 10);
@@ -79,7 +78,7 @@ namespace LogicTest
             Assert.True(20 > ctr.count);
         }
         [Fact]
-        public void TestTimeIndependence() //unu
+        public void TestTimeIndependence()
         {
             var ctr = new SlowCounter(3);
             var ticker = new Ticker(ctr.inc, 10);

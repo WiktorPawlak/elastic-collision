@@ -27,7 +27,7 @@ namespace ElasticCollision.Logic
             {
                 private Dictionary<int, BallWithJunk> _map = new Dictionary<int, BallWithJunk>();
 
-                public void update(BallWithJunk ball) => _map[ball.id] = ball;
+                public void update(BallWithJunk ball) => _map[-ball.id] = ball;
 
                 public List<Ball> GetNeighbours(Area area, Ball ball) => GetTree(area).Neighbors(ball);
 
@@ -42,14 +42,18 @@ namespace ElasticCollision.Logic
                 _dataLayer.CheckCollision = Collide;
             }
 
-            public override void AddBalls(int count, double radius, double mass) => _dataLayer.AddBalls(count, radius, mass);
+            public override void AddBalls(int count, double radius, double mass)
+            {
+                _dataLayer.AddBalls(count, radius, mass);
+            }
+
 
             private void Collide(BallWithJunk ball)
             {
                 lock (yay_now_with_oop_i_can_collide_only_one_ball_at_the_same_time)
                 {
                     _ballDictionary.update(ball);
-                    Task.Run(() => Observable.Notify(_ballDictionary.GetLogicBalls()));
+                    Observable.Notify(_ballDictionary.GetLogicBalls());
                     var changedBalls = Collisions.Collide(ball, _dataLayer.Area, _ballDictionary.GetNeighbours(_dataLayer.Area, ball));
                     foreach (BallWithJunk bl in changedBalls)
                     {

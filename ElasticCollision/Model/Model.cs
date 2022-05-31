@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using ElasticCollision.Logic;
 
 namespace ElasticCollision.Presentation
@@ -34,8 +35,7 @@ namespace ElasticCollision.Presentation
             {
                 try
                 {
-                    BallModels = balls.Select(ball => new BallModel(ball));
-                    Observable.Notify(BallModels);
+                    Task.Run(() => Observable.Notify(balls.Select(ball => new BallModel(ball))));
                 }
                 finally
                 {

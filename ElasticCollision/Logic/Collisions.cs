@@ -30,7 +30,7 @@ namespace ElasticCollision.Logic
             Vector arm = Vector.vec(deltaX, deltaY);
 
 
-            ((BallWithJunk)ball).ApplyImpulse(2 * arm * ball.Mass);
+            ((BallWithJunk)ball).cb(2 * arm * ball.Mass);
         }
 
         public static bool Approaching(Ball a, Ball b)

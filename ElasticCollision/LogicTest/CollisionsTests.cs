@@ -13,32 +13,32 @@ namespace ElasticCollision.Logic.Tests
 {
     public class CollisionsTests
     {
-        [Fact]
-        public void TestWallCollision()
-        {
-            Area a = Area.FromCorners(vec(-10, -10), vec(10, 10));
-            Ball b = new(5, 1, vec(0, 0), vec(1, 0));
-            Assert.True(a.FullyContains(b.Budge(5)));
-            Assert.Equal(vec(0, 0), CollideWalls(a, b));
-            Assert.Equal(b.ApplyImpulse(CollideWalls(a, b)), b);
-            Assert.False(a.FullyContains(b.Budge(6)));
-            Ball budged = b.Budge(6);
-            Assert.Equal(budged.ApplyImpulse(CollideWalls(a, budged)).Velocity, vec(-1, 0));
-            Ball c = new(5, 1, vec(4, -4), vec(1, 1));
-            Ball budgedC = c.Budge(3);
-            Assert.Equal(budgedC.ApplyImpulse(CollideWalls(a, budgedC)).Velocity, vec(-1, 1));
-        }
-        [Fact]
-        public void TestBallImpact() //unu
-        {
-            Ball a = new(10, 10, vec(-4, 0), vec(1, 0));
-            Ball b = new(10, 10, vec(4, 0), vec(-1, 0));
-            Ball c = new(10, 10, vec(4, 3), vec(-1, 0));
-            Assert.Equal(CollisionImpulse(a, b), -CollisionImpulse(b, a));
-            Assert.NotEqual(CollisionImpulse(a, b), CollisionImpulse(a, c));
-            Assert.True(CollisionImpulse(a, c).Y < 0);
-            Assert.Equal(CollisionImpulse(a, b), vec(-20, 0));
-        }
+        //[Fact]
+        //public void TestWallCollision()
+        //{
+        //    Area a = Area.FromCorners(vec(-10, -10), vec(10, 10));
+        //    Ball b = new(5, 1, vec(0, 0), vec(1, 0));
+        //    Assert.True(a.FullyContains(b.Budge(5)));
+        //    Assert.Equal(vec(0, 0), CollideWalls(a, b));
+        //    Assert.Equal(b.ApplyImpulse(CollideWalls(a, b)), b);
+        //    Assert.False(a.FullyContains(b.Budge(6)));
+        //    Ball budged = b.Budge(6);
+        //    Assert.Equal(budged.ApplyImpulse(CollideWalls(a, budged)).Velocity, vec(-1, 0));
+        //    Ball c = new(5, 1, vec(4, -4), vec(1, 1));
+        //    Ball budgedC = c.Budge(3);
+        //    Assert.Equal(budgedC.ApplyImpulse(CollideWalls(a, budgedC)).Velocity, vec(-1, 1));
+        //}
+        //[Fact]
+        //public void TestBallImpact() //unu
+        //{
+        //    Ball a = new(10, 10, vec(-4, 0), vec(1, 0));
+        //    Ball b = new(10, 10, vec(4, 0), vec(-1, 0));
+        //    Ball c = new(10, 10, vec(4, 3), vec(-1, 0));
+        //    Assert.Equal(CollisionImpulse(a, b), -CollisionImpulse(b, a));
+        //    Assert.NotEqual(CollisionImpulse(a, b), CollisionImpulse(a, c));
+        //    Assert.True(CollisionImpulse(a, c).Y < 0);
+        //    Assert.Equal(CollisionImpulse(a, b), vec(-20, 0));
+        //}
 
         [Fact]
         public void TestBallApproaching()

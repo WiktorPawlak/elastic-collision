@@ -9,28 +9,11 @@ namespace LogicTest
 {
     public class DataAPITestFixture : DataAPI
     {
+        public override UpdateBall CheckCollision { get; set; }
 
-        public override void ApplyForces(IEnumerable<Vector> forces)
-        {
-            return;
-        }
-
-        public override WorldState GetState()
-        {
-            return null;
-        }
-
-        public override void SetState(WorldState newState)
-        {
-            return;
-        }
+        public override Area Area { get; }
 
         public override void AddBalls(int count, double radius, double mass)
-        {
-            return;
-        }
-
-        public override void MoveBalls(double v)
         {
             return;
         }
