@@ -21,7 +21,7 @@ namespace ElasticCollision.Data
             private static int _ballCounter = 0;
             public override Area Area { get; }
             public override UpdateBall CheckCollision { get; set; }
-            private Logger log = new Logger("/dev/stdout");
+            private Logger log = new Logger("Ball.log");
 
             public BallData()
             {
