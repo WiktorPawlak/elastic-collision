@@ -44,13 +44,6 @@ namespace DataTest
         }
 
         [Fact]
-        public void TestKEcalculation()
-        {
-            Ball b = new(10, 10, vec(0, 0), vec(1, 0));
-            Assert.Equal(5, b.KineticEnergy);
-        }
-
-        [Fact]
         public void TestMomentum()
         {
             Ball a = new(10, 10, vec(0, 0), vec(1, 0));

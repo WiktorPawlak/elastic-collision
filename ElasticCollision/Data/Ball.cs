@@ -17,16 +17,8 @@
         public Vector Momentum { get { return Velocity * Mass; } }
 
         public Ball ApplyImpulse(Vector Momentum) => this with { Velocity = Velocity + Momentum * (1 / Mass) };
-
-        public double KineticEnergy
-        {
-            get
-            {
-                double speed = Velocity.Magnitude;
-                return speed * speed * Mass * 0.5;
-            }
-        }
     }
+
     public record BallWithJunk(
          double Radius,
          double Mass,
@@ -74,7 +66,7 @@
                 _ball = _ball.Budge(0.03);
 
             CheckCollision.Invoke(update());
-            _log.log(ToString());
+            _log.Log(ToString());
         }
         public override string ToString() { return "ID: " + _id + " " + _ball.ToString(); }
 

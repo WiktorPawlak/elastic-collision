@@ -4,24 +4,37 @@ using System;
 using System.IO;
 namespace ElasticCollision.Data
 {
-    public class Logger
+    public class Logger : IDisposable
     {
-        BlockingCollection<string> fifo;
-        StreamWriter fs;
+        BlockingCollection<string> _fifo;
+        StreamWriter _sw;
 
-        private void endlessLoop()
+        private void EndlessLoop()
         {
-            foreach (string i in fifo.GetConsumingEnumerable())
-                fs.WriteLine(i);
+            try
+            {
+                foreach (string entry in _fifo.GetConsumingEnumerable())
+                    _sw.WriteLine(entry);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         public Logger(string filename)
         {
-            fifo = new BlockingCollection<string>();
-            fs = new(filename);
-            Task.Run(endlessLoop);
+            _fifo = new BlockingCollection<string>();
+            _sw = new(filename);
+            Task.Run(EndlessLoop);
         }
 
-        public void log(string t) => fifo.Add(DateTime.Now.ToString("HH:mm:ss ") + t);
+        public void Log(string t) => _fifo.Add(DateTime.Now.ToString("HH:mm:ss ") + t);
+
+        public void Dispose()
+        {
+            _sw.Dispose();
+            _fifo.Dispose();
+        }
     }
 }
