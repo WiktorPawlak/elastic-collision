@@ -1,5 +1,4 @@
 ﻿using ElasticCollision.Logic;
-using System;
 
 namespace ElasticCollision.Presentation
 {

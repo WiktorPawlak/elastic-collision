@@ -1,11 +1,10 @@
-using System;
 using ElasticCollision.Data;
 using Xunit;
 using static ElasticCollision.Data.Vector;
 
 namespace DataTest
 {
-    public class BallTest
+    public class BallTests
     {
         [Fact]
         public void TestModificationWorksTheWayIThinkItWorks()

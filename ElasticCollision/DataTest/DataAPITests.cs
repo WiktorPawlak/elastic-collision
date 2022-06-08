@@ -1,14 +1,8 @@
 ﻿using ElasticCollision.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace DataTest
 {
-    public class DataAPITest
+    public class DataAPITests
     {
         private DataAPI sub = DataAPI.CreateBallData();
 

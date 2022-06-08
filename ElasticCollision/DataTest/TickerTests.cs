@@ -1,10 +1,9 @@
-using System;
-using System.Threading;
 using ElasticCollision.Data;
+using System.Threading;
 using Xunit;
 namespace DataTest
 {
-    public class TickerTest
+    public class TickerTests
     {
         private class Counter
         {

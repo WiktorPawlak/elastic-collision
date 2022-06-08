@@ -1,7 +1,7 @@
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Concurrent;
 using System.IO;
+using System.Threading.Tasks;
 namespace ElasticCollision.Data
 {
     public class Logger : IDisposable

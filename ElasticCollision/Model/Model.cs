@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ElasticCollision.Logic;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ElasticCollision.Logic;
 
 namespace ElasticCollision.Presentation
 {

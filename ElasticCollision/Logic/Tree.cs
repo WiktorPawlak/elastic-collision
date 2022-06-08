@@ -1,28 +1,26 @@
-using System;
+using ElasticCollision.Data;
 using System.Collections.Generic;
 using System.Linq;
-using ElasticCollision.Data;
-using ExtensionMethods;
 
 /// allows for efficient checking of possibly overlapping balls
 namespace ElasticCollision.Logic
 {
-    public interface BallContainer
+    public interface IBallContainer
     {
         public void Insert(Ball b);
         public List<Ball> Neighbors(Ball b);
     }
 
-    public abstract class Tree : BallContainer
+    public abstract class Tree : IBallContainer
     {
-        public BallContainer Container { get; protected set; }
+        public IBallContainer Container { get; protected set; }
         public Tree A { get; private set; }
         public Tree B { get; private set; }
-        public Section Basis { get; private set; }
+        public ISection Basis { get; private set; }
         public bool Initialized { get; private set; } = false;
 
 
-        public Tree(Section basis) => Basis = basis;
+        public Tree(ISection basis) => Basis = basis;
 
         private void MakeChildren()
         {
@@ -35,7 +33,7 @@ namespace ElasticCollision.Logic
             }
         }
 
-        protected abstract Tree CreateChild(Section s);
+        protected abstract Tree CreateChild(ISection s);
 
         public void Insert(Ball ball)
         {
@@ -63,7 +61,7 @@ namespace ElasticCollision.Logic
     public class BinaryTree : Tree
     {
         // just a list wrapper
-        private class BallList : BallContainer
+        private class BallList : IBallContainer
         {
             private List<Ball> _lst;
             public BallList() => _lst = new List<Ball>();
@@ -71,20 +69,20 @@ namespace ElasticCollision.Logic
             public List<Ball> Neighbors(Ball b) => _lst;
         }
 
-        public BinaryTree(Section s) : base(s) => Container = new BallList();
-        protected override Tree CreateChild(Section s) => new BinaryTree(s);
+        public BinaryTree(ISection s) : base(s) => Container = new BallList();
+        protected override Tree CreateChild(ISection s) => new BinaryTree(s);
     }
 
     // two-dimensional tree, uses BinaryTree as storage
     public class NonBinaryTree : Tree
     {
-        public NonBinaryTree(Section s) : base(s)
+        public NonBinaryTree(ISection s) : base(s)
         {
             var a = (Area)s;
             Container = new BinaryTree(a.ShorterInterval());
         }
 
-        protected override Tree CreateChild(Section s) => new NonBinaryTree(s);
+        protected override Tree CreateChild(ISection s) => new NonBinaryTree(s);
 
         public static NonBinaryTree MakeTree(Area area, IEnumerable<Ball> balls)
         {

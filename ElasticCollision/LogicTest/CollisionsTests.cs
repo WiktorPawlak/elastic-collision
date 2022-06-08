@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ElasticCollision.Data;
-using ElasticCollision.Logic;
+﻿using ElasticCollision.Data;
 using Xunit;
 using static ElasticCollision.Data.Vector;
 using static ElasticCollision.Logic.Collisions;

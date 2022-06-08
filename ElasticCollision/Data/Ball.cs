@@ -24,12 +24,12 @@
          double Mass,
          Vector Location,
          Vector Velocity,
-         int id,
-         PushMe cb,
-         RequestUpdate info
+         int Id,
+         PushMe Callback,
+         RequestUpdate Info
     ) : Ball(Radius, Mass, Location, Velocity)
     {
-        public static BallWithJunk addJunk(Ball ball, int id, PushMe cb, RequestUpdate info)
+        public static BallWithJunk AddJunk(Ball ball, int id, PushMe cb, RequestUpdate info)
         {
             return new BallWithJunk(
                 ball.Radius, ball.Mass, ball.Location, ball.Velocity, id, cb, info
@@ -47,7 +47,7 @@
         private Ball _ball;
         private readonly int _id;
         private readonly UpdateBall CheckCollision;
-        private object onlyone = new object();
+        private object _onlyOne = new object();
         private Logger _log;
 
         public MobileBall(Ball ball, int id, UpdateBall onBallMoved, Logger log)
@@ -62,19 +62,19 @@
 
         public void Proceed()
         {
-            lock (onlyone)
+            lock (_onlyOne)
                 _ball = _ball.Budge(0.03);
 
-            CheckCollision.Invoke(update());
+            CheckCollision.Invoke(Update());
             _log.Log(ToString());
         }
         public override string ToString() { return "ID: " + _id + " " + _ball.ToString(); }
 
-        public BallWithJunk update() => BallWithJunk.addJunk(_ball, _id, Poke, update);
+        public BallWithJunk Update() => BallWithJunk.AddJunk(_ball, _id, Poke, Update);
 
         public void Poke(Vector momentum)
         {
-            lock (onlyone)
+            lock (_onlyOne)
                 _ball = _ball.ApplyImpulse(momentum);
         }
     }

@@ -1,7 +1,7 @@
+using ElasticCollision.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ElasticCollision.Data;
 
 namespace ElasticCollision.Logic
 {
@@ -30,7 +30,7 @@ namespace ElasticCollision.Logic
             Vector arm = Vector.vec(deltaX, deltaY);
 
 
-            ((BallWithJunk)ball).cb(2 * arm * ball.Mass);
+            ((BallWithJunk)ball).Callback(2 * arm * ball.Mass);
         }
 
         public static bool Approaching(Ball a, Ball b)
@@ -49,8 +49,8 @@ namespace ElasticCollision.Logic
             var relative_velocity = (other.Velocity - self.Velocity).On(direction);
             var our_impulse = relative_velocity * other.Mass;
             var other_impulse = relative_velocity * -self.Mass;
-            ((BallWithJunk)self).cb.Invoke(our_impulse);
-            ((BallWithJunk)other).cb.Invoke(other_impulse);
+            ((BallWithJunk)self).Callback.Invoke(our_impulse);
+            ((BallWithJunk)other).Callback.Invoke(other_impulse);
             return other.ApplyImpulse(other_impulse);
         }
 

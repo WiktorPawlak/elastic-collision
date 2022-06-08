@@ -1,13 +1,12 @@
-using System;
 using ExtensionMethods;
-
+using System;
 using static ElasticCollision.Data.Vector;
 namespace ElasticCollision.Data
 {
     public record Area(
          Interval Horizontal,
          Interval Vertical
-    ) : Section
+    ) : ISection
     {
 
         public double Top { get { return UpperLeftCorner.Y; } }
@@ -62,17 +61,17 @@ namespace ElasticCollision.Data
                this with { Horizontal = right });
         }
 
-        private bool isWiderThanTaller() => Horizontal.length > Vertical.length;
+        private bool IsWiderThanTaller() => Horizontal.Length > Vertical.Length;
 
-        public (Section, Section) SplitSection()
+        public (ISection, ISection) SplitSection()
         {
-            if (isWiderThanTaller()) { return SplitVertically(); }
+            if (IsWiderThanTaller()) { return SplitVertically(); }
             else { return SplitHorizontally(); }
         }
 
         public DirectionalInterval ShorterInterval()
         {
-            if (isWiderThanTaller()) { return new VerticalInterval(Vertical.low, Vertical.high); }
+            if (IsWiderThanTaller()) { return new VerticalInterval(Vertical.low, Vertical.high); }
             else { return new HorizontalInterval(Horizontal.low, Horizontal.high); }
         }
 

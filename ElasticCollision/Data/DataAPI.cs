@@ -1,7 +1,5 @@
 ﻿using ExtensionMethods;
 using System;
-using System.Collections.Generic;
-using static ElasticCollision.Data.MobileBall;
 
 namespace ElasticCollision.Data
 {
@@ -17,11 +15,11 @@ namespace ElasticCollision.Data
 
         private class BallData : DataAPI
         {
-            private static readonly Random rng = new Random();
+            private static readonly Random _rng = new Random();
+            private Logger _log = new Logger("Ball.log");
             private static int _ballCounter = 0;
             public override Area Area { get; }
             public override UpdateBall CheckCollision { get; set; }
-            private Logger log = new Logger("Ball.log");
 
             public BallData()
             {
@@ -42,13 +40,13 @@ namespace ElasticCollision.Data
             {
                 var location = Area.Shrink(radius).GetRandomLocation();
 
-                double x = rng.NextDoubleInRange(-100, 100);
-                double y = rng.NextDoubleInRange(-100, 100);
+                double x = _rng.NextDoubleInRange(-100, 100);
+                double y = _rng.NextDoubleInRange(-100, 100);
 
                 var velocity = new Vector(x, y);
 
                 Ball ball = new Ball(radius, mass, location, velocity);
-                new MobileBall(ball, _ballCounter, CheckCollision, log);
+                new MobileBall(ball, _ballCounter, CheckCollision, _log);
                 _ballCounter++;
             }
         }

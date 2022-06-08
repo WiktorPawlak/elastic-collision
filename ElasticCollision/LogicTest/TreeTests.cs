@@ -1,11 +1,9 @@
-using System;
-using System.Threading;
 using ElasticCollision.Data;
 using ElasticCollision.Logic;
 using Xunit;
 namespace LogicTest
 {
-    public class TreeTest
+    public class TreeTests
     {
         [Fact]
         public void TestInitialization()

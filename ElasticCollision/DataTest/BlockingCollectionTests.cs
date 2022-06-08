@@ -1,45 +1,42 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using ElasticCollision.Data;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
-using static ElasticCollision.Data.Vector;
 
 namespace DataTest
 {
-    public class BlockingCollectionDoesWhatIthinkItDoes
+    public class BlockingCollectionTests
     {
 
-        public class helper
+        public class TestHelper
         {
             public List<int> lst = new List<int>();
-            public void consume(int i) => lst.Add(i);
-            public void accept(IEnumerable<int> data)
+            public void Consume(int i) => lst.Add(i);
+            public void Accept(IEnumerable<int> data)
             {
                 foreach (int i in data)
-                    consume(i);
+                    Consume(i);
             }
 
-            public void attach(BlockingCollection<int> queue)
+            public void Attach(BlockingCollection<int> queue)
             {
-                Task.Run(() => accept(queue.GetConsumingEnumerable()));
+                Task.Run(() => Accept(queue.GetConsumingEnumerable()));
             }
 
             [Fact]
             public void TestA()
             {
                 var coll = new BlockingCollection<int>();
-                var IntEater = new helper();
-                IntEater.attach(coll);
+                var IntEater = new TestHelper();
+                IntEater.Attach(coll);
 
                 void test(int i)
                 {
                     Thread.Sleep(10);
                     Assert.Equal(i, IntEater.lst.Count);
                 }
+
                 test(0);
                 coll.Add(5);
                 test(1);

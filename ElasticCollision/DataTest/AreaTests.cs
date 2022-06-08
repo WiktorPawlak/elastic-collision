@@ -1,4 +1,3 @@
-using System;
 using ElasticCollision.Data;
 using Xunit;
 using static ElasticCollision.Data.Vector;
